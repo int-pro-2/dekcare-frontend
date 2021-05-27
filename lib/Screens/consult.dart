@@ -17,7 +17,7 @@ class _ConsultState extends State<Consult> {
         theme: ThemeData(fontFamily: 'supermarket'),
         home: Scaffold(
             appBar: PreferredSize(
-                preferredSize: Size.fromHeight(height * 0.1),
+                preferredSize: Size.fromHeight(height * 0.075),
                 child: TopBar(
                   titleText: 'ปรึกษาลูกน้อยกับหมอ',
                   enableBackButton: false,
