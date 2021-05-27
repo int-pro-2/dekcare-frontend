@@ -1,5 +1,6 @@
 import 'package:dekcare_frontend/Components/button.dart';
 import 'package:dekcare_frontend/Components/constants.dart';
+import 'package:dekcare_frontend/Screens/landing.dart';
 
 import 'package:flutter/material.dart';
 
@@ -137,6 +138,14 @@ class _LoginState extends State<Login> {
                 color: yelloPrimary,
                 onPress: () {
                   setState(() {});
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return Landing();
+                      },
+                    ),
+                  );
                 },
                 title: 'Login'),
             SizedBox(
