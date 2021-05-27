@@ -89,7 +89,14 @@ class _State extends State<Nav> {
               activeColor: yellowPrimary,
             ),
             BottomNavyBarItem(
-                icon: Icon(Icons.person),
+                icon: Container(
+                  height: 25,
+                  width: 25,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                    image: AssetImage('assets/images/doctorIcon.png'),
+                  )),
+                ),
                 title: Center(
                   child: Text(
                     'Consult',
@@ -97,8 +104,15 @@ class _State extends State<Nav> {
                 ),
                 activeColor: yellowPrimary),
             BottomNavyBarItem(
-                icon: Icon(Icons.public),
-                title: Center(child: Text('Pantip')),
+                icon: Container(
+                  height: 30,
+                  width: 30,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                    image: AssetImage('assets/images/Forum.png'),
+                  )),
+                ),
+                title: Center(child: Text('Forum')),
                 activeColor: yellowPrimary),
             BottomNavyBarItem(
                 icon: Icon(Icons.chat),
