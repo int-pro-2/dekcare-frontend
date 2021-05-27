@@ -1,6 +1,6 @@
 import 'package:dekcare_frontend/Components/navBar/nav.dart';
 import 'package:dekcare_frontend/Components/constants.dart';
-import 'package:dekcare_frontend/Components/Card.dart';
+import 'package:dekcare_frontend/Components/CardBalance.dart';
 
 import 'package:flutter/material.dart';
 
@@ -22,15 +22,15 @@ class _LandingState extends State<Landing> {
         ),
         body: Stack(children: <Widget>[
           Positioned(
-              height: height * 0.33,
+              height: height * 0.35,
               child: SizedBox(
                   width: width,
                   child: DecoratedBox(
                     decoration: const BoxDecoration(
                         color: yellowPrimary,
                         borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(40),
-                          bottomRight: Radius.circular(40),
+                          bottomLeft: Radius.circular(20),
+                          bottomRight: Radius.circular(20),
                         )),
                   ))),
           Positioned(
@@ -39,13 +39,25 @@ class _LandingState extends State<Landing> {
                 width: width * 0.95,
                 alignment: Alignment.center,
                 child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                  Icon(
-                    Icons.notifications,
-                    color: whitePrimary,
+                  Container(
+                    width: 40,
+                    child: TextButton(
+                      onPressed: () {},
+                      child: Icon(
+                        Icons.notifications,
+                        color: whitePrimary,
+                      ),
+                    ),
                   ),
-                  Icon(
-                    Icons.more_vert,
-                    color: whitePrimary,
+                  Container(
+                    width: 30,
+                    child: TextButton(
+                      onPressed: () {},
+                      child: Icon(
+                        Icons.more_vert,
+                        color: whitePrimary,
+                      ),
+                    ),
                   ),
                 ])),
           ),
@@ -106,23 +118,31 @@ class _LandingState extends State<Landing> {
                 )),
           ),
           Positioned(
-            height: height * 0.65,
+            height: height * 0.72,
             child: Container(
               width: width,
               alignment: Alignment.center,
-              child: CardButton(
-                buttonSize: 0,
+              child: CardMoney(
                 fontsize: 10,
                 textColor: yellowPrimary,
-                icon: Icon(
-                  Icons.shopping_cart,
-                  color: Colors.white,
-                ),
-                description: "Record customer's transactions",
-                press: () {},
-                colorCircle: Color(0xFF6961D6),
+                pressAddmoney: () {
+                  print('test');
+                },
               ),
             ),
+          ),
+          Positioned(
+            height: height * 1.08,
+            child: Container(
+                width: width * 0.5,
+                alignment: Alignment.center,
+                child: Text(
+                  'ดูแลลูกน้อยกันเถอะ',
+                  style: TextStyle(
+                      fontFamily: 'supermarket',
+                      fontSize: 25,
+                      fontWeight: FontWeight.w500),
+                )),
           ),
         ]));
   }
