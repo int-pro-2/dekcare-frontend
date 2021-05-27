@@ -2,6 +2,7 @@ import 'package:dekcare_frontend/Components/navBar/nav.dart';
 import 'package:dekcare_frontend/Components/constants.dart';
 import 'package:dekcare_frontend/Components/CardBalance.dart';
 import 'package:dekcare_frontend/Components/Card.dart';
+import 'package:dekcare_frontend/Screens/setting.dart';
 
 import 'package:flutter/material.dart';
 
@@ -53,7 +54,16 @@ class _LandingState extends State<Landing> {
                   Container(
                     width: 30,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return Setting();
+                            },
+                          ),
+                        );
+                      },
                       child: Icon(
                         Icons.more_vert,
                         color: whitePrimary,

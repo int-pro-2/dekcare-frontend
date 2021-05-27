@@ -16,7 +16,7 @@ class Button extends StatelessWidget {
         onPressed: onPress,
         child: Text(
           title,
-          style: TextStyle(fontSize: 16),
+          style: TextStyle(fontSize: 16, fontFamily: 'supermarket'),
         ),
         style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(

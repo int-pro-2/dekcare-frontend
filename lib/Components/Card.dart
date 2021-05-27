@@ -52,7 +52,7 @@ class CardKid extends StatelessWidget {
                     ),
                   ),
                   Container(
-                      height: height * 0.05,
+                      height: height * 0.045,
                       width: width * 0.35,
                       child: Button(
                           color: yellowPrimary, onPress: press, title: text))

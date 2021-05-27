@@ -42,7 +42,7 @@ class _State extends State<Nav> {
           showElevation: true,
           onItemSelected: (index) => setState(() {
             if (index == 0 && widget.currentIndex != 0)
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) {
@@ -51,7 +51,7 @@ class _State extends State<Nav> {
                 ),
               );
             if (index == 1 && widget.currentIndex != 1)
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) {
@@ -69,7 +69,7 @@ class _State extends State<Nav> {
                 ),
               );
             if (index == 3 && widget.currentIndex != 3)
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) {
