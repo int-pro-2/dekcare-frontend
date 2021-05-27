@@ -85,22 +85,24 @@ class _State extends State<Nav> {
           items: [
             BottomNavyBarItem(
               icon: Icon(Icons.home),
-              title: Text('Home'),
+              title: Center(child: Text('Home')),
               activeColor: yellowPrimary,
             ),
             BottomNavyBarItem(
                 icon: Icon(Icons.person),
-                title: Text(
-                  'Consult',
+                title: Center(
+                  child: Text(
+                    'Consult',
+                  ),
                 ),
                 activeColor: yellowPrimary),
             BottomNavyBarItem(
                 icon: Icon(Icons.public),
-                title: Text('Pantip'),
+                title: Center(child: Text('Pantip')),
                 activeColor: yellowPrimary),
             BottomNavyBarItem(
                 icon: Icon(Icons.chat),
-                title: Text('Chat'),
+                title: Center(child: Text('Chat')),
                 activeColor: yellowPrimary),
           ],
         ),

@@ -1,6 +1,7 @@
 import 'package:dekcare_frontend/Components/navBar/nav.dart';
 import 'package:dekcare_frontend/Components/constants.dart';
 import 'package:dekcare_frontend/Components/CardBalance.dart';
+import 'package:dekcare_frontend/Components/Card.dart';
 
 import 'package:flutter/material.dart';
 
@@ -143,6 +144,32 @@ class _LandingState extends State<Landing> {
                       fontSize: 25,
                       fontWeight: FontWeight.w500),
                 )),
+          ),
+          Positioned(
+            height: height * 1.4,
+            child: Container(
+              width: width,
+              child:
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Container(
+                    width: width * 0.47,
+                    child: CardKid(
+                      title: 'สุขภาพอุจจาระของลูก',
+                      text: 'บันทึกข้อมูล',
+                      press: () {},
+                    )),
+                SizedBox(
+                  width: width * 0.02,
+                ),
+                Container(
+                    width: width * 0.47,
+                    child: CardKid(
+                      title: 'ข้อมูลสุขภาพอุจจาระ',
+                      text: 'ดูข้อมูล',
+                      press: () {},
+                    )),
+              ]),
+            ),
           ),
         ]));
   }

@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 
 class Button extends StatelessWidget {
   final onPress;
-  final String title;
-  final Color color;
+  final title;
+  final color;
 
-  Button({required this.color, required this.onPress, required this.title});
+  Button({this.color, this.onPress, this.title});
 
   @override
   Widget build(BuildContext context) {
-    
     return Container(
       width: 325,
       height: 50,
