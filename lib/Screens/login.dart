@@ -135,7 +135,7 @@ class _LoginState extends State<Login> {
                   )),
             ),
             Button(
-                color: yelloPrimary,
+                color: yellowPrimary,
                 onPress: () {
                   setState(() {});
                   Navigator.push(

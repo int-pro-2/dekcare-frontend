@@ -28,6 +28,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   bottom_navy_bar: ^6.0.0
+  socket_io_client: ^1.0.1
   flutter:
     sdk: flutter
 
