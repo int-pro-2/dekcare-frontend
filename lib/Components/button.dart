@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 
 class Button extends StatelessWidget {
   final onPress;
-  final String title;
-  final Color color;
+  final title;
+  final color;
 
-  Button({required this.color, required this.onPress, required this.title});
+  Button({this.color, this.onPress, this.title});
 
   @override
   Widget build(BuildContext context) {
-    
     return Container(
       width: 325,
       height: 50,
@@ -17,7 +16,7 @@ class Button extends StatelessWidget {
         onPressed: onPress,
         child: Text(
           title,
-          style: TextStyle(fontSize: 16),
+          style: TextStyle(fontSize: 16, fontFamily: 'supermarket'),
         ),
         style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(

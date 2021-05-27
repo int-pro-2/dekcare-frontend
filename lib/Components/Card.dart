@@ -1,48 +1,65 @@
+import 'package:dekcare_frontend/Components/button.dart';
 import 'package:flutter/material.dart';
+import 'package:dekcare_frontend/Components/constants.dart';
 
-class CardButton extends StatelessWidget {
-  final press;
-  final double fontsize;
-  final Color colorCircle, textColor;
-  final double buttonSize;
-  final Icon icon;
-  final String description;
+class CardKid extends StatelessWidget {
+  final press, text, title;
 
-  const CardButton(
-      {required this.press,
-      required this.colorCircle,
-      required this.textColor,
-      required this.buttonSize,
-      required this.icon,
-      required this.fontsize,
-      required this.description});
+  const CardKid({this.press, this.text, this.title});
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    return Container(
-        child: TextButton(
-      onPressed: press,
-      child: SizedBox(
-        width: width - 60,
-        height: height * (17 / 100),
-        child: DecoratedBox(
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(23),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey,
-                    spreadRadius: 1,
-                    blurRadius: 5,
-                    offset: Offset(0, 5),
+    return TextButton(
+      onPressed: () {},
+      child: Container(
+        child: SizedBox(
+          width: width * 0.5,
+          height: height * (25 / 100),
+          child: DecoratedBox(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(23),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      spreadRadius: 1,
+                      blurRadius: 5,
+                      offset: Offset(0, 5),
+                    ),
+                  ]),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 12,
                   ),
-                ]),
-            child: Row(
-              children: [],
-            )),
+                  Container(
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontFamily: 'supermarket',
+                          color: blackPrimaryFont,
+                          fontStyle: FontStyle.normal),
+                    ),
+                  ),
+                  Container(
+                    height: 110,
+                    width: 70,
+                    child: CircleAvatar(
+                      backgroundColor: greyPrimary,
+                    ),
+                  ),
+                  Container(
+                      height: height * 0.045,
+                      width: width * 0.35,
+                      child: Button(
+                          color: yellowPrimary, onPress: press, title: text))
+                ],
+              )),
+        ),
       ),
-    ));
+    );
   }
 }

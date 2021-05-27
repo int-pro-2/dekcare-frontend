@@ -5,3 +5,4 @@ const blackPrimaryFont = Color(0xFF343434);
 const greyPrimary = Color(0xFFCFCFCF);
 const greySecondary = Color(0xFFEDEDED);
 const whitePrimary = Color(0xFFFFFFFF);
+const BlackPrimaryFont = Color(0xFF343434);

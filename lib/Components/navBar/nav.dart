@@ -42,7 +42,7 @@ class _State extends State<Nav> {
           showElevation: true,
           onItemSelected: (index) => setState(() {
             if (index == 0 && widget.currentIndex != 0)
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) {
@@ -51,7 +51,7 @@ class _State extends State<Nav> {
                 ),
               );
             if (index == 1 && widget.currentIndex != 1)
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) {
@@ -69,7 +69,7 @@ class _State extends State<Nav> {
                 ),
               );
             if (index == 3 && widget.currentIndex != 3)
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) {
@@ -85,22 +85,38 @@ class _State extends State<Nav> {
           items: [
             BottomNavyBarItem(
               icon: Icon(Icons.home),
-              title: Text('Home'),
+              title: Center(child: Text('Home')),
               activeColor: yellowPrimary,
             ),
             BottomNavyBarItem(
-                icon: Icon(Icons.person),
-                title: Text(
-                  'Consult',
+                icon: Container(
+                  height: 25,
+                  width: 25,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                    image: AssetImage('assets/images/doctorIcon.png'),
+                  )),
+                ),
+                title: Center(
+                  child: Text(
+                    'Consult',
+                  ),
                 ),
                 activeColor: yellowPrimary),
             BottomNavyBarItem(
-                icon: Icon(Icons.public),
-                title: Text('Pantip'),
+                icon: Container(
+                  height: 30,
+                  width: 30,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                    image: AssetImage('assets/images/Forum.png'),
+                  )),
+                ),
+                title: Center(child: Text('Forum')),
                 activeColor: yellowPrimary),
             BottomNavyBarItem(
                 icon: Icon(Icons.chat),
-                title: Text('Chat'),
+                title: Center(child: Text('Chat')),
                 activeColor: yellowPrimary),
           ],
         ),
