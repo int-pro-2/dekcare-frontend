@@ -1,4 +1,7 @@
+import 'package:dekcare_frontend/Components/button.dart';
+import 'package:dekcare_frontend/Components/constants.dart';
 import 'package:dekcare_frontend/Components/navBar/nav.dart';
+import 'package:dekcare_frontend/Screens/login.dart';
 
 import 'package:flutter/material.dart';
 
@@ -14,16 +17,41 @@ class _SettingState extends State<Setting> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-        bottomNavigationBar: Nav(
-          currentIndex: 1,
-        ),
-        body: Column(
-          children: [
-            SizedBox(
-              height: 50,
+        appBar: AppBar(
+            title: Text(
+              'setting',
+              style: TextStyle(fontSize: 23),
             ),
-            Text('setting')
-          ],
+            centerTitle: true,
+            backgroundColor: yellowPrimary,
+            shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.vertical(bottom: Radius.circular(30)))),
+        body: Container(
+          width: width,
+          child: Column(
+            children: [
+              SizedBox(
+                height: 30,
+              ),
+              Container(
+                child: Button(
+                  onPress: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return Login();
+                        },
+                      ),
+                    );
+                  },
+                  title: 'Logout',
+                  color: yellowPrimary,
+                ),
+              )
+            ],
+          ),
         ));
   }
 }
