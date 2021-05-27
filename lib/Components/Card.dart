@@ -31,9 +31,7 @@ class CardKid extends StatelessWidget {
                   ]),
               child: Column(
                 children: [
-                  SizedBox(
-                    height: 12,
-                  ),
+                  SizedBox(height: height * 0.02),
                   Container(
                     child: Text(
                       title,
