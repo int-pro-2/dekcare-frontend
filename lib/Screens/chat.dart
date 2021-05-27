@@ -1,6 +1,5 @@
 import 'package:dekcare_frontend/Components/navBar/nav.dart';
 import 'package:dekcare_frontend/Components/constants.dart';
-import 'package:dekcare_frontend/Components/TopBar.dart';
 import 'package:flutter/material.dart';
 
 class Chat extends StatefulWidget {
@@ -17,12 +16,15 @@ class _ChatState extends State<Chat> {
     return MaterialApp(
         theme: ThemeData(fontFamily: 'supermarket'),
         home: Scaffold(
-            appBar: PreferredSize(
-                preferredSize: Size.fromHeight(height * 0.1),
-                child: TopBar(
-                  titleText: 'สนทนา',
-                  enableBackButton: true,
-                )),
+            appBar: AppBar(
+                title: const Text(
+                  'ปรึกษาลูกน้อยกับหมอ',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                ),
+                backgroundColor: yellowPrimary,
+                shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.vertical(bottom: Radius.circular(30)))),
             bottomNavigationBar: Nav(
               currentIndex: 3,
             ),
