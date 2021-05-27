@@ -52,9 +52,9 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   fonts:
-    - family: Tajawal-Bold
+    - family: supermarket
       fonts:
-        - asset: assets/fonts/Tajawal-Bold.ttf
+        - asset: assets/fonts/supermarket.ttf
  
    
 

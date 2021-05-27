@@ -34,12 +34,12 @@ class _LoginState extends State<Login> {
               height: 80,
             ),
             Text(
-              'Welcome to DekCare ',
+              'Welcome to DekCare',
               style: TextStyle(
                   // color: kPrimaryFont,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 28,
-                  fontFamily: 'Tajawal-Bold'),
+
+                  fontSize: 30,
+                  fontFamily: 'supermarket'),
             ),
             Container(
                 padding: EdgeInsets.all(20),
@@ -65,7 +65,7 @@ class _LoginState extends State<Login> {
                 margin: EdgeInsets.symmetric(vertical: 10),
                 padding: EdgeInsets.symmetric(horizontal: 14, vertical: 5),
                 width: 325,
-                height: 60,
+                height: 55,
                 decoration: BoxDecoration(
                   color: Colors.black12,
                   borderRadius: BorderRadius.circular(10),
@@ -75,7 +75,8 @@ class _LoginState extends State<Login> {
                   controller: emailController,
                   decoration: InputDecoration(
                       hintText: 'บัญชีผู้ใช้',
-                      hintStyle: TextStyle(fontFamily: 'Tajawal-Bold'),
+                      hintStyle:
+                          TextStyle(fontFamily: 'supermarket', fontSize: 18),
                       icon: Icon(
                         Icons.person_rounded,
                         color: Colors.black54,
@@ -86,7 +87,7 @@ class _LoginState extends State<Login> {
                 margin: EdgeInsets.symmetric(vertical: 10),
                 padding: EdgeInsets.symmetric(horizontal: 14, vertical: 5),
                 width: 325,
-                height: 60,
+                height: 55,
                 decoration: BoxDecoration(
                   color: Colors.black12,
                   borderRadius: BorderRadius.circular(10),
@@ -96,6 +97,8 @@ class _LoginState extends State<Login> {
                   obscureText: !_passwordVisible,
                   decoration: InputDecoration(
                       hintText: 'รหัสผ่าน',
+                      hintStyle:
+                          TextStyle(fontFamily: 'supermarket', fontSize: 18),
                       icon: Icon(
                         Icons.lock,
                         color: Colors.black54,
@@ -124,7 +127,10 @@ class _LoginState extends State<Login> {
                   },
                   child: Text(
                     'ลืมรหัสผ่าน?',
-                    style: TextStyle(color: blackPrimaryFont),
+                    style: TextStyle(
+                        color: blackPrimaryFont,
+                        fontFamily: 'supermarket',
+                        fontSize: 18),
                   )),
             ),
             Button(
@@ -134,7 +140,7 @@ class _LoginState extends State<Login> {
                 },
                 title: 'Login'),
             SizedBox(
-              height: 10,
+              height: 20,
             ),
             TextButton(
                 onPressed: () {
@@ -142,7 +148,10 @@ class _LoginState extends State<Login> {
                 },
                 child: Text(
                   'สมัครบัญชีผู้ใช้',
-                  style: TextStyle(color: blackPrimaryFont),
+                  style: TextStyle(
+                      color: blackPrimaryFont,
+                      fontFamily: 'supermarket',
+                      fontSize: 18),
                 ))
           ],
         ),
