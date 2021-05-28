@@ -1,6 +1,8 @@
 import 'package:dekcare_frontend/Components/button.dart';
 import 'package:dekcare_frontend/Components/constants.dart';
 import 'package:dekcare_frontend/Screens/landing.dart';
+import 'package:dekcare_frontend/provider/authenticateProvider.dart';
+import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
@@ -10,6 +12,18 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  void login() async {
+    try {
+      print(emailController.text);
+      print(passwordController.text);
+      await Provider.of<AuthenticateProvider>(context, listen: false)
+          .login(emailController.text, passwordController.text);
+      print('complete');
+    } catch (error) {
+      print(error);
+    }
+  }
+
   bool _passwordVisible = false;
 
   ScrollController _scrollController = ScrollController();
@@ -137,15 +151,16 @@ class _LoginState extends State<Login> {
             Button(
                 color: yellowPrimary,
                 onPress: () {
-                  setState(() {});
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return Landing();
-                      },
-                    ),
-                  );
+                  login();
+                  // setState(() {});
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) {
+                  //       return Landing();
+                  //     },
+                  //   ),
+                  // );
                 },
                 title: 'Login'),
             SizedBox(
