@@ -1,6 +1,6 @@
-import 'package:dekcare_frontend/Components/button.dart';
+import 'package:dekcare_frontend/components/button.dart';
 import 'package:flutter/material.dart';
-import 'package:dekcare_frontend/Components/constants.dart';
+import 'package:dekcare_frontend/components/constants.dart';
 
 class CardKid extends StatelessWidget {
   final press, text, title;

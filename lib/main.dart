@@ -1,6 +1,6 @@
-import 'package:dekcare_frontend/Screens/landing.dart';
-import 'package:dekcare_frontend/Screens/login.dart';
-import 'package:dekcare_frontend/Screens/splashScrees.dart';
+import 'package:dekcare_frontend/Screens/landingScreen.dart';
+import 'package:dekcare_frontend/Screens/loginScreen.dart';
+import 'package:dekcare_frontend/Screens/splashScreen.dart';
 import 'package:dekcare_frontend/provider/authenticateProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,14 +26,14 @@ class DekCare extends StatelessWidget {
           navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
           home: auth.isAuth
-              ? Landing()
+              ? LandingScreen()
               : FutureBuilder(
                   future: auth.tryAutoLogin(),
                   builder: (ctx, authResultSnapshot) =>
                       authResultSnapshot.connectionState ==
                               ConnectionState.waiting
                           ? SplashScreen()
-                          : Login(),
+                          : LoginScreen(),
                 ),
         ),
       ),

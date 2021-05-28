@@ -1,7 +1,7 @@
-import 'package:dekcare_frontend/Screens/Forum.dart';
-import 'package:dekcare_frontend/Screens/chat.dart';
-import 'package:dekcare_frontend/Screens/consult.dart';
-import 'package:dekcare_frontend/Screens/landing.dart';
+import 'package:dekcare_frontend/screens/forumScreen.dart';
+import 'package:dekcare_frontend/screens/chatScreen.dart';
+import 'package:dekcare_frontend/screens/consultScreen.dart';
+import 'package:dekcare_frontend/screens/landingScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:dekcare_frontend/Components/constants.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
@@ -34,6 +34,12 @@ class _State extends State<Nav> {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> pageRoutes = [
+      LandingScreen(),
+      ConsultScreen(),
+      ForumScreen(),
+      ChatScreen()
+    ];
     return Container(
       height: 60,
       child: PageView(controller: _pageController, children: [
@@ -41,42 +47,16 @@ class _State extends State<Nav> {
           selectedIndex: widget.currentIndex,
           showElevation: true,
           onItemSelected: (index) => setState(() {
-            if (index == 0 && widget.currentIndex != 0)
+            if (index != widget.currentIndex) {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return Landing();
+                    return pageRoutes[index];
                   },
                 ),
               );
-            if (index == 1 && widget.currentIndex != 1)
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return Consult();
-                  },
-                ),
-              );
-            if (index == 2 && widget.currentIndex != 2)
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return Forum();
-                  },
-                ),
-              );
-            if (index == 3 && widget.currentIndex != 3)
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return Chat();
-                  },
-                ),
-              );
+            }
 
             _currentIndex = index;
             _pageController.animateToPage(index,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dekcare_frontend/Components/constants.dart';
+import 'package:dekcare_frontend/components/constants.dart';
 
 class CardMoney extends StatelessWidget {
   final pressAddmoney, pressWithdraw, pressTransfer;

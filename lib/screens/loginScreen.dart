@@ -1,24 +1,20 @@
-import 'package:dekcare_frontend/Components/button.dart';
-import 'package:dekcare_frontend/Components/constants.dart';
-import 'package:dekcare_frontend/Screens/landing.dart';
+import 'package:dekcare_frontend/components/button.dart';
+import 'package:dekcare_frontend/components/constants.dart';
 import 'package:dekcare_frontend/provider/authenticateProvider.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
-class Login extends StatefulWidget {
+class LoginScreen extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginState extends State<LoginScreen> {
   void login() async {
     try {
-      print(emailController.text);
-      print(passwordController.text);
       await Provider.of<AuthenticateProvider>(context, listen: false)
           .login(emailController.text, passwordController.text);
-      print('complete');
     } catch (error) {
       print(error);
     }
@@ -52,7 +48,6 @@ class _LoginState extends State<Login> {
               'Welcome to DekCare',
               style: TextStyle(
                   // color: kPrimaryFont,
-
                   fontSize: 30,
                   fontFamily: 'supermarket'),
             ),

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 // import 'package:dekcare_frontend/Screens/Forum.dart';
 // import 'package:dekcare_frontend/Screens/chat.dart';
 // import 'package:dekcare_frontend/Screens/consult.dart';
-import 'package:dekcare_frontend/Screens/landing.dart';
-import 'package:dekcare_frontend/Components/constants.dart';
+import 'package:dekcare_frontend/Screens/landingScreen.dart';
+import 'package:dekcare_frontend/components/constants.dart';
 
 class TopBar extends StatelessWidget
 // implements PreferredSizeWidget
@@ -32,7 +32,7 @@ class TopBar extends StatelessWidget
         onPressed: () {
           if (enableBackButton == true) {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return Landing();
+              return LandingScreen();
             }));
           }
         },
