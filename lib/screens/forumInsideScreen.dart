@@ -156,6 +156,32 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
                           userName: forum[0].userName,
                           date: forum[0].date,
                         ),
+                        Row(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(15),
+                              width: width * 0.425,
+                              child: Divider(
+                                height: 5,
+                                thickness: 2,
+                                indent: 10,
+                                endIndent: 10,
+                              ),
+                            ),
+                            Text('ความคิดเห็น',
+                                style: TextStyle(color: Colors.grey)),
+                            Container(
+                              padding: EdgeInsets.all(15),
+                              width: width * 0.425,
+                              child: Divider(
+                                height: 5,
+                                thickness: 2,
+                                indent: 10,
+                                endIndent: 10,
+                              ),
+                            ),
+                          ],
+                        ),
                         ListView.builder(
                           physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
@@ -168,6 +194,45 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
                             userName: comment[index].userName,
                           ),
                         ),
+                        Row(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(15),
+                              width: width * 0.425,
+                              child: Divider(
+                                height: 5,
+                                thickness: 2,
+                                indent: 10,
+                                endIndent: 10,
+                              ),
+                            ),
+                            Text('ความคิดเห็น',
+                                style: TextStyle(color: Colors.grey)),
+                            Container(
+                              padding: EdgeInsets.all(15),
+                              width: width * 0.425,
+                              child: Divider(
+                                height: 5,
+                                thickness: 2,
+                                indent: 10,
+                                endIndent: 10,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(10),
+                          child: ChatInput(
+                            hasShadow: true,
+                            widthh: width * 0.95,
+                            heightt: height * 0.1,
+                            color: Colors.white,
+                            title: 'แสดงความคิดเห็น',
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        )
                       ]),
                     ),
                   ),

@@ -2,12 +2,15 @@ import 'package:dekcare_frontend/Components/constants.dart';
 import 'package:flutter/material.dart';
 
 class ChatInput extends StatefulWidget {
-  final title, controller;
+  final title, controller, hasShadow;
+  final Color color;
   final double widthh;
   final double heightt;
 
   ChatInput(
       {this.title,
+      this.hasShadow,
+      required this.color,
       this.controller,
       required this.widthh,
       required this.heightt});
@@ -25,9 +28,23 @@ class _ChatInputState extends State<ChatInput> {
             width: widget.widthh,
             height: widget.heightt,
             decoration: BoxDecoration(
-              color: greySecondary,
-              borderRadius: BorderRadius.circular(10),
-            ),
+                color: widget.color,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  widget.hasShadow
+                      ? BoxShadow(
+                          color: Colors.grey,
+                          spreadRadius: 1,
+                          blurRadius: 2,
+                          offset: Offset(0, 2),
+                        )
+                      : BoxShadow(
+                          color: Colors.grey,
+                          spreadRadius: 0,
+                          blurRadius: 0,
+                          offset: Offset(0, 0),
+                        )
+                ]),
             child: TextField(
               keyboardType: TextInputType.emailAddress,
               controller: widget.controller,
@@ -35,14 +52,16 @@ class _ChatInputState extends State<ChatInput> {
                   hintText: widget.title,
                   hintStyle: TextStyle(fontFamily: 'supermarket', fontSize: 18),
                   suffixIcon: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        print('send');
+                      },
                       child: Icon(
                         Icons.send,
                         color: Colors.black54,
                       ),
                       style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all(greySecondary),
+                              MaterialStateProperty.all(widget.color),
                           shadowColor: MaterialStateProperty.all<Color>(
                             Colors.transparent,
                           ))),
