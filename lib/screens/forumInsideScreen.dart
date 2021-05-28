@@ -2,15 +2,14 @@ import 'package:dekcare_frontend/components/cardForum.dart';
 import 'package:dekcare_frontend/components/navBar/nav.dart';
 import 'package:dekcare_frontend/Components/TopBar.dart';
 import 'package:dekcare_frontend/Components/searchBar.dart';
-import 'package:dekcare_frontend/screens/forumInsideScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:dekcare_frontend/Components/constants.dart';
 import 'dart:async';
 import 'dart:math';
 
-class ForumScreen extends StatefulWidget {
+class ForumInsideScreen extends StatefulWidget {
   @override
-  _ForumState createState() => _ForumState();
+  _ForumInsideScreenState createState() => _ForumInsideScreenState();
 }
 
 class Forum {
@@ -34,7 +33,7 @@ class Forum {
       this.img});
 }
 
-class _ForumState extends State<ForumScreen> {
+class _ForumInsideScreenState extends State<ForumInsideScreen> {
   List<Forum> forum = [
     Forum(
         id: '01',
@@ -106,39 +105,15 @@ class _ForumState extends State<ForumScreen> {
       home: Scaffold(
         backgroundColor: greySecondary,
         appBar: PreferredSize(
-            child: TopBar(titleText: 'กระทู้ถาม/ตอบ', enableBackButton: false),
+            child: TopBar(titleText: 'กระทู้ถาม/ตอบ', enableBackButton: true),
             preferredSize: Size.fromHeight(height * 0.075)),
-        bottomNavigationBar: Nav(
-          currentIndex: 2,
-        ),
         body: Container(
           height: height,
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Row(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.only(top: 20, bottom: 20, left: 10),
-                      width: width * 0.9,
-                      child: searchBar(title: 'ค้นหาชื่อคุณหมอที่นี่'),
-                    ),
-                    Container(
-                      width: width * 0.1,
-                      child: TextButton(
-                        onPressed: () {
-                          print('navigate');
-                        },
-                        child: Icon(
-                          Icons.add_comment,
-                          color: yellowPrimary,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
                 Container(
-                  height: height * 0.7,
+                  height: height * 0.9,
                   child: RefreshIndicator(
                     key: refreshKey,
                     onRefresh: refreshList,
@@ -151,17 +126,7 @@ class _ForumState extends State<ForumScreen> {
                           itemCount: forum.length,
                           itemBuilder: (context, index) => CardForum(
                             title: forum[index].topic,
-                            press: () {
-                              print('navigate');
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return ForumInsideScreen();
-                                  },
-                                ),
-                              );
-                            },
+                            press: () {},
                             text: forum[index].body,
                             userName: forum[index].userName,
                             comment: forum[index].comment,
