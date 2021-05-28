@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:dekcare_frontend/components/constants.dart';
 
 class CardForum extends StatelessWidget {
-  final press, text, title;
+  final press, text, title, userName, comment;
 
-  const CardForum({this.press, this.text, this.title});
+  const CardForum(
+      {this.press, this.text, this.title, this.userName, this.comment});
 
   @override
   Widget build(BuildContext context) {
@@ -53,10 +54,66 @@ class CardForum extends StatelessWidget {
                           height: 1.3,
                           fontSize: 20,
                           fontFamily: 'supermarket',
-                          color: blackPrimaryFont,
+                          color: blackSecondaryFont,
                           fontStyle: FontStyle.normal),
                     ),
                   ),
+                  Container(
+                    width: width * 0.9,
+                    child: Divider(
+                      height: 5,
+                      thickness: 2,
+                      indent: 10,
+                      endIndent: 10,
+                    ),
+                  ),
+                  Container(
+                      height: height * 0.07,
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.only(left: 15),
+                            child: CircleAvatar(
+                              backgroundColor: greyPrimary,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            userName,
+                            style: TextStyle(
+                                height: 1.3,
+                                fontSize: 20,
+                                fontFamily: 'supermarket',
+                                color: blackPrimaryFont,
+                                fontStyle: FontStyle.normal),
+                          ),
+                          Container(
+                            width: width * 0.52,
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Icon(
+                                    Icons.mode_comment_outlined,
+                                    color: yellowPrimary,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    comment + " comments",
+                                    style: TextStyle(
+                                        height: 1.3,
+                                        fontSize: 20,
+                                        fontFamily: 'supermarket',
+                                        color: yellowPrimary,
+                                        fontStyle: FontStyle.normal),
+                                  ),
+                                ]),
+                          )
+                        ],
+                      ))
                 ],
               )),
         ),
