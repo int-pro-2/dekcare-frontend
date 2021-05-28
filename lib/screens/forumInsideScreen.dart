@@ -3,6 +3,7 @@ import 'package:dekcare_frontend/components/chatInput.dart';
 import 'package:dekcare_frontend/components/navBar/nav.dart';
 import 'package:dekcare_frontend/Components/TopBar.dart';
 import 'package:dekcare_frontend/Components/searchBar.dart';
+import 'package:dekcare_frontend/screens/forumScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:dekcare_frontend/Components/constants.dart';
 import 'dart:async';
@@ -114,7 +115,24 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
       home: Scaffold(
         backgroundColor: greySecondary,
         appBar: PreferredSize(
-            child: TopBar(titleText: 'กระทู้ถาม/ตอบ', enableBackButton: true),
+            child: AppBar(
+              centerTitle: true,
+              title: Text(
+                'กระทู้ถาม/ตอบ',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+              ),
+              backgroundColor: yellowPrimary,
+              shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.vertical(bottom: Radius.circular(30)),
+              ),
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ),
             preferredSize: Size.fromHeight(height * 0.075)),
         body: Container(
           height: height,
