@@ -126,6 +126,7 @@ class CardForum extends StatelessWidget {
                                               MainAxisAlignment.end,
                                           children: [
                                             ChatInput(
+                                              isCreate: false,
                                               hasShadow: false,
                                               color: greySecondary,
                                               title: 'แสดงความคิดเห็น',

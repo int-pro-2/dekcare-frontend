@@ -2,6 +2,7 @@ import 'package:dekcare_frontend/components/cardForum.dart';
 import 'package:dekcare_frontend/components/navBar/nav.dart';
 import 'package:dekcare_frontend/Components/TopBar.dart';
 import 'package:dekcare_frontend/Components/searchBar.dart';
+import 'package:dekcare_frontend/screens/createForum.dart';
 import 'package:dekcare_frontend/screens/forumInsideScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:dekcare_frontend/Components/constants.dart';
@@ -127,7 +128,14 @@ class _ForumState extends State<ForumScreen> {
                       width: width * 0.1,
                       child: TextButton(
                         onPressed: () {
-                          print('navigate');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return CreaetForumScreen();
+                              },
+                            ),
+                          );
                         },
                         child: Icon(
                           Icons.add_comment,

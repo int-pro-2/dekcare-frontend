@@ -223,11 +223,12 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
                         Container(
                           padding: EdgeInsets.all(10),
                           child: ChatInput(
+                            isCreate: false,
                             hasShadow: true,
                             widthh: width * 0.95,
                             heightt: height * 0.1,
                             color: Colors.white,
-                            title: 'แสดงความคิดเห็น',
+                            title: 'แสดงความคิดเห็น....',
                           ),
                         ),
                         SizedBox(
