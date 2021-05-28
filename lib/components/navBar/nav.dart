@@ -42,7 +42,7 @@ class _State extends State<Nav> {
       ChatScreen()
     ];
     return Container(
-      height: height * 0.1,
+      height: height * 0.075,
       child: PageView(controller: _pageController, children: [
         BottomNavyBar(
           selectedIndex: widget.currentIndex,

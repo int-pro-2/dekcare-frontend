@@ -150,6 +150,7 @@ class _ForumState extends State<ForumScreen> {
                           shrinkWrap: true,
                           itemCount: forum.length,
                           itemBuilder: (context, index) => CardForum(
+                            isComment: false,
                             title: forum[index].topic,
                             press: () {
                               print('navigate');
@@ -162,6 +163,7 @@ class _ForumState extends State<ForumScreen> {
                                 ),
                               );
                             },
+                            isInside: false,
                             text: forum[index].body,
                             userName: forum[index].userName,
                             comment: forum[index].comment,

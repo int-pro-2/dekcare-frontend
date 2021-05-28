@@ -1,4 +1,5 @@
 import 'package:dekcare_frontend/components/cardForum.dart';
+import 'package:dekcare_frontend/components/chatInput.dart';
 import 'package:dekcare_frontend/components/navBar/nav.dart';
 import 'package:dekcare_frontend/Components/TopBar.dart';
 import 'package:dekcare_frontend/Components/searchBar.dart';
@@ -33,6 +34,25 @@ class Forum {
       this.img});
 }
 
+class Comment {
+  final id;
+  final userID;
+  final userName;
+  final commentID;
+  final text;
+  final date;
+  final img;
+
+  Comment(
+      {this.id,
+      this.userID,
+      this.userName,
+      this.commentID,
+      this.text,
+      this.date,
+      this.img});
+}
+
 class _ForumInsideScreenState extends State<ForumInsideScreen> {
   List<Forum> forum = [
     Forum(
@@ -45,35 +65,24 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
         topic: 'ปรึกษาเรื่องลูกหน่อยค่ะ เครียดมาก...??',
         comment: '4',
         img: 'null'),
-    Forum(
+  ];
+  List<Comment> comment = [
+    Comment(
+        id: '01',
+        userID: '8b36a2e7-a990',
+        userName: 'บอยไง',
+        commentID: '01',
+        text:
+            "เรามีเวลาเอาใจใส่เขาก่อนหน้านี้ มากพอไหม เขาขาดอะไรจากคนรอบข้างบ้างหรือเปล่า บางทีเราปล่อยเขามานานไม่ค่อยได้บอกกล่าวซึ่งมาถึงจุดนี้จะเปลี่ยนแปลงก็ต้องใช้เวลาบ้าง  บอกกล่าวกันด้วยเหตุผล ผลเสียต่างๆที่จะตามมา การใช้อารมณ์น่าจะทำให้สิ่งต่างๆยิ่งแย่ลงนะ ใจเย็นๆ บางทีก็ต้องคิดดูอีกทีว่าตัวเราหรือเปล่าที่ทำให้เขาเป็นแบบนี้ หรือเพราะตัวเขาเอง",
+        date: '2021-05-28',
+        img: 'null'),
+    Comment(
         id: '02',
-        ownwerID: '8b36a2e7-a990',
-        userName: 'กาต๊าก กะตัก',
-        body:
-            "ตอนนี้ลูกสาวอายุ 15 ค่ะ เป็นเด็กคิดเยอะ (คิดร้ายกับผู้อื่น คิดว่าผู้อื่นคิดร้ายกับตัว) ชอบเพ้อฝันค่ะ กลัวอายเพื่อน กลัวมีไม่เท่าเทียมกับเพื่อน เป็นเด็กอวดเก่งอวดดี แต่ทำในสิ่งที่ตัวเองอวดไม่ได้เลย จ้องจะมีปัญหากับคนอื่นเสมอ",
+        userID: '8b36a2e7-a990',
+        userName: 'เต้ยเอง',
+        commentID: '02',
+        text: "เห็นด้วยกับความคิดเห็นแรกค่ะ",
         date: '2021-05-28',
-        topic: 'ปรึกษาเรื่องลูกหน่อยค่ะ เครียดมาก...??',
-        comment: '4',
-        img: 'null'),
-    Forum(
-        id: '03',
-        ownwerID: '8b36a2e7-a990',
-        userName: 'กาต๊าก กะตัก',
-        body:
-            "ตอนนี้ลูกสาวอายุ 15 ค่ะ เป็นเด็กคิดเยอะ (คิดร้ายกับผู้อื่น คิดว่าผู้อื่นคิดร้ายกับตัว) ชอบเพ้อฝันค่ะ กลัวอายเพื่อน กลัวมีไม่เท่าเทียมกับเพื่อน เป็นเด็กอวดเก่งอวดดี แต่ทำในสิ่งที่ตัวเองอวดไม่ได้เลย จ้องจะมีปัญหากับคนอื่นเสมอ",
-        date: '2021-05-28',
-        topic: 'ปรึกษาเรื่องลูกหน่อยค่ะ เครียดมาก...??',
-        comment: '4',
-        img: 'null'),
-    Forum(
-        id: '04',
-        ownwerID: '8b36a2e7-a990',
-        userName: 'กาต๊าก กะตัก',
-        body:
-            "ตอนนี้ลูกสาวอายุ 15 ค่ะ เป็นเด็กคิดเยอะ (คิดร้ายกับผู้อื่น คิดว่าผู้อื่นคิดร้ายกับตัว) ชอบเพ้อฝันค่ะ กลัวอายเพื่อน กลัวมีไม่เท่าเทียมกับเพื่อน เป็นเด็กอวดเก่งอวดดี แต่ทำในสิ่งที่ตัวเองอวดไม่ได้เลย จ้องจะมีปัญหากับคนอื่นเสมอ",
-        date: '2021-05-28',
-        topic: 'ปรึกษาเรื่องลูกหน่อยค่ะ เครียดมาก...??',
-        comment: '4',
         img: 'null'),
   ];
 
@@ -120,16 +129,25 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
                     child: SingleChildScrollView(
                       physics: ScrollPhysics(),
                       child: Column(children: [
+                        CardForum(
+                          isInside: true,
+                          isComment: false,
+                          title: forum[0].topic,
+                          press: () {},
+                          text: forum[0].body,
+                          userName: forum[0].userName,
+                          date: forum[0].date,
+                        ),
                         ListView.builder(
                           physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          itemCount: forum.length,
+                          itemCount: comment.length,
                           itemBuilder: (context, index) => CardForum(
-                            title: forum[index].topic,
-                            press: () {},
-                            text: forum[index].body,
-                            userName: forum[index].userName,
-                            comment: forum[index].comment,
+                            commentID: (index + 1).toString(),
+                            isComment: true,
+                            isInside: true,
+                            text: comment[index].text,
+                            userName: comment[index].userName,
                           ),
                         ),
                       ]),

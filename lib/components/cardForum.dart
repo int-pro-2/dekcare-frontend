@@ -1,12 +1,29 @@
 import 'package:dekcare_frontend/components/button.dart';
+import 'package:dekcare_frontend/components/chatInput.dart';
 import 'package:flutter/material.dart';
 import 'package:dekcare_frontend/components/constants.dart';
 
 class CardForum extends StatelessWidget {
-  final press, text, title, userName, comment;
+  final press,
+      text,
+      title,
+      userName,
+      comment,
+      isInside,
+      date,
+      commentID,
+      isComment;
 
   const CardForum(
-      {this.press, this.text, this.title, this.userName, this.comment});
+      {this.press,
+      this.isComment,
+      this.commentID,
+      this.text,
+      this.title,
+      this.userName,
+      this.comment,
+      this.isInside,
+      this.date});
 
   @override
   Widget build(BuildContext context) {
@@ -33,18 +50,29 @@ class CardForum extends StatelessWidget {
               child: Column(
                 children: [
                   SizedBox(height: height * 0.02),
-                  Container(
-                    padding: EdgeInsets.only(left: 20, top: 10),
-                    alignment: Alignment.bottomLeft,
-                    child: Text(
-                      title,
-                      style: TextStyle(
-                          fontSize: 23,
-                          fontFamily: 'supermarket',
-                          color: blackPrimaryFont,
-                          fontStyle: FontStyle.normal),
-                    ),
-                  ),
+                  isComment
+                      ? Container(
+                          padding: EdgeInsets.only(left: 20, top: 10),
+                          alignment: Alignment.bottomLeft,
+                          child: Text(
+                            ('ความคิดเห็นที่ ' + commentID),
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: 'supermarket',
+                                color: blackPrimaryFont,
+                                fontStyle: FontStyle.normal),
+                          ))
+                      : Container(
+                          padding: EdgeInsets.only(left: 20, top: 10),
+                          alignment: Alignment.bottomLeft,
+                          child: Text(
+                            title,
+                            style: TextStyle(
+                                fontSize: 23,
+                                fontFamily: 'supermarket',
+                                color: blackPrimaryFont,
+                                fontStyle: FontStyle.normal),
+                          )),
                   Container(
                     padding: EdgeInsets.all(20),
                     alignment: Alignment.bottomLeft,
@@ -89,29 +117,61 @@ class CardForum extends StatelessWidget {
                                 color: blackPrimaryFont,
                                 fontStyle: FontStyle.normal),
                           ),
-                          Container(
-                            width: width * 0.52,
-                            child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Icon(
-                                    Icons.mode_comment_outlined,
-                                    color: yellowPrimary,
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    comment + " comments",
-                                    style: TextStyle(
-                                        height: 1.3,
-                                        fontSize: 20,
-                                        fontFamily: 'supermarket',
-                                        color: yellowPrimary,
-                                        fontStyle: FontStyle.normal),
-                                  ),
-                                ]),
-                          ),
+                          isInside
+                              ? isComment
+                                  ? Container(
+                                      width: width * 0.6,
+                                      child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            ChatInput(
+                                              title: 'แสดงความคิดเห็น',
+                                              widthh: width * 0.55,
+                                              heightt: 40,
+                                            )
+                                          ]),
+                                    )
+                                  : Container(
+                                      width: width * 0.52,
+                                      child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Text(
+                                              date,
+                                              style: TextStyle(
+                                                  height: 1.3,
+                                                  fontSize: 20,
+                                                  fontFamily: 'supermarket',
+                                                  color: blackPrimaryFont,
+                                                  fontStyle: FontStyle.normal),
+                                            ),
+                                          ]),
+                                    )
+                              : Container(
+                                  width: width * 0.52,
+                                  child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Icon(
+                                          Icons.mode_comment_outlined,
+                                          color: yellowPrimary,
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          comment + " comments",
+                                          style: TextStyle(
+                                              height: 1.3,
+                                              fontSize: 20,
+                                              fontFamily: 'supermarket',
+                                              color: yellowPrimary,
+                                              fontStyle: FontStyle.normal),
+                                        ),
+                                      ]),
+                                ),
                           SizedBox(
                             width: 10,
                           ),
