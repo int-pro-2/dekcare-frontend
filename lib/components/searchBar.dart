@@ -13,11 +13,11 @@ class searchBar extends StatefulWidget {
 class _searchBarState extends State<searchBar> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.all(20.0),
+    return Container(
+        // padding: const EdgeInsets.only(top: ),
         child: Container(
             width: MediaQuery.of(context).size.width * 0.90,
-            height: MediaQuery.of(context).size.height * 0.045,
+            height: MediaQuery.of(context).size.height * 0.06,
             child: TextFormField(
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
