@@ -1,28 +1,29 @@
-import 'package:dekcare_frontend/Components/navBar/nav.dart';
-import 'package:dekcare_frontend/Components/constants.dart';
-import 'package:dekcare_frontend/Components/CardBalance.dart';
-import 'package:dekcare_frontend/Components/Card.dart';
-import 'package:dekcare_frontend/Screens/setting.dart';
+import 'package:dekcare_frontend/components/navBar/nav.dart';
+import 'package:dekcare_frontend/components/constants.dart';
+import 'package:dekcare_frontend/components/cardBalance.dart';
+import 'package:dekcare_frontend/components/card.dart';
+import 'package:dekcare_frontend/screens/settingScreen.dart';
 
 import 'package:flutter/material.dart';
 
-class Landing extends StatefulWidget {
+class LandingScreen extends StatefulWidget {
   @override
   _LandingState createState() => _LandingState();
 }
 
-class _LandingState extends State<Landing> {
+class _LandingState extends State<LandingScreen> {
   @override
   Widget build(BuildContext context) {
     @override
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-        backgroundColor: greySecondary,
-        bottomNavigationBar: Nav(
-          currentIndex: 0,
-        ),
-        body: Stack(children: <Widget>[
+      backgroundColor: greySecondary,
+      bottomNavigationBar: Nav(
+        currentIndex: 0,
+      ),
+      body: Stack(
+        children: <Widget>[
           Positioned(
               height: height * 0.35,
               child: SizedBox(
@@ -59,7 +60,7 @@ class _LandingState extends State<Landing> {
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return Setting();
+                              return SettingScreen();
                             },
                           ),
                         );
@@ -181,6 +182,8 @@ class _LandingState extends State<Landing> {
               ]),
             ),
           ),
-        ]));
+        ],
+      ),
+    );
   }
 }
