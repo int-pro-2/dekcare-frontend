@@ -6,8 +6,25 @@ import '../config/string.dart';
 import '../config/api.dart';
 import '../model/httpException.dart';
 
+class User {
+  String firstname;
+  String lastname;
+  String picture;
+  DateTime birthdate;
+  int money;
+
+  User({
+    required this.firstname,
+    required this.lastname,
+    required this.picture,
+    required this.birthdate,
+    required this.money,
+  });
+}
+
 class AuthenticateProvider with ChangeNotifier {
   String _token = "";
+  User? _user = null;
 
   AuthenticateProvider();
   bool get isAuth {
@@ -27,11 +44,6 @@ class AuthenticateProvider with ChangeNotifier {
       _token = token;
       prefs.setString('userToken', _token);
 
-      final temp = await Dio().get(apiEndpoint + '/auth/profile',
-          options: Options(headers: {"cookie": 'jwt=' + token + ';'}));
-      print('temp is');
-      print(temp.data);
-
       notifyListeners();
     } catch (error) {
       print(error);
@@ -44,6 +56,7 @@ class AuthenticateProvider with ChangeNotifier {
       final response = await Dio()
           .post('/auth/regis', data: {"email": email, "password": password});
       final token = response.data["token"];
+      _token = token;
       notifyListeners();
       prefs.setString('userToken', _token);
     } catch (error) {
@@ -53,20 +66,14 @@ class AuthenticateProvider with ChangeNotifier {
   }
 
   Future<void> tryAutoLogin() async {
-    print('Start to try auto login');
     final prefs = await SharedPreferences.getInstance();
-    if (!prefs.containsKey('userToken')) {
-      print('no pref');
-      return;
-    }
+    if (!prefs.containsKey('userToken')) return;
 
     String token = prefs.getString('userToken').toString();
-    print('token is' + token);
     _token = token;
     try {
       final response = await Dio().get(apiEndpoint + '/auth/profile',
           options: Options(headers: {"cookie": 'jwt=' + token + ';'}));
-      print(response.data);
       notifyListeners();
     } catch (error) {
       prefs.clear();
