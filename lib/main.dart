@@ -23,7 +23,7 @@ class DekCare extends StatelessWidget {
       child: Consumer<AuthenticateProvider>(
         builder: (ctx, auth, child) => MaterialApp(
           title: 'DekCare',
-          navigatorKey: navigatorKey,
+          // navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
           home: auth.isAuth
               ? LandingScreen()
