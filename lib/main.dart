@@ -14,8 +14,7 @@ void main() {
 }
 
 class DekCare extends StatelessWidget {
-  Widget build(BuildContext) {
-    final navigatorKey = GlobalKey<NavigatorState>();
+  Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (ctx) => AuthenticateProvider())
@@ -23,7 +22,6 @@ class DekCare extends StatelessWidget {
       child: Consumer<AuthenticateProvider>(
         builder: (ctx, auth, child) => MaterialApp(
           title: 'DekCare',
-          // navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
           home: auth.isAuth
               ? LandingScreen()
