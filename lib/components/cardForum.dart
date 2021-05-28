@@ -111,9 +111,15 @@ class CardForum extends StatelessWidget {
                                         fontStyle: FontStyle.normal),
                                   ),
                                 ]),
-                          )
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
                         ],
-                      ))
+                      )),
+                  SizedBox(
+                    width: 10,
+                  ),
                 ],
               )),
         ),
