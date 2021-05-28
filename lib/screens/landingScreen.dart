@@ -2,6 +2,7 @@ import 'package:dekcare_frontend/components/navBar/nav.dart';
 import 'package:dekcare_frontend/components/constants.dart';
 import 'package:dekcare_frontend/components/cardBalance.dart';
 import 'package:dekcare_frontend/components/card.dart';
+import 'package:dekcare_frontend/screens/poopInputScreen.dart';
 import 'package:dekcare_frontend/screens/settingScreen.dart';
 
 import 'package:flutter/material.dart';
@@ -167,7 +168,16 @@ class _LandingState extends State<LandingScreen> {
                     child: CardKid(
                       title: 'สุขภาพอุจจาระของลูก',
                       text: 'บันทึกข้อมูล',
-                      press: () {},
+                      press: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return PoopInputScreen();
+                            },
+                          ),
+                        );
+                      },
                     )),
                 SizedBox(
                   width: width * 0.02,

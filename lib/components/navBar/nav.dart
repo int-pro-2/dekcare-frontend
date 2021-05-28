@@ -34,6 +34,7 @@ class _State extends State<Nav> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     List<Widget> pageRoutes = [
       LandingScreen(),
       ConsultScreen(),
@@ -41,7 +42,7 @@ class _State extends State<Nav> {
       ChatScreen()
     ];
     return Container(
-      height: 60,
+      height: height * 0.1,
       child: PageView(controller: _pageController, children: [
         BottomNavyBar(
           selectedIndex: widget.currentIndex,
