@@ -11,7 +11,10 @@ class TopBar extends StatelessWidget
   final String titleText;
   final bool enableBackButton;
   // Size get preferredSize => const Size.fromHeight(80);
-  TopBar({required this.titleText, required this.enableBackButton});
+  TopBar({
+    required this.titleText,
+    required this.enableBackButton,
+  });
   @override
   Widget build(BuildContext context) {
     return AppBar(

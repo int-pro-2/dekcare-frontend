@@ -1,6 +1,7 @@
 import 'package:dekcare_frontend/Components/navBar/nav.dart';
 import 'package:dekcare_frontend/Components/constants.dart';
 import 'package:dekcare_frontend/Components/TopBar.dart';
+import 'package:dekcare_frontend/Components/searchBar.dart';
 import 'package:flutter/material.dart';
 
 class Chat extends StatefulWidget {
@@ -18,21 +19,22 @@ class _ChatState extends State<Chat> {
         theme: ThemeData(fontFamily: 'supermarket'),
         home: Scaffold(
             appBar: PreferredSize(
-                preferredSize: Size.fromHeight(height * 0.075),
-                child: TopBar(
-                  titleText: 'สนทนา',
-                  enableBackButton: true,
-                )),
+                child: TopBar(titleText: 'สนทนา', enableBackButton: true),
+                preferredSize: Size.fromHeight(height * 0.075)),
             bottomNavigationBar: Nav(
               currentIndex: 3,
             ),
-            body: Column(
-              children: [
-                SizedBox(
-                  height: 50,
+            backgroundColor: greySecondary,
+            body: SingleChildScrollView(
+              child: SafeArea(
+                child: Center(
+                  child: Column(
+                    children: [
+                      searchBar(title: 'ค้นหาชื่อเพื่อน'),
+                    ],
+                  ),
                 ),
-                Text('Chat')
-              ],
+              ),
             )));
   }
 }
