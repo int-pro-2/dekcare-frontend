@@ -1,4 +1,4 @@
-import 'package:dekcare_frontend/Components/constants.dart';
+import 'package:dekcare_frontend/components/constants.dart';
 import 'package:flutter/material.dart';
 
 class searchBar extends StatefulWidget {
@@ -26,7 +26,7 @@ class _searchBarState extends State<searchBar> {
               keyboardType: TextInputType.emailAddress,
               controller: widget.controller,
               decoration: InputDecoration(
-                  hintText: 'ค้นหากระทู้',
+                  hintText: widget.title,
                   hintStyle: TextStyle(fontFamily: 'supermarket', fontSize: 18),
                   icon: Icon(
                     Icons.search,

@@ -10,10 +10,12 @@ class TopBar extends StatelessWidget
 {
   final String titleText;
   final bool enableBackButton;
+  final BuildContext contextFromPage;
   // Size get preferredSize => const Size.fromHeight(80);
   TopBar({
     required this.titleText,
     required this.enableBackButton,
+    required this.contextFromPage,
   });
   @override
   Widget build(BuildContext context) {
@@ -31,9 +33,10 @@ class TopBar extends StatelessWidget
         icon: Icon(Icons.arrow_back),
         onPressed: () {
           if (enableBackButton == true) {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return LandingScreen();
-            }));
+            // Navigator.push(context, MaterialPageRoute(builder: (context) {
+            //   return LandingScreen();
+            // }));
+            Navigator.pop(contextFromPage);
           }
         },
         tooltip: 'Back',

@@ -1,11 +1,11 @@
 import 'package:dekcare_frontend/components/cardForum.dart';
 import 'package:dekcare_frontend/components/chatInput.dart';
 import 'package:dekcare_frontend/components/navBar/nav.dart';
-import 'package:dekcare_frontend/Components/TopBar.dart';
-import 'package:dekcare_frontend/Components/searchBar.dart';
+import 'package:dekcare_frontend/components/topBar.dart';
+import 'package:dekcare_frontend/components/searchBar.dart';
 import 'package:dekcare_frontend/screens/forumScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:dekcare_frontend/Components/constants.dart';
+import 'package:dekcare_frontend/components/constants.dart';
 import 'dart:async';
 import 'dart:math';
 
@@ -210,7 +210,6 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
                           shrinkWrap: true,
                           itemCount: comment.length,
                           itemBuilder: (context, index) => CardForum(
-                            
                             commentID: (index + 1).toString(),
                             isComment: true,
                             isInside: true,

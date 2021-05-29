@@ -1,4 +1,4 @@
-import 'package:dekcare_frontend/Components/constants.dart';
+import 'package:dekcare_frontend/components/constants.dart';
 import 'package:flutter/material.dart';
 
 class ChatInput extends StatefulWidget {

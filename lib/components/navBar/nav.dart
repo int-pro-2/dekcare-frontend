@@ -3,7 +3,7 @@ import 'package:dekcare_frontend/screens/chatScreen.dart';
 import 'package:dekcare_frontend/screens/consultScreen.dart';
 import 'package:dekcare_frontend/screens/landingScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:dekcare_frontend/Components/constants.dart';
+import 'package:dekcare_frontend/components/constants.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 
 class Nav extends StatefulWidget {

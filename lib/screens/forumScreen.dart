@@ -1,11 +1,11 @@
 import 'package:dekcare_frontend/components/cardForum.dart';
 import 'package:dekcare_frontend/components/navBar/nav.dart';
-import 'package:dekcare_frontend/Components/TopBar.dart';
-import 'package:dekcare_frontend/Components/searchBar.dart';
+import 'package:dekcare_frontend/components/topBar.dart';
+import 'package:dekcare_frontend/components/searchBar.dart';
 import 'package:dekcare_frontend/screens/createForum.dart';
 import 'package:dekcare_frontend/screens/forumInsideScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:dekcare_frontend/Components/constants.dart';
+import 'package:dekcare_frontend/components/constants.dart';
 import 'dart:async';
 import 'dart:math';
 import 'package:dekcare_frontend/provider/forumProvider.dart';
@@ -117,8 +117,11 @@ class _ForumState extends State<ForumScreen> {
         return Scaffold(
           backgroundColor: greySecondary,
           appBar: PreferredSize(
-              child:
-                  TopBar(titleText: 'กระทู้ถาม/ตอบ', enableBackButton: false),
+              child: TopBar(
+                titleText: 'กระทู้ถาม/ตอบ',
+                enableBackButton: false,
+                contextFromPage: context,
+              ),
               preferredSize: Size.fromHeight(height * 0.075)),
           bottomNavigationBar: Nav(
             currentIndex: 2,
