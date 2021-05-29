@@ -43,8 +43,8 @@ class CardMoney extends StatelessWidget {
               children: [
                 Center(
                   child: Container(
+                    padding: EdgeInsets.only(left: 20),
                     height: height * 0.07,
-                    width: width * 0.75,
                     child: Row(
                       children: [
                         Container(
@@ -56,17 +56,14 @@ class CardMoney extends StatelessWidget {
                           ),
                         ),
                         Container(
-                          width: width * 0.15,
-                          child: SizedBox(
-                            height: 10,
-                          ),
-                        ),
-                        Container(
-                          width: width * 0.2,
+                          width: width * 0.4,
                           child: Text(
                             '400 Baht',
+                            textAlign: TextAlign.right,
                             style: TextStyle(
-                                fontFamily: 'supermarket', fontSize: 20),
+                              fontFamily: 'supermarket',
+                              fontSize: 20,
+                            ),
                           ),
                         ),
                       ],

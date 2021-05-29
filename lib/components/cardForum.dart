@@ -12,7 +12,8 @@ class CardForum extends StatelessWidget {
       isInside,
       date,
       commentID,
-      isComment;
+      isComment,
+      url;
 
   const CardForum(
       {this.press,
@@ -23,7 +24,8 @@ class CardForum extends StatelessWidget {
       this.userName,
       this.comment,
       this.isInside,
-      this.date});
+      this.date,
+      this.url});
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +57,7 @@ class CardForum extends StatelessWidget {
                           padding: EdgeInsets.only(left: 20, top: 10),
                           alignment: Alignment.bottomLeft,
                           child: Text(
-                            ('ความคิดเห็นที่ ' + commentID),
+                            ('ความคิดเห็นที่ ' + (commentID).toString()),
                             style: TextStyle(
                                 fontSize: 20,
                                 fontFamily: 'supermarket',
@@ -102,7 +104,8 @@ class CardForum extends StatelessWidget {
                           Container(
                             padding: EdgeInsets.only(left: 15),
                             child: CircleAvatar(
-                              backgroundColor: greyPrimary,
+                              backgroundColor: Colors.grey,
+                              //  backgroundImage: NetworkImage(url),
                             ),
                           ),
                           SizedBox(
@@ -153,7 +156,7 @@ class CardForum extends StatelessWidget {
                                           ]),
                                     )
                               : Container(
-                                  width: width * 0.52,
+                                  width: width * 0.45,
                                   child: Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
@@ -165,7 +168,7 @@ class CardForum extends StatelessWidget {
                                           width: 10,
                                         ),
                                         Text(
-                                          comment + " comments",
+                                          comment.toString() + " comments",
                                           style: TextStyle(
                                               height: 1.3,
                                               fontSize: 20,

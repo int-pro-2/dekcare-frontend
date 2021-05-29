@@ -1,8 +1,8 @@
-import 'package:dekcare_frontend/Components/Toggle.dart';
-import 'package:dekcare_frontend/Components/constants.dart';
-import 'package:dekcare_frontend/Components/navBar/nav.dart';
-import 'package:dekcare_frontend/Components/topBar.dart';
-import 'package:dekcare_frontend/Components/searchBar.dart';
+import 'package:dekcare_frontend/components/Toggle.dart';
+import 'package:dekcare_frontend/components/constants.dart';
+import 'package:dekcare_frontend/components/navBar/nav.dart';
+import 'package:dekcare_frontend/components/topBar.dart';
+import 'package:dekcare_frontend/components/searchBar.dart';
 import 'package:flutter/material.dart';
 
 class ConsultScreen extends StatefulWidget {
