@@ -1,7 +1,7 @@
 import 'package:dekcare_frontend/Components/Toggle.dart';
 import 'package:dekcare_frontend/Components/constants.dart';
 import 'package:dekcare_frontend/Components/navBar/nav.dart';
-import 'package:dekcare_frontend/Components/TopBar.dart';
+import 'package:dekcare_frontend/Components/topBar.dart';
 import 'package:dekcare_frontend/Components/searchBar.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +21,10 @@ class _ConsultState extends State<ConsultScreen> {
         home: Scaffold(
           appBar: PreferredSize(
             child: TopBar(
-                titleText: 'ปรึกษาลูกน้อยกับหมอ', enableBackButton: true),
+              titleText: 'ปรึกษาลูกน้อยกับหมอ',
+              enableBackButton: true,
+              contextFromPage: context,
+            ),
             preferredSize: Size.fromHeight((height * 0.075)),
           ),
           bottomNavigationBar: Nav(

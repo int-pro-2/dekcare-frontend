@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 class Toggle extends StatefulWidget {
   final String button1Title;
   final String button2Title;
-
-  List<bool> _selections = [true, false];
+  bool status1 = true;
+  bool status2 = false;
 
   Toggle({required this.button1Title, required this.button2Title});
 
@@ -20,39 +20,81 @@ class _ToggleState extends State<Toggle> {
     double height = MediaQuery.of(context).size.height;
 
     return Padding(
-      padding: const EdgeInsets.only(top: 20.0),
+      padding: const EdgeInsets.symmetric(vertical: 20.0),
       child: Container(
-        width: width * 0.91,
-        height: height * 0.035,
-        child: ToggleButtons(
-          children: <Widget>[
-            Container(
-              width: width * 0.45,
-              alignment: Alignment.center,
-              child: Text(widget.button1Title),
-            ),
-            Container(
-              width: width * 0.45,
-              alignment: Alignment.center,
-              child: Text(widget.button2Title),
-            )
-          ],
-          isSelected: widget._selections,
-          color: yellowPrimary,
-          selectedColor: whitePrimary,
-          fillColor: yellowPrimary,
-          splashColor: yellowPrimary,
-          onPressed: (int index) {
-            if (widget._selections[0] != widget._selections[1]) {
-              setState(() {
-                widget._selections[index] = !widget._selections[index];
-                widget._selections[(index + 1) % 2] =
-                    !widget._selections[(index + 1) % 2];
-              });
-            }
-          },
-        ),
-      ),
+          width: width * 0.91,
+          height: height * 0.045,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Container(
+                width: width * 0.35,
+                child: ElevatedButton(
+                  child: Text(
+                    widget.button1Title,
+                    style: TextStyle(color: yellowPrimary, fontSize: 18),
+                  ),
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            side: BorderSide(color: yellowPrimary, width: 2))),
+                    backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                      (Set<MaterialState> states) {
+                        if (states.contains(MaterialState.pressed) ||
+                            widget.status1 == true) return yellowPrimary;
+                        return widget.status1 == true
+                            ? yellowPrimary
+                            : Colors
+                                .transparent; // Use the component's default.
+                      },
+                    ),
+                    shadowColor: MaterialStateProperty.resolveWith<Color>(
+                      (Set<MaterialState> states) {
+                        return Colors
+                            .transparent; // Use the component's default.
+                      },
+                    ),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      widget.status1 = !widget.status1;
+                    });
+                  },
+                ),
+              ),
+              Container(
+                width: width * 0.35,
+                child: ElevatedButton(
+                  child: Text(
+                    widget.button2Title,
+                    style: TextStyle(color: yellowPrimary, fontSize: 18),
+                  ),
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            side: BorderSide(color: yellowPrimary, width: 2))),
+                    backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                      (Set<MaterialState> states) {
+                        if (states.contains(MaterialState.pressed))
+                          return yellowPrimary;
+                        return Colors
+                            .transparent; // Use the component's default.
+                      },
+                    ),
+                    shadowColor: MaterialStateProperty.resolveWith<Color>(
+                      (Set<MaterialState> states) {
+                        return Colors
+                            .transparent; // Use the component's default.
+                      },
+                    ),
+                  ),
+                  onPressed: () {},
+                ),
+              ),
+            ],
+          )),
     );
   }
 }

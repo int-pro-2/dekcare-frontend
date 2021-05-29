@@ -1,7 +1,7 @@
 import 'package:dekcare_frontend/components/cardForum.dart';
 import 'package:dekcare_frontend/components/chatInput.dart';
 import 'package:dekcare_frontend/components/navBar/nav.dart';
-import 'package:dekcare_frontend/Components/TopBar.dart';
+import 'package:dekcare_frontend/Components/topBar.dart';
 import 'package:dekcare_frontend/Components/searchBar.dart';
 import 'package:dekcare_frontend/screens/forumScreen.dart';
 import 'package:flutter/material.dart';
