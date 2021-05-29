@@ -210,6 +210,7 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
                           shrinkWrap: true,
                           itemCount: comment.length,
                           itemBuilder: (context, index) => CardForum(
+                            
                             commentID: (index + 1).toString(),
                             isComment: true,
                             isInside: true,

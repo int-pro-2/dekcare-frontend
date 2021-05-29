@@ -12,7 +12,8 @@ class CardForum extends StatelessWidget {
       isInside,
       date,
       commentID,
-      isComment;
+      isComment,
+      url;
 
   const CardForum(
       {this.press,
@@ -23,7 +24,8 @@ class CardForum extends StatelessWidget {
       this.userName,
       this.comment,
       this.isInside,
-      this.date});
+      this.date,
+      this.url});
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +104,8 @@ class CardForum extends StatelessWidget {
                           Container(
                             padding: EdgeInsets.only(left: 15),
                             child: CircleAvatar(
-                              backgroundColor: greyPrimary,
+                              backgroundColor: Colors.grey,
+                              //  backgroundImage: NetworkImage(url),
                             ),
                           ),
                           SizedBox(
@@ -153,7 +156,7 @@ class CardForum extends StatelessWidget {
                                           ]),
                                     )
                               : Container(
-                                  width: width * 0.52,
+                                  width: width * 0.45,
                                   child: Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
