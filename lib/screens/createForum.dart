@@ -21,7 +21,7 @@ class _CreaetForumScreenState extends State<CreaetForumScreen> {
     return Scaffold(
       backgroundColor: greySecondary,
       bottomNavigationBar: Container(
-        height: height * 0.08,
+        height: height * 0.09,
         color: whitePrimary,
         child: Container(
           padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
@@ -53,7 +53,7 @@ class _CreaetForumScreenState extends State<CreaetForumScreen> {
                 title: 'ตั้งหัวข้อคำถามตรงนี้...',
                 color: whitePrimary,
                 widthh: width * 0.9,
-                heightt: height * 0.05,
+                heightt: height * 0.06,
                 hasShadow: false,
               ),
             ),

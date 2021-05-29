@@ -105,7 +105,7 @@ class CardForum extends StatelessWidget {
                             padding: EdgeInsets.only(left: 15),
                             child: CircleAvatar(
                               backgroundColor: Colors.grey,
-                              //  backgroundImage: NetworkImage(url),
+                              // backgroundImage: NetworkImage(url),
                             ),
                           ),
                           SizedBox(
