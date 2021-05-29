@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:dekcare_frontend/Components/constants.dart';
 import 'dart:async';
 import 'dart:math';
+import 'package:dekcare_frontend/provider/forumProvider.dart';
+import 'package:provider/provider.dart';
 
 class ForumScreen extends StatefulWidget {
   @override
@@ -81,6 +83,7 @@ class _ForumState extends State<ForumScreen> {
 
   var random;
   var refreshKey = GlobalKey<RefreshIndicatorState>();
+
   void initState() {
     super.initState();
     random = Random();
