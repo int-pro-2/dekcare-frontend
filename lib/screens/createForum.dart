@@ -73,7 +73,7 @@ class _CreaetForumScreenState extends State<CreaetForumScreen> {
               width: width,
               child: Text(
                 '*ร่วมพูดคุยแลกเปลี่ยนความคิดเห็นในทุกประเด็น ',
-                style: TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: 18, color: blackSecondaryFont),
               ),
             ),
             Container(
@@ -81,7 +81,7 @@ class _CreaetForumScreenState extends State<CreaetForumScreen> {
               width: width,
               child: Text(
                 '*โปรดใช้คำพูดที่สุภาพ เพื่อสังคมที่ดีของ DekCare',
-                style: TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: 18, color: blackSecondaryFont),
               ),
             )
           ],

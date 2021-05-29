@@ -35,9 +35,31 @@ class Forum {
       this.img});
 }
 
+class Reply {
+  final id;
+  final ownwerID;
+  final userName;
+  final topic;
+  final body;
+  final date;
+  final comment;
+  final img;
+
+  Reply(
+      {this.id,
+      this.ownwerID,
+      this.topic,
+      this.body,
+      this.date,
+      this.userName,
+      this.comment,
+      this.img});
+}
+
 class Comment {
   final id;
   final userID;
+  final forumID;
   final userName;
   final commentID;
   final text;
@@ -47,6 +69,7 @@ class Comment {
   Comment(
       {this.id,
       this.userID,
+      this.forumID,
       this.userName,
       this.commentID,
       this.text,
