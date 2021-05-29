@@ -55,7 +55,7 @@ class CardForum extends StatelessWidget {
                           padding: EdgeInsets.only(left: 20, top: 10),
                           alignment: Alignment.bottomLeft,
                           child: Text(
-                            ('ความคิดเห็นที่ ' + commentID),
+                            ('ความคิดเห็นที่ ' + (commentID).toString()),
                             style: TextStyle(
                                 fontSize: 20,
                                 fontFamily: 'supermarket',
@@ -165,7 +165,7 @@ class CardForum extends StatelessWidget {
                                           width: 10,
                                         ),
                                         Text(
-                                          comment + " comments",
+                                          comment.toString() + " comments",
                                           style: TextStyle(
                                               height: 1.3,
                                               fontSize: 20,

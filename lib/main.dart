@@ -2,6 +2,7 @@ import 'package:dekcare_frontend/Screens/landingScreen.dart';
 import 'package:dekcare_frontend/Screens/loginScreen.dart';
 import 'package:dekcare_frontend/Screens/splashScreen.dart';
 import 'package:dekcare_frontend/provider/authenticateProvider.dart';
+import 'package:dekcare_frontend/provider/forumProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,12 @@ class DekCare extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (ctx) => AuthenticateProvider())
+        ChangeNotifierProvider(create: (ctx) => AuthenticateProvider()),
+        ChangeNotifierProxyProvider<AuthenticateProvider, ForumProvider>(
+          create: (ctx) => ForumProvider("", []),
+          update: (ctx, auth, prev) =>
+              ForumProvider(auth.token, prev == null ? [] : prev.forums),
+        ),
       ],
       child: Consumer<AuthenticateProvider>(
         builder: (ctx, auth, child) => MaterialApp(
