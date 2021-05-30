@@ -11,6 +11,7 @@ environment:
 dependencies:
   bottom_navy_bar: ^6.0.0
   socket_io_client: ^1.0.1
+  dotted_decoration: ^2.0.0
   provider: ^5.0.0
   shared_preferences: ^2.0.5
   dio: ^4.0.0

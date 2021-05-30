@@ -9,10 +9,12 @@ class Replies {
   final String userID;
   final String text;
   final String firstname;
+  final String picture;
   final String lastname;
   final DateTime date;
   Replies({
     required this.id,
+    required this.picture,
     required this.userID,
     required this.text,
     required this.firstname,
@@ -27,6 +29,7 @@ class Comments {
   final String text;
   final String firstname;
   final String lastname;
+  final String picture;
   final List<Replies> replies;
 
   Comments({
@@ -35,6 +38,7 @@ class Comments {
     required this.text,
     required this.firstname,
     required this.lastname,
+    required this.picture,
     required this.replies,
   });
 }
@@ -46,11 +50,13 @@ class Forum {
   final String body;
   final DateTime date;
   final String firstname;
+  final String picture;
   final String lastname;
   final List<Comments> comments;
 
   Forum(
       {required this.id,
+      required this.picture,
       required this.ownerID,
       required this.topic,
       required this.body,
@@ -131,8 +137,6 @@ class ForumProvider with ChangeNotifier {
 
 //////////////////////////////////////////////////////
   Future<void> fetchSpecificForum(int id) async {
-    print('fetchForum');
-
     final prefs = await SharedPreferences.getInstance();
     if (!prefs.containsKey('userToken')) return;
     String token = prefs.getString('userToken').toString();
@@ -163,6 +167,7 @@ class ForumProvider with ChangeNotifier {
                 text: el1['text'],
                 firstname: el1['firstname'],
                 lastname: el1['lastname'],
+                picture: el1['picture'],
                 date: DateTime.parse(el1['date'])))
           },
         )
@@ -174,6 +179,7 @@ class ForumProvider with ChangeNotifier {
             id: el['id'],
             userID: el['userID'],
             text: el['text'],
+            picture: el['picture'],
             firstname: el['firstname'],
             lastname: el['lastname'],
             replies: replies))
@@ -183,14 +189,13 @@ class ForumProvider with ChangeNotifier {
     specificforum.add(Forum(
         id: data["id"],
         ownerID: data["ownerID"],
+        picture: data['picture'],
         topic: data["topic"],
         body: data["body"],
         date: DateTime.parse(data["date"]),
         firstname: data['firstname'],
         lastname: data['lastname'],
         comments: comments));
-
-    print(specificforum[0].comments[0].replies[0].date);
     return specificforum;
   }
 }
