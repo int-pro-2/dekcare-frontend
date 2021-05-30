@@ -3,6 +3,7 @@ import 'package:dekcare_frontend/components/cardForum.dart';
 import 'package:dekcare_frontend/components/chatInput.dart';
 import 'package:dekcare_frontend/components/constants.dart';
 import 'package:dekcare_frontend/components/navBar/nav.dart';
+import 'package:dekcare_frontend/screens/forumScreen.dart';
 import 'package:dekcare_frontend/screens/loginScreen.dart';
 import 'package:dekcare_frontend/provider/forumProvider.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +21,16 @@ class _CreaetForumScreenState extends State<CreaetForumScreen> {
     try {
       await Provider.of<ForumProvider>(context, listen: false).createForum(
           topicController.text, bodyController.text, DateTime.now().toString());
+      Navigator.pop(context);
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return ForumScreen();
+          },
+        ),
+      );
     } catch (error) {
       print(error);
     }
