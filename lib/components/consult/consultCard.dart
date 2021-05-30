@@ -1,15 +1,22 @@
 import 'package:dekcare_frontend/components/constants.dart';
 import 'package:flutter/material.dart';
 
-class chatPreviewCard extends StatefulWidget {
-  final name, profile, message, press;
-  chatPreviewCard({this.name, this.profile, this.message, this.press});
+class consultCard extends StatefulWidget {
+  final name, profile, hospital, press;
+  bool isFavorite;
+
+  consultCard(
+      {this.name,
+      this.profile,
+      this.hospital,
+      this.press,
+      required this.isFavorite});
 
   @override
-  _chatPreviewCardState createState() => _chatPreviewCardState();
+  _consultCardState createState() => _consultCardState();
 }
 
-class _chatPreviewCardState extends State<chatPreviewCard> {
+class _consultCardState extends State<consultCard> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -31,6 +38,7 @@ class _chatPreviewCardState extends State<chatPreviewCard> {
                         offset: Offset(0, 4))
                   ]),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -52,17 +60,38 @@ class _chatPreviewCardState extends State<chatPreviewCard> {
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: Row(children: [
-                            Icon(
-                              Icons.reply,
-                              size: 18,
-                            ),
-                            Text(widget.message,
-                                style: TextStyle(fontSize: 18)),
-                          ]),
+                          child: Text(widget.hospital,
+                              style: TextStyle(fontSize: 18)),
                         ),
                       ],
                     ),
+                  ),
+                  SizedBox(width: width * 0.175),
+                  Column(
+                    children: [
+                      Container(
+                        width: 40,
+                        height: 40,
+                        child: MaterialButton(
+                          child: Icon(
+                            widget.isFavorite == true
+                                ? Icons.star
+                                : Icons.star_border_outlined,
+                            color: yellowPrimary,
+                            size: 20,
+                          ),
+                          splashColor: greySecondary,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50.0)),
+                          onPressed: () {
+                            setState(() {
+                              widget.isFavorite = !widget.isFavorite;
+                            });
+                          },
+                          padding: EdgeInsets.zero,
+                        ),
+                      ),
+                    ],
                   )
                 ],
               ),

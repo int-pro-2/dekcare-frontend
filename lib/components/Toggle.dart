@@ -32,7 +32,11 @@ class _ToggleState extends State<Toggle> {
                 child: ElevatedButton(
                   child: Text(
                     widget.button1Title,
-                    style: TextStyle(color: yellowPrimary, fontSize: 18),
+                    style: TextStyle(
+                        color: widget.status1 == true
+                            ? whitePrimary
+                            : yellowPrimary,
+                        fontSize: 18),
                   ),
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -59,6 +63,7 @@ class _ToggleState extends State<Toggle> {
                   onPressed: () {
                     setState(() {
                       widget.status1 = !widget.status1;
+                      widget.status2 = !widget.status2;
                     });
                   },
                 ),
@@ -68,7 +73,11 @@ class _ToggleState extends State<Toggle> {
                 child: ElevatedButton(
                   child: Text(
                     widget.button2Title,
-                    style: TextStyle(color: yellowPrimary, fontSize: 18),
+                    style: TextStyle(
+                        color: widget.status2 == true
+                            ? whitePrimary
+                            : yellowPrimary,
+                        fontSize: 18),
                   ),
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -77,10 +86,12 @@ class _ToggleState extends State<Toggle> {
                             side: BorderSide(color: yellowPrimary, width: 2))),
                     backgroundColor: MaterialStateProperty.resolveWith<Color>(
                       (Set<MaterialState> states) {
-                        if (states.contains(MaterialState.pressed))
-                          return yellowPrimary;
-                        return Colors
-                            .transparent; // Use the component's default.
+                        if (states.contains(MaterialState.pressed) ||
+                            widget.status2 == true) return yellowPrimary;
+                        return widget.status2 == true
+                            ? yellowPrimary
+                            : Colors
+                                .transparent; // Use the component's default.
                       },
                     ),
                     shadowColor: MaterialStateProperty.resolveWith<Color>(
@@ -90,7 +101,12 @@ class _ToggleState extends State<Toggle> {
                       },
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      widget.status2 = !widget.status2;
+                      widget.status1 = !widget.status1;
+                    });
+                  },
                 ),
               ),
             ],
