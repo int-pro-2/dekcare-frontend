@@ -4,7 +4,8 @@ import 'package:dekcare_frontend/components/chatInput.dart';
 import 'package:dekcare_frontend/components/constants.dart';
 import 'package:dekcare_frontend/components/navBar/nav.dart';
 import 'package:dekcare_frontend/screens/loginScreen.dart';
-
+import 'package:dekcare_frontend/provider/forumProvider.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 class CreaetForumScreen extends StatefulWidget {
@@ -14,6 +15,19 @@ class CreaetForumScreen extends StatefulWidget {
 
 class _CreaetForumScreenState extends State<CreaetForumScreen> {
   @override
+  void createForum() async {
+    print('create Forum');
+    try {
+      await Provider.of<ForumProvider>(context, listen: false).createForum(
+          topicController.text, bodyController.text, DateTime.now().toString());
+    } catch (error) {
+      print(error);
+    }
+    print('done create forumm');
+  }
+
+  final TextEditingController topicController = TextEditingController();
+  final TextEditingController bodyController = TextEditingController();
   Widget build(BuildContext context) {
     @override
     double width = MediaQuery.of(context).size.width;
@@ -28,7 +42,9 @@ class _CreaetForumScreenState extends State<CreaetForumScreen> {
           child: Button(
             title: 'ยืนยัน',
             color: yellowPrimary,
-            onPress: () {},
+            onPress: () {
+              createForum();
+            },
           ),
         ),
       ),
@@ -49,6 +65,7 @@ class _CreaetForumScreenState extends State<CreaetForumScreen> {
             Container(
               padding: EdgeInsets.only(top: 15),
               child: ChatInput(
+                controller: topicController,
                 isCreate: true,
                 title: 'ตั้งหัวข้อคำถามตรงนี้...',
                 color: whitePrimary,
@@ -60,6 +77,7 @@ class _CreaetForumScreenState extends State<CreaetForumScreen> {
             Container(
               padding: EdgeInsets.all(15),
               child: ChatInput(
+                controller: bodyController,
                 isCreate: true,
                 title: 'เนื้อหากระทู้...',
                 color: whitePrimary,

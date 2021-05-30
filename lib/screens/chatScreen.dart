@@ -66,7 +66,7 @@ class _ChatState extends State<ChatScreen> {
                                 itemBuilder: (context, index) =>
                                     chatPreviewCard(
                                   name: "	นพ. วิรวรรธ ใจอารีย์",
-                                  profile: "/assets/images/doctorIcon.png",
+                                  profile: "/doctorIcon.png",
                                   message: "สวัสดีครับคนไข้",
                                   press: () {
                                     print('navigate');
