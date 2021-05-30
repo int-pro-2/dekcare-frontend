@@ -104,26 +104,29 @@ class CardForum extends StatelessWidget {
                           Container(
                             padding: EdgeInsets.only(left: 15),
                             child: CircleAvatar(
-                              backgroundColor: Colors.grey,
-                              // backgroundImage: NetworkImage(url),
+                              // backgroundColor: Colors.grey,
+                              backgroundImage: NetworkImage(url),
                             ),
                           ),
                           SizedBox(
                             width: 10,
                           ),
-                          Text(
-                            userName,
-                            style: TextStyle(
-                                height: 1.3,
-                                fontSize: 20,
-                                fontFamily: 'supermarket',
-                                color: blackPrimaryFont,
-                                fontStyle: FontStyle.normal),
+                          Container(
+                            width: width * 0.28,
+                            child: Text(
+                              userName,
+                              style: TextStyle(
+                                  height: 1.3,
+                                  fontSize: 18,
+                                  fontFamily: 'supermarket',
+                                  color: blackPrimaryFont,
+                                  fontStyle: FontStyle.normal),
+                            ),
                           ),
                           isInside
                               ? isComment
                                   ? Container(
-                                      width: width * 0.6,
+                                      width: width * 0.45,
                                       child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.end,
@@ -133,13 +136,13 @@ class CardForum extends StatelessWidget {
                                               hasShadow: false,
                                               color: greySecondary,
                                               title: 'แสดงความคิดเห็น',
-                                              widthh: width * 0.55,
+                                              widthh: width * 0.45,
                                               heightt: 40,
                                             )
                                           ]),
                                     )
                                   : Container(
-                                      width: width * 0.52,
+                                      width: width * 0.45,
                                       child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.end,

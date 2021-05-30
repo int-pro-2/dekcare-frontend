@@ -50,6 +50,7 @@ class _ForumState extends State<ForumScreen> {
       theme: ThemeData(fontFamily: 'supermarket'),
       home: Consumer<ForumProvider>(builder: (context, forumProvider, _) {
         final forumList = forumProvider.forums;
+
         return Scaffold(
           backgroundColor: greySecondary,
           appBar: PreferredSize(
@@ -124,7 +125,9 @@ class _ForumState extends State<ForumScreen> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) {
-                                      return ForumInsideScreen();
+                                      return ForumInsideScreen(
+                                        index: forumList[index].id,
+                                      );
                                     },
                                   ),
                                 );
