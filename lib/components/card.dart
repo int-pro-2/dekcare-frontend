@@ -15,7 +15,7 @@ class CardKid extends StatelessWidget {
       // onPressed: () {},
       child: Container(
         child: Container(
-          width: width * 0.4,
+          width: width * 0.425,
           // height: height * (25 / 100),
           child: DecoratedBox(
               decoration: BoxDecoration(
