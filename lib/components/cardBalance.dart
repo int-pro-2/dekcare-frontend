@@ -131,7 +131,7 @@ class CardMoney extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            'เติมเงิน',
+                            'ถอนเงิน',
                             style: TextStyle(
                                 fontSize: 18,
                                 fontFamily: 'supermarket',
@@ -161,7 +161,7 @@ class CardMoney extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            'เติมเงิน',
+                            'โอนเงิน',
                             style: TextStyle(
                                 fontSize: 18,
                                 fontFamily: 'supermarket',
@@ -173,6 +173,9 @@ class CardMoney extends StatelessWidget {
                     ),
                   ],
                 ),
+                SizedBox(
+                  height: 10,
+                )
               ],
             )),
       ),
