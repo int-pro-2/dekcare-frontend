@@ -132,7 +132,7 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
                                 url: forumList[0].picture,
                                 isComment: false,
                                 title: forumList[0].topic,
-                                press: () {},
+                                pressComment: () => print('ha'),
                                 text: forumList[0].body,
                                 userName: forumList[0].firstname,
                                 date: forumList[0]
@@ -172,6 +172,9 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
                                   shrinkWrap: true,
                                   itemCount: forumList[0].comments.length,
                                   itemBuilder: (context, index) => CardForum(
+                                    press: () {},
+                                    pressComment: () {},
+                                    // date: forumList[0].comments[index].,
                                     commentID: (index + 1).toString(),
                                     url: forumList[0].comments[index].picture,
                                     isComment: true,

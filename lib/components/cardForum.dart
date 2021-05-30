@@ -14,7 +14,7 @@ class CardForum extends StatelessWidget {
       commentID,
       isComment,
       url;
-
+  final Function pressComment;
   const CardForum(
       {this.press,
       this.isComment,
@@ -25,7 +25,8 @@ class CardForum extends StatelessWidget {
       this.comment,
       this.isInside,
       this.date,
-      this.url});
+      this.url,
+      required this.pressComment});
 
   @override
   Widget build(BuildContext context) {
@@ -139,23 +140,26 @@ class CardForum extends StatelessWidget {
                                                 title: 'แสดงความคิดเห็น',
                                                 widthh: width * 0.35,
                                                 heightt: 40,
-                                              )
+                                              ),
                                             ]),
                                       ),
                                       Container(
+                                        height: height * 0.05,
                                         width: width * 0.12,
                                         child: ElevatedButton(
-                                            onPressed: () {
-                                              print('test');
-                                            },
+                                            onPressed: () => pressComment(),
                                             child: Icon(
                                               Icons.send,
                                               color: Colors.black54,
+                                              size: 20,
                                             ),
                                             style: ButtonStyle(
                                                 backgroundColor:
                                                     MaterialStateProperty.all(
-                                                        whitePrimary),
+                                                        isComment == ''
+                                                            ? Colors.grey
+                                                            : Colors
+                                                                .amber[300]),
                                                 shadowColor:
                                                     MaterialStateProperty.all<
                                                         Color>(
