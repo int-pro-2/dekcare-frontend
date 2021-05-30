@@ -62,12 +62,12 @@ class _CreaetForumScreenState extends State<CreaetForumScreen> {
                 ? yellowPrimary
                 : greyPrimary,
             onPress: () {
-              if (topicCheckError == '') {
+              if (topicCheck == '') {
                 setState(() {
                   topicCheckError = 'error';
                 });
               }
-              if (bodyCheckError == '') {
+              if (bodyCheck == '') {
                 setState(() {
                   bodyCheckError = 'error';
                 });

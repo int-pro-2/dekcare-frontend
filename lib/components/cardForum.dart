@@ -125,23 +125,44 @@ class CardForum extends StatelessWidget {
                           ),
                           isInside
                               ? isComment
-                                  ? Container(
-                                      width: width * 0.45,
-                                      child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            ChatInput(
-                                          
-                                              isCreate: false,
-                                              hasShadow: false,
-                                              color: greySecondary,
-                                              title: 'แสดงความคิดเห็น',
-                                              widthh: width * 0.45,
-                                              heightt: 40,
-                                            )
-                                          ]),
-                                    )
+                                  ? Row(children: [
+                                      Container(
+                                        width: width * 0.35,
+                                        child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              ChatInput(
+                                                isCreate: false,
+                                                hasShadow: false,
+                                                color: greySecondary,
+                                                title: 'แสดงความคิดเห็น',
+                                                widthh: width * 0.35,
+                                                heightt: 40,
+                                              )
+                                            ]),
+                                      ),
+                                      Container(
+                                        width: width * 0.12,
+                                        child: ElevatedButton(
+                                            onPressed: () {
+                                              print('test');
+                                            },
+                                            child: Icon(
+                                              Icons.send,
+                                              color: Colors.black54,
+                                            ),
+                                            style: ButtonStyle(
+                                                backgroundColor:
+                                                    MaterialStateProperty.all(
+                                                        whitePrimary),
+                                                shadowColor:
+                                                    MaterialStateProperty.all<
+                                                        Color>(
+                                                  Colors.transparent,
+                                                ))),
+                                      ),
+                                    ])
                                   : Container(
                                       width: width * 0.45,
                                       child: Row(
