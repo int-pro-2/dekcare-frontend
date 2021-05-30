@@ -26,7 +26,6 @@ class CardMoney extends StatelessWidget {
     return Container(
       child: SizedBox(
         width: width - 30,
-        height: height * (25 / 100),
         child: DecoratedBox(
             decoration: BoxDecoration(
                 color: Colors.white,
@@ -40,6 +39,7 @@ class CardMoney extends StatelessWidget {
                   ),
                 ]),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Center(
                   child: Container(
@@ -81,9 +81,8 @@ class CardMoney extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    SizedBox(
-                      height: 130,
-                      width: 120,
+                    Container(
+                      width: width * 0.3,
                       child: TextButton(
                         style: TextButton.styleFrom(
                           primary: Colors.teal,
@@ -112,9 +111,8 @@ class CardMoney extends StatelessWidget {
                         ]),
                       ),
                     ),
-                    SizedBox(
-                      height: 130,
-                      width: 120,
+                    Container(
+                      width: width * 0.3,
                       child: TextButton(
                         style: TextButton.styleFrom(
                           primary: Colors.teal,
@@ -133,7 +131,7 @@ class CardMoney extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            'ถอนเงิน',
+                            'เติมเงิน',
                             style: TextStyle(
                                 fontSize: 18,
                                 fontFamily: 'supermarket',
@@ -143,9 +141,8 @@ class CardMoney extends StatelessWidget {
                         ]),
                       ),
                     ),
-                    SizedBox(
-                      height: 130,
-                      width: 120,
+                    Container(
+                      width: width * 0.3,
                       child: TextButton(
                         style: TextButton.styleFrom(
                           primary: Colors.teal,
@@ -164,7 +161,7 @@ class CardMoney extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            'โอนเงิน',
+                            'เติมเงิน',
                             style: TextStyle(
                                 fontSize: 18,
                                 fontFamily: 'supermarket',
@@ -173,7 +170,7 @@ class CardMoney extends StatelessWidget {
                           )
                         ]),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ],
