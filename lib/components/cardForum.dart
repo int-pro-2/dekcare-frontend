@@ -13,7 +13,8 @@ class CardForum extends StatelessWidget {
       date,
       commentID,
       isComment,
-      url;
+      url,
+      hello;
   final Function pressComment;
   const CardForum(
       {this.press,
@@ -26,6 +27,7 @@ class CardForum extends StatelessWidget {
       this.isInside,
       this.date,
       this.url,
+      this.hello,
       required this.pressComment});
 
   @override

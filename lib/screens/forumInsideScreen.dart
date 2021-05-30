@@ -73,6 +73,10 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
     return null;
   }
 
+  void test() {
+    print('boy');
+  }
+
   @override
   final TextEditingController commentController = TextEditingController();
 
@@ -132,7 +136,8 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
                                 url: forumList[0].picture,
                                 isComment: false,
                                 title: forumList[0].topic,
-                                pressComment: () => print('ha'),
+                                pressComment: test,
+                                hello: 'boyplus',
                                 text: forumList[0].body,
                                 userName: forumList[0].firstname,
                                 date: forumList[0]
@@ -173,7 +178,10 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
                                   itemCount: forumList[0].comments.length,
                                   itemBuilder: (context, index) => CardForum(
                                     press: () {},
-                                    pressComment: () {},
+                                    pressComment: () {
+                                      print('ha');
+                                    },
+                                    hello: 'from another',
                                     // date: forumList[0].comments[index].,
                                     commentID: (index + 1).toString(),
                                     url: forumList[0].comments[index].picture,
