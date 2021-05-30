@@ -76,6 +76,7 @@ class _CreaetForumScreenState extends State<CreaetForumScreen> {
             Container(
               padding: EdgeInsets.only(top: 15),
               child: ChatInput(
+            
                 controller: topicController,
                 isCreate: true,
                 title: 'ตั้งหัวข้อคำถามตรงนี้...',
@@ -88,6 +89,7 @@ class _CreaetForumScreenState extends State<CreaetForumScreen> {
             Container(
               padding: EdgeInsets.all(15),
               child: ChatInput(
+            
                 controller: bodyController,
                 isCreate: true,
                 title: 'เนื้อหากระทู้...',

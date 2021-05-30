@@ -83,7 +83,6 @@ class _ForumState extends State<ForumScreen> {
       home: Consumer<ForumProvider>(builder: (context, forumProvider, _) {
         final forumList = forumProvider.forums;
         if (initList == 0 && forumList.length != 0) {
-          print(initList);
           initList++;
           for (var i = 0; i < 3; i++) {
             listRender.add(Forums(
@@ -95,13 +94,9 @@ class _ForumState extends State<ForumScreen> {
                 displayname: forumList[i].displayname,
                 count: forumList[i].count,
                 picture: forumList[i].picture));
-            print('inside');
           }
         }
-        // if (listRender.length == 0) {
-        //   return SplashScreen();
-        // }
-        print("ListRender Lenght " + listRender.length.toString());
+
         return Scaffold(
           backgroundColor: greySecondary,
           appBar: PreferredSize(

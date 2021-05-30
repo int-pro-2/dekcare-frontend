@@ -20,107 +20,26 @@ class ForumInsideScreen extends StatefulWidget {
   _ForumInsideScreenState createState() => _ForumInsideScreenState();
 }
 
-class Forum {
-  final id;
-  final ownwerID;
-  final userName;
-  final topic;
-  final body;
-  final date;
-  final comment;
-  final img;
-
-  Forum(
-      {this.id,
-      this.ownwerID,
-      this.topic,
-      this.body,
-      this.date,
-      this.userName,
-      this.comment,
-      this.img});
-}
-
-class Reply {
-  final id;
-  final ownwerID;
-  final userName;
-  final topic;
-  final body;
-  final date;
-  final comment;
-  final img;
-
-  Reply(
-      {this.id,
-      this.ownwerID,
-      this.topic,
-      this.body,
-      this.date,
-      this.userName,
-      this.comment,
-      this.img});
-}
-
-class Comment {
-  final id;
-  final userID;
-  final forumID;
-  final userName;
-  final commentID;
-  final text;
-  final date;
-  final img;
-
-  Comment(
-      {this.id,
-      this.userID,
-      this.forumID,
-      this.userName,
-      this.commentID,
-      this.text,
-      this.date,
-      this.img});
-}
-
 class _ForumInsideScreenState extends State<ForumInsideScreen> {
-  List<Forum> forum = [
-    Forum(
-        id: '01',
-        ownwerID: '8b36a2e7-a990',
-        userName: 'กาต๊าก กะตัก',
-        body:
-            "ตอนนี้ลูกสาวอายุ 15 ค่ะ เป็นเด็กคิดเยอะ (คิดร้ายกับผู้อื่น คิดว่าผู้อื่นคิดร้ายกับตัว) ชอบเพ้อฝันค่ะ กลัวอายเพื่อน กลัวมีไม่เท่าเทียมกับเพื่อน เป็นเด็กอวดเก่งอวดดี แต่ทำในสิ่งที่ตัวเองอวดไม่ได้เลย จ้องจะมีปัญหากับคนอื่นเสมอ",
-        date: '2021-05-28',
-        topic: 'ปรึกษาเรื่องลูกหน่อยค่ะ เครียดมาก...??',
-        comment: '4',
-        img: 'null'),
-  ];
-  List<Comment> comment = [
-    // Comment(
-    //     id: '01',
-    //     userID: '8b36a2e7-a990',
-    //     userName: 'บอยไง',
-    //     commentID: '01',
-    //     text:
-    //         "เรามีเวลาเอาใจใส่เขาก่อนหน้านี้ มากพอไหม เขาขาดอะไรจากคนรอบข้างบ้างหรือเปล่า บางทีเราปล่อยเขามานานไม่ค่อยได้บอกกล่าวซึ่งมาถึงจุดนี้จะเปลี่ยนแปลงก็ต้องใช้เวลาบ้าง  บอกกล่าวกันด้วยเหตุผล ผลเสียต่างๆที่จะตามมา การใช้อารมณ์น่าจะทำให้สิ่งต่างๆยิ่งแย่ลงนะ ใจเย็นๆ บางทีก็ต้องคิดดูอีกทีว่าตัวเราหรือเปล่าที่ทำให้เขาเป็นแบบนี้ หรือเพราะตัวเขาเอง",
-    //     date: '2021-05-28',
-    //     img: 'null'),
-    // Comment(
-    //     id: '02',
-    //     userID: '8b36a2e7-a990',
-    //     userName: 'เต้ยเอง',
-    //     commentID: '02',
-    //     text: "เห็นด้วยกับความคิดเห็นแรกค่ะ",
-    //     date: '2021-05-28',
-    //     img: 'null'),
-  ];
-
   void fetchForums() async {
     try {
       await Provider.of<ForumProvider>(context, listen: false)
           .fetchSpecificForum(widget.index);
     } catch (error) {}
+  }
+
+  void createComment() async {
+    print('create Forum');
+    try {
+      await Provider.of<ForumProvider>(context, listen: false).createComment(
+          widget.index.toString(),
+          commentController.text,
+          DateTime.now().toString());
+      fetchForums();
+    } catch (error) {
+      print(error);
+    }
+    print('done create forumm');
   }
 
   var random;
@@ -143,6 +62,8 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
   }
 
   @override
+  final TextEditingController commentController = TextEditingController();
+
   Widget build(BuildContext context) {
     @override
     double width = MediaQuery.of(context).size.width;
@@ -155,8 +76,6 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
         if (forumList.length == 0) {
           return SplashScreen();
         }
-
-        print(forumList[0].comments.length);
 
         return Scaffold(
           backgroundColor: greySecondary,
@@ -272,17 +191,41 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
                               ),
                             ],
                           ),
-                          Container(
-                            padding: EdgeInsets.all(10),
-                            child: ChatInput(
-                              isCreate: false,
-                              hasShadow: true,
-                              widthh: width * 0.95,
-                              heightt: height * 0.1,
-                              color: Colors.white,
-                              title: 'แสดงความคิดเห็น....',
+                          Row(children: [
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              child: ChatInput(
+                                controller: commentController,
+                                isCreate: false,
+                                hasShadow: true,
+                                widthh: width * 0.75,
+                                heightt: height * 0.07,
+                                color: Colors.white,
+                                title: 'แสดงความคิดเห็น....',
+                              ),
                             ),
-                          ),
+                            Container(
+                              height: height * 0.07,
+                              child: ElevatedButton(
+                                  onPressed: () {
+                                    createComment();
+                                  },
+                                  child: Icon(
+                                    Icons.send,
+                                    color: Colors.black54,
+                                  ),
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              commentController == ''
+                                                  ? Colors.grey
+                                                  : Colors.amber[200]),
+                                      shadowColor:
+                                          MaterialStateProperty.all<Color>(
+                                        Colors.transparent,
+                                      ))),
+                            ),
+                          ]),
                           SizedBox(
                             height: 20,
                           )

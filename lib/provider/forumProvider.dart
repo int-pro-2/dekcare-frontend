@@ -108,7 +108,8 @@ class ForumProvider with ChangeNotifier {
     _token = token;
     try {
       // print("tokne in provider" + token);
-      final response = await Dio().get(apiEndpoint + '/forum/forums',
+      final response = await Dio().get(
+          apiEndpoint + '/forum/forums?orderBy=popular',
           options: Options(headers: {"cookie": 'jwt=' + token + ';'}));
       _forums = modifyResponse(response.data.toList());
       notifyListeners();
@@ -205,6 +206,21 @@ class ForumProvider with ChangeNotifier {
       final response = await Dio().post(apiEndpoint + '/forum/forum',
           data: {"topic": topic, "body": body, "date": date},
           options: Options(headers: {"cookie": 'jwt=' + _token + ';'}));
+
+      notifyListeners();
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  Future<void> createComment(String forumID, String text, String date) async {
+    final prefs = await SharedPreferences.getInstance();
+    try {
+      print(forumID + text + date);
+      final response = await Dio().post(apiEndpoint + '/forum/comment',
+          data: {"forumID": forumID, "text": text, "date": date},
+          options: Options(headers: {"cookie": 'jwt=' + _token + ';'}));
+      print('done create comment provider');
 
       notifyListeners();
     } catch (error) {
