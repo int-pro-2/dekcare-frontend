@@ -13,6 +13,7 @@ dependencies:
   socket_io_client: ^1.0.1
   dotted_decoration: ^2.0.0
   provider: ^5.0.0
+  flutter_vant_kit: ^0.2.7
   shared_preferences: ^2.0.5
   dio: ^4.0.0
   flutter:
