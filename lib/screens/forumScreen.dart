@@ -1,11 +1,11 @@
 import 'package:dekcare_frontend/components/cardForum.dart';
 import 'package:dekcare_frontend/components/navBar/nav.dart';
-import 'package:dekcare_frontend/components/topBar.dart';
-import 'package:dekcare_frontend/components/searchBar.dart';
+import 'package:dekcare_frontend/Components/TopBar.dart';
+import 'package:dekcare_frontend/Components/searchBar.dart';
 import 'package:dekcare_frontend/screens/createForum.dart';
 import 'package:dekcare_frontend/screens/forumInsideScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:dekcare_frontend/components/constants.dart';
+import 'package:dekcare_frontend/Components/constants.dart';
 import 'dart:async';
 import 'dart:math';
 import 'package:dekcare_frontend/provider/forumProvider.dart';
@@ -16,71 +16,7 @@ class ForumScreen extends StatefulWidget {
   _ForumState createState() => _ForumState();
 }
 
-class Forum {
-  final id;
-  final ownwerID;
-  final userName;
-  final topic;
-  final body;
-  final date;
-  final comment;
-  final img;
-
-  Forum(
-      {this.id,
-      this.ownwerID,
-      this.topic,
-      this.body,
-      this.date,
-      this.userName,
-      this.comment,
-      this.img});
-}
-
 class _ForumState extends State<ForumScreen> {
-  List<Forum> forum = [
-    Forum(
-        id: '01',
-        ownwerID: '8b36a2e7-a990',
-        userName: 'กาต๊าก กะตัก',
-        body:
-            "ตอนนี้ลูกสาวอายุ 15 ค่ะ เป็นเด็กคิดเยอะ (คิดร้ายกับผู้อื่น คิดว่าผู้อื่นคิดร้ายกับตัว) ชอบเพ้อฝันค่ะ กลัวอายเพื่อน กลัวมีไม่เท่าเทียมกับเพื่อน เป็นเด็กอวดเก่งอวดดี แต่ทำในสิ่งที่ตัวเองอวดไม่ได้เลย จ้องจะมีปัญหากับคนอื่นเสมอ",
-        date: '2021-05-28',
-        topic: 'ปรึกษาเรื่องลูกหน่อยค่ะ เครียดมาก...??',
-        comment: '4',
-        img: 'null'),
-    Forum(
-        id: '02',
-        ownwerID: '8b36a2e7-a990',
-        userName: 'กาต๊าก กะตัก',
-        body:
-            "ตอนนี้ลูกสาวอายุ 15 ค่ะ เป็นเด็กคิดเยอะ (คิดร้ายกับผู้อื่น คิดว่าผู้อื่นคิดร้ายกับตัว) ชอบเพ้อฝันค่ะ กลัวอายเพื่อน กลัวมีไม่เท่าเทียมกับเพื่อน เป็นเด็กอวดเก่งอวดดี แต่ทำในสิ่งที่ตัวเองอวดไม่ได้เลย จ้องจะมีปัญหากับคนอื่นเสมอ",
-        date: '2021-05-28',
-        topic: 'ปรึกษาเรื่องลูกหน่อยค่ะ เครียดมาก...??',
-        comment: '4',
-        img: 'null'),
-    Forum(
-        id: '03',
-        ownwerID: '8b36a2e7-a990',
-        userName: 'กาต๊าก กะตัก',
-        body:
-            "ตอนนี้ลูกสาวอายุ 15 ค่ะ เป็นเด็กคิดเยอะ (คิดร้ายกับผู้อื่น คิดว่าผู้อื่นคิดร้ายกับตัว) ชอบเพ้อฝันค่ะ กลัวอายเพื่อน กลัวมีไม่เท่าเทียมกับเพื่อน เป็นเด็กอวดเก่งอวดดี แต่ทำในสิ่งที่ตัวเองอวดไม่ได้เลย จ้องจะมีปัญหากับคนอื่นเสมอ",
-        date: '2021-05-28',
-        topic: 'ปรึกษาเรื่องลูกหน่อยค่ะ เครียดมาก...??',
-        comment: '4',
-        img: 'null'),
-    Forum(
-        id: '04',
-        ownwerID: '8b36a2e7-a990',
-        userName: 'กาต๊าก กะตัก',
-        body:
-            "ตอนนี้ลูกสาวอายุ 15 ค่ะ เป็นเด็กคิดเยอะ (คิดร้ายกับผู้อื่น คิดว่าผู้อื่นคิดร้ายกับตัว) ชอบเพ้อฝันค่ะ กลัวอายเพื่อน กลัวมีไม่เท่าเทียมกับเพื่อน เป็นเด็กอวดเก่งอวดดี แต่ทำในสิ่งที่ตัวเองอวดไม่ได้เลย จ้องจะมีปัญหากับคนอื่นเสมอ",
-        date: '2021-05-28',
-        topic: 'ปรึกษาเรื่องลูกหน่อยค่ะ เครียดมาก...??',
-        comment: '4',
-        img: 'null'),
-  ];
-
   var random;
   var refreshKey = GlobalKey<RefreshIndicatorState>();
 
@@ -117,10 +53,18 @@ class _ForumState extends State<ForumScreen> {
         return Scaffold(
           backgroundColor: greySecondary,
           appBar: PreferredSize(
-              child: TopBar(
-                titleText: 'กระทู้ถาม/ตอบ',
-                enableBackButton: false,
-                contextFromPage: context,
+              child: AppBar(
+                automaticallyImplyLeading: false,
+                centerTitle: true,
+                title: Text(
+                  'กระทู้ถาม/ตอบ',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                ),
+                backgroundColor: yellowPrimary,
+                shape: RoundedRectangleBorder(
+                  borderRadius:
+                      BorderRadius.vertical(bottom: Radius.circular(30)),
+                ),
               ),
               preferredSize: Size.fromHeight(height * 0.075)),
           bottomNavigationBar: Nav(
@@ -176,7 +120,6 @@ class _ForumState extends State<ForumScreen> {
                               isComment: false,
                               title: forumList[index].topic,
                               press: () {
-                                print('navigate');
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
