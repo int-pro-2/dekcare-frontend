@@ -3,6 +3,7 @@ import 'package:dekcare_frontend/Screens/loginScreen.dart';
 import 'package:dekcare_frontend/Screens/splashScreen.dart';
 import 'package:dekcare_frontend/provider/authenticateProvider.dart';
 import 'package:dekcare_frontend/provider/forumProvider.dart';
+import 'package:dekcare_frontend/provider/chatProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -25,6 +26,11 @@ class DekCare extends StatelessWidget {
               auth.token,
               prev == null ? [] : prev.forums,
               prev == null ? [] : prev.specificforum),
+        ),
+        ChangeNotifierProxyProvider<AuthenticateProvider, ChatProvider>(
+          create: (ctx) => ChatProvider("", []),
+          update: (ctx, auth, prev) =>
+              ChatProvider(auth.token, prev == null ? [] : prev.chatPreview),
         ),
       ],
       child: Consumer<AuthenticateProvider>(
