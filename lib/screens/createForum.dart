@@ -16,6 +16,8 @@ class CreaetForumScreen extends StatefulWidget {
 
 class _CreaetForumScreenState extends State<CreaetForumScreen> {
   @override
+  var topicCheck = '';
+  var bodyCheck = '';
   void createForum() async {
     print('create Forum');
     try {
@@ -52,9 +54,16 @@ class _CreaetForumScreenState extends State<CreaetForumScreen> {
           padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
           child: Button(
             title: 'ยืนยัน',
-            color: yellowPrimary,
+            color: (topicCheck != '' && bodyCheck != '')
+                ? yellowPrimary
+                : greyPrimary,
             onPress: () {
-              createForum();
+              if (topicCheck != '' && bodyCheck != '') {
+                createForum();
+              }
+              if (topicCheck == '' && bodyCheck == '') {
+                print('topic and body are not complete');
+              }
             },
           ),
         ),
@@ -76,7 +85,11 @@ class _CreaetForumScreenState extends State<CreaetForumScreen> {
             Container(
               padding: EdgeInsets.only(top: 15),
               child: ChatInput(
-            
+                onchange: (text) {
+                  setState(() {
+                    topicCheck = text;
+                  });
+                },
                 controller: topicController,
                 isCreate: true,
                 title: 'ตั้งหัวข้อคำถามตรงนี้...',
@@ -89,9 +102,13 @@ class _CreaetForumScreenState extends State<CreaetForumScreen> {
             Container(
               padding: EdgeInsets.all(15),
               child: ChatInput(
-            
                 controller: bodyController,
                 isCreate: true,
+                onchange: (text) {
+                  setState(() {
+                    bodyCheck = text;
+                  });
+                },
                 title: 'เนื้อหากระทู้...',
                 color: whitePrimary,
                 widthh: width * 0.9,
