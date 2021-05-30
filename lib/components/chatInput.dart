@@ -2,7 +2,7 @@ import 'package:dekcare_frontend/components/constants.dart';
 import 'package:flutter/material.dart';
 
 class ChatInput extends StatefulWidget {
-  final title, controller, hasShadow, isCreate;
+  final title, controller, hasShadow, isCreate, onchange;
   final object;
 
   final Color color;
@@ -11,7 +11,7 @@ class ChatInput extends StatefulWidget {
 
   ChatInput(
       {this.title,
-    
+      this.onchange,
       this.object,
       this.isCreate,
       this.hasShadow,
@@ -51,7 +51,8 @@ class _ChatInputState extends State<ChatInput> {
                         )
                 ]),
             child: TextField(
-              keyboardType: TextInputType.emailAddress,
+              keyboardType: TextInputType.text,
+              onChanged: widget.onchange,
               controller: widget.controller,
               decoration: InputDecoration(
                   hintText: widget.title,

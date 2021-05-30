@@ -23,7 +23,7 @@ class _searchBarState extends State<searchBar> {
               borderRadius: BorderRadius.circular(10),
             ),
             child: TextField(
-              keyboardType: TextInputType.emailAddress,
+              keyboardType: TextInputType.text,
               controller: widget.controller,
               decoration: InputDecoration(
                   hintText: widget.title,

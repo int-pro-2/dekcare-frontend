@@ -127,7 +127,7 @@ class _ForumState extends State<ForumScreen> {
                       Container(
                         padding: EdgeInsets.only(top: 20, bottom: 20, left: 10),
                         width: width * 0.9,
-                        child: searchBar(title: 'ค้นหาชื่อคุณหมอที่นี่'),
+                        child: searchBar(title: 'ค้นหากระทู้ที่นี่'),
                       ),
                       Container(
                         width: width * 0.1,
@@ -189,6 +189,7 @@ class _ForumState extends State<ForumScreen> {
                                 Padding(
                                   padding: EdgeInsets.all(20),
                                   child: Pagination(
+                                    mode: 'simple',
                                     onChange: (page) {
                                       setState(() {
                                         pageRender = page;

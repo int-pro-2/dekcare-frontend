@@ -24,7 +24,7 @@ class Pagination extends StatefulWidget {
     this.current: 1,
     this.totalItems: 0,
     this.itemsPerPage: 3,
-    this.mode: "multiple",
+    this.mode: "multi",
     this.prevText: "ย้อนกลับ",
     this.nextText: "ต่อไป",
     this.showPageSize: 5,
