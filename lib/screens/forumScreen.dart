@@ -37,6 +37,7 @@ class _ForumState extends State<ForumScreen> {
     refreshKey.currentState?.show(atTop: false);
     await Future.delayed(Duration(seconds: 1));
     setState(() {});
+    fetchForums();
     return null;
   }
 

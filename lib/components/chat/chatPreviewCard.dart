@@ -36,7 +36,7 @@ class _chatPreviewCardState extends State<chatPreviewCard> {
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: CircleAvatar(
                       backgroundImage: NetworkImage(widget.profile),
-                      backgroundColor: greyPrimary,
+                      // backgroundColor: greyPrimary,
                       radius: 45,
                     ),
                   ),

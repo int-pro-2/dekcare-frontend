@@ -198,4 +198,17 @@ class ForumProvider with ChangeNotifier {
         comments: comments));
     return specificforum;
   }
+
+  Future<void> createForum(String topic, String body, String date) async {
+    final prefs = await SharedPreferences.getInstance();
+    try {
+      final response = await Dio().post(apiEndpoint + '/forum/forum',
+          data: {"topic": topic, "body": body, "date": date},
+          options: Options(headers: {"cookie": 'jwt=' + _token + ';'}));
+
+      notifyListeners();
+    } catch (error) {
+      print(error);
+    }
+  }
 }

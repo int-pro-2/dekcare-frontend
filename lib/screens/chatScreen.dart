@@ -65,9 +65,14 @@ class _ChatState extends State<ChatScreen> {
                                 itemCount: 5,
                                 itemBuilder: (context, index) =>
                                     chatPreviewCard(
+<<<<<<< HEAD
                                   name: "นพ. วิรวรรธ ใจอารีย์",
                                   profile:
                                       "https://scontent.fkdt2-1.fna.fbcdn.net/v/t1.6435-9/53458185_2150818338340159_4143062862610300928_n.jpg?_nc_cat=100&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=TZrNhZRqI6MAX9Nv44L&_nc_ht=scontent.fkdt2-1.fna&oh=9e7fd4dc6eeb448b34a3576abd63698c&oe=60D970C9",
+=======
+                                  name: "	นพ. วิรวรรธ ใจอารีย์",
+                                  profile: "/doctorIcon.png",
+>>>>>>> ed4f3b2dfa700fbdb1959434911fdcee8b4eb265
                                   message: "สวัสดีครับคนไข้",
                                   press: () {
                                     print('navigate');
