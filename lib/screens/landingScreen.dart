@@ -46,41 +46,44 @@ class _LandingState extends State<LandingScreen> {
                         ),
                         child: Column(
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.only(top: 20),
-                                  width: 40,
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    child: Icon(
-                                      Icons.notifications,
-                                      color: whitePrimary,
+                            Container(
+                              padding: EdgeInsets.only(right: 20),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.only(top: 20),
+                                    width: 40,
+                                    child: TextButton(
+                                      onPressed: () {},
+                                      child: Icon(
+                                        Icons.notifications,
+                                        color: whitePrimary,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.only(top: 20),
-                                  width: 30,
-                                  child: TextButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) {
-                                            return SettingScreen();
-                                          },
-                                        ),
-                                      );
-                                    },
-                                    child: Icon(
-                                      Icons.more_vert,
-                                      color: whitePrimary,
+                                  Container(
+                                    padding: EdgeInsets.only(top: 20),
+                                    width: 30,
+                                    child: TextButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) {
+                                              return SettingScreen();
+                                            },
+                                          ),
+                                        );
+                                      },
+                                      child: Icon(
+                                        Icons.more_vert,
+                                        color: whitePrimary,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                             Row(
                               children: [
