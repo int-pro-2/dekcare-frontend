@@ -1,6 +1,7 @@
 import 'package:dekcare_frontend/components/button.dart';
 import 'package:dekcare_frontend/components/constants.dart';
 import 'package:dekcare_frontend/provider/authenticateProvider.dart';
+import 'package:dekcare_frontend/screens/registerScreen.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
@@ -147,15 +148,6 @@ class _LoginState extends State<LoginScreen> {
                 color: yellowPrimary,
                 onPress: () {
                   login();
-                  // setState(() {});
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) {
-                  //       return Landing();
-                  //     },
-                  //   ),
-                  // );
                 },
                 title: 'Login'),
             SizedBox(
@@ -163,7 +155,16 @@ class _LoginState extends State<LoginScreen> {
             ),
             TextButton(
                 onPressed: () {
-                  setState(() {});
+                  setState(() {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return RegisterScreen();
+                        },
+                      ),
+                    );
+                  });
                 },
                 child: Text(
                   'สมัครบัญชีผู้ใช้',
