@@ -4,10 +4,16 @@ import 'package:dekcare_frontend/components/topBar.dart';
 import 'package:dekcare_frontend/components/text.dart';
 import 'package:flutter/material.dart';
 
-class PoopInputScreen extends StatelessWidget {
+class PoopInputScreen extends StatefulWidget {
+  @override
+  _PoopInputScreenState createState() => _PoopInputScreenState();
+}
+
+var color = '';
+var type = '';
+
+class _PoopInputScreenState extends State<PoopInputScreen> {
   Widget build(BuildContext context) {
-    final TextEditingController typeController = TextEditingController();
-    final TextEditingController colorController = TextEditingController();
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return MaterialApp(
@@ -20,12 +26,23 @@ class PoopInputScreen extends StatelessWidget {
             child: Container(
               padding:
                   EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-              child:
-                  Button(title: 'ยืนยัน', color: greyPrimary, onPress: () {}),
+              child: Button(
+                  title: 'ยืนยัน',
+                  color:
+                      (type != '' && color != '') ? yellowPrimary : greyPrimary,
+                  onPress: () {
+                    print(type + color);
+                  }),
             ),
           ),
           appBar: PreferredSize(
               child: TopBar(
+                press: () {
+                  setState(() {
+                    color = '';
+                    type = '';
+                  });
+                },
                 titleText: 'สุขภาพอุจจาระของลูก',
                 enableBackButton: true,
                 contextFromPage: context,
@@ -108,7 +125,12 @@ class PoopInputScreen extends StatelessWidget {
                           child: new Text(value),
                         );
                       }).toList(),
-                      onChanged: (_) {},
+                      onChanged: (value) {
+                        setState(() {
+                          type = value.toString();
+                        });
+                        print(type);
+                      },
                       decoration: InputDecoration(
                         filled: true,
                         hintText: 'เลือกลักษณะของอุจจาระ',
@@ -117,7 +139,7 @@ class PoopInputScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  TextKT(text: 'ลักษณะของอุจจาระ'),
+                  TextKT(text: 'สีของอุจจาระ'),
                   Container(
                     width: width * 0.9,
                     child: DropdownButtonFormField<String>(
@@ -135,7 +157,11 @@ class PoopInputScreen extends StatelessWidget {
                           child: new Text(value),
                         );
                       }).toList(),
-                      onChanged: (_) {},
+                      onChanged: (value) {
+                        setState(() {
+                          color = value.toString();
+                        });
+                      },
                       decoration: InputDecoration(
                         filled: true,
                         hintText: 'เลือกลักษณะของอุจจาระ',
@@ -143,7 +169,7 @@ class PoopInputScreen extends StatelessWidget {
                         border: InputBorder.none,
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
