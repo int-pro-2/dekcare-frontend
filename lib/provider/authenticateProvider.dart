@@ -43,7 +43,6 @@ class AuthenticateProvider with ChangeNotifier {
       final token = response.data["token"];
       _token = token;
       prefs.setString('userToken', _token);
-
       notifyListeners();
     } catch (error) {
       print(error);
@@ -52,34 +51,16 @@ class AuthenticateProvider with ChangeNotifier {
 
   Future<void> register(String email, String password, String firstname,
       String lastname, String birthdate) async {
-    final prefs = await SharedPreferences.getInstance();
-
     try {
-      print("email " +
-          email +
-          " password " +
-          password +
-          " firstname " +
-          firstname +
-          " lastname " +
-          lastname +
-          " birthdate " +
-          birthdate);
-
-      final response = await Dio().post('/auth/register', data: {
+      final response = await Dio().post(apiEndpoint + '/auth/register', data: {
         "email": email,
         "password": password,
         "firstname": firstname,
         "lastname": lastname,
         "birthdate": birthdate
       });
-      final token = response.data["token"];
-      _token = token;
       notifyListeners();
-      prefs.setString('userToken', _token);
     } catch (error) {
-      print(error);
-      prefs.clear();
       throw HttpException(usedEmailException);
     }
   }
@@ -91,7 +72,7 @@ class AuthenticateProvider with ChangeNotifier {
     String token = prefs.getString('userToken').toString();
     _token = token;
     try {
-      final response = await Dio().get(apiEndpoint + '/auth/profile',
+      await Dio().get(apiEndpoint + '/auth/profile',
           options: Options(headers: {"cookie": 'jwt=' + token + ';'}));
       notifyListeners();
     } catch (error) {
@@ -108,32 +89,13 @@ class AuthenticateProvider with ChangeNotifier {
     prefs.clear();
   }
 
-  Future<void> forgetPassword(String email) async {
+  Future<void> changePassword(String newPassword) async {
     // try {
-    //   await Dio().post(apiEndpoint + '/auth/reset', data: {"email": email});
+    //   await Dio().patch(apiEndpoint + '/auth/reset',
+    //       data: {"token": _recoveryToken, "password": newPassword});
     //   Timer(Duration(milliseconds: 500), () => notifyListeners());
     // } catch (error) {
-    //   throw HttpException(invalidException('email'));
+    //   throw HttpException(generalException);
     // }
   }
-
-  Future<void> checkResetPassword(String recoveryToken) async {
-    // try {
-    //   _recoveryToken = recoveryToken;
-    //   await Dio().post(apiEndpoint + '/auth/check-token',
-    //       data: {"token": recoveryToken});
-    //   Timer(Duration(milliseconds: 500), () => notifyListeners());
-    // } catch (error) {
-    //   throw HttpException(invalidException('token'));
-  }
-}
-
-Future<void> changePassword(String newPassword) async {
-  // try {
-  //   await Dio().patch(apiEndpoint + '/auth/reset',
-  //       data: {"token": _recoveryToken, "password": newPassword});
-  //   Timer(Duration(milliseconds: 500), () => notifyListeners());
-  // } catch (error) {
-  //   throw HttpException(generalException);
-  // }
 }
