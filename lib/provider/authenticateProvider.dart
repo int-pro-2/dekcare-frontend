@@ -53,8 +53,19 @@ class AuthenticateProvider with ChangeNotifier {
   Future<void> register(String email, String password, String firstname,
       String lastname, String birthdate) async {
     final prefs = await SharedPreferences.getInstance();
+
     try {
-      final response = await Dio().post('/auth/regis', data: {
+      print("email" +
+          email +
+          "password" +
+          password +
+          "firstname" +
+          firstname +
+          "lastname" +
+          lastname +
+          "birthdate" +
+          birthdate);
+      final response = await Dio().post('/api/auth/register', data: {
         "email": email,
         "password": password,
         "firstname": firstname,

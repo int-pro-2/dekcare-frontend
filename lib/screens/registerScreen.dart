@@ -1,4 +1,3 @@
-import 'package:dekcare_frontend/components/CalendarPicker.dart';
 import 'package:dekcare_frontend/components/button.dart';
 import 'package:dekcare_frontend/components/chatInput.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,6 +6,7 @@ import 'package:dekcare_frontend/components/constants.dart';
 import 'package:dekcare_frontend/screens/forumScreen.dart';
 
 import 'package:dekcare_frontend/provider/authenticateProvider.dart';
+import 'package:dekcare_frontend/components/topBar.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -23,24 +23,38 @@ class _RegisterScreenState extends State<RegisterScreen> {
   var emailCheck = '';
   var passwordCheck = '';
   var confirmPasswordCheck = '';
+  var firstnameCheck = '';
+  var lastnameCheck = '';
+
+  bool passwordEqual = true;
 
   var emailCheckError = '';
   var passwordCheckError = '';
   var confirmPasswordCheckError = '';
+  var firstnameCheckError = '';
+  var lastnameCheckError = '';
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
+  final TextEditingController firstnameController = TextEditingController();
 
-  // void register() async {
-  //   try {
-  //     await Provider.of<AuthenticateProvider>(context, listen: false)
-  //         .register(emailController.text, passwordController.text);
-  //   } catch (error) {
-  //     print(error);
-  //   }
-  // }
+  final TextEditingController lastnameController = TextEditingController();
+
+  void register() async {
+    try {
+      await Provider.of<AuthenticateProvider>(context, listen: false).register(
+          emailController.text,
+          passwordController.text,
+          firstnameController.text,
+          lastnameController.text,
+          dateTime.toString().substring(0, 10));
+    } catch (error) {
+      print(error);
+    }
+  }
+
   DateTime selectedDate = DateTime.now();
 
   String changeDate(date) {
@@ -67,16 +81,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    print(passwordCheckError);
-    bool valuefirst = false;
-    Color hexToColor(int rgb) => new Color(0xFF000000 + rgb);
+    print(dateTime);
+
     return MaterialApp(
-      theme: ThemeData(
-        brightness: Brightness.light,
-        primaryColor: hexToColor(0x335C81),
-        accentColor: hexToColor(0xFCA311),
-        splashColor: hexToColor(0x3BB273),
-      ),
+      theme: ThemeData(fontFamily: 'supermarket'),
       home: Scaffold(
         backgroundColor: whitePrimary,
         bottomNavigationBar: Container(
@@ -88,24 +96,49 @@ class _RegisterScreenState extends State<RegisterScreen> {
               title: 'ยืนยัน',
               color: (emailCheck != '' &&
                       passwordCheck != '' &&
-                      confirmPasswordCheck != '')
+                      confirmPasswordCheck != '' &&
+                      firstnameCheck != '' &&
+                      lastnameCheck != '')
                   ? yellowPrimary
                   : greyPrimary,
               onPress: () {
                 emailCheck = emailController.text;
                 passwordCheck = passwordController.text;
                 confirmPasswordCheck = confirmPasswordController.text;
+                firstnameCheck = firstnameController.text;
+                lastnameCheck = lastnameController.text;
+
+                if (confirmPasswordController.text != passwordController.text) {
+                  setState(() {
+                    passwordEqual = false;
+                  });
+                }
                 if (emailCheck == '') {
                   setState(() {
-                    emailCheck = 'error';
+                    emailCheckError = 'error';
                   });
                 }
                 if (passwordCheck == '') {
                   setState(() {
-                    passwordCheck = 'error';
+                    passwordCheckError = 'error';
                   });
                 }
                 if (confirmPasswordCheck == '') {
+                  setState(() {
+                    confirmPasswordCheckError = 'error';
+                  });
+                }
+                if (firstnameCheck == '') {
+                  setState(() {
+                    firstnameCheckError = 'error';
+                  });
+                }
+                if (lastnameCheck == '') {
+                  setState(() {
+                    lastnameCheckError = 'error';
+                  });
+                }
+                if (confirmPasswordCheckError == '') {
                   setState(() {
                     confirmPasswordCheck = 'error';
                   });
@@ -113,23 +146,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 if (emailCheck != '' && passwordCheck != '') {
                   // createForum();
                 }
-                if (emailCheck == '' && passwordCheck == '') {
-                  print('topic and body are not complete');
+                if (emailCheck != '' &&
+                    passwordCheck != '' &&
+                    confirmPasswordCheck != '' &&
+                    firstnameCheck != '' &&
+                    lastnameCheck != '') {
+                  // register();
+                  // print("email " + emailController.text);
+                  // print("password " + passwordController.text);
+
+                  // print("firstname " + firstnameController.text);
+
+                  // print("lastname " + lastnameController.text);
+
+                  // print("date " + dateTime.toString().substring(0, 10));
+                  register();
+                  print('registered');
                 }
               },
             ),
           ),
         ),
-        appBar: AppBar(
-            title: Text(
-              'สมัครสมาชิก',
-              style: TextStyle(fontSize: 23),
+        appBar: PreferredSize(
+            child: TopBar(
+              titleText: 'สมัครสมาชิก',
+              enableBackButton: true,
+              contextFromPage: context,
             ),
-            centerTitle: true,
-            backgroundColor: yellowPrimary,
-            shape: RoundedRectangleBorder(
-                borderRadius:
-                    BorderRadius.vertical(bottom: Radius.circular(30)))),
+            preferredSize: Size.fromHeight((height * 0.075))),
         body: SingleChildScrollView(
           child: Container(
             width: width,
@@ -162,6 +206,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         setState(() {
                           print(text);
                           emailCheck = text;
+                          setState(() {
+                            emailCheckError = '';
+                          });
                         });
                       },
                       keyboardType: TextInputType.emailAddress,
@@ -176,7 +223,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           border: InputBorder.none),
                     )),
-                emailCheck == 'error'
+                emailCheckError == 'error'
                     ? Container(
                         width: width,
                         padding: EdgeInsets.only(top: 20, left: 25),
@@ -199,6 +246,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       onChanged: (text) {
                         passwordCheck = text;
                         print(passwordCheck);
+                        setState(() {
+                          passwordCheckError = '';
+                          passwordEqual = true;
+                        });
                       },
                       controller: passwordController,
                       obscureText: !_passwordVisible,
@@ -225,7 +276,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           border: InputBorder.none),
                     )),
-                passwordCheck == 'error'
+                passwordCheckError == 'error'
                     ? Container(
                         width: width,
                         padding: EdgeInsets.only(top: 20, left: 25),
@@ -247,6 +298,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: TextField(
                       onChanged: (text) {
                         confirmPasswordCheck = text;
+                        setState(() {
+                          confirmPasswordCheckError = '';
+                          passwordEqual = true;
+                        });
                       },
                       controller: confirmPasswordController,
                       obscureText: !_confirmPasswordVisible,
@@ -274,12 +329,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           border: InputBorder.none),
                     )),
-                confirmPasswordCheck == 'error'
+                confirmPasswordCheckError == 'error'
                     ? Container(
                         width: width,
                         padding: EdgeInsets.only(top: 20, left: 25),
                         child: Text(
                           'โปรดกรอกรหัสผ่านอีกครั้งเพื่อยืนยัน',
+                          style: TextStyle(fontSize: 18, color: Colors.red),
+                        ),
+                      )
+                    : Container(),
+                passwordEqual == false
+                    ? Container(
+                        width: width,
+                        padding: EdgeInsets.only(top: 20, left: 25),
+                        child: Text(
+                          'รหัสผ่านไม่ตรงกัน',
                           style: TextStyle(fontSize: 18, color: Colors.red),
                         ),
                       )
@@ -298,34 +363,44 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   padding: EdgeInsets.only(top: 15),
                   child: ChatInput(
                     onchange: (text) {
-                      // setState(() {
-                      //   topicCheck = text;
-                      // });
-                      // setState(() {
-                      //   topicCheckError = '';
-                      // });
+                      setState(() {
+                        firstnameCheck = text;
+                      });
+                      setState(() {
+                        firstnameCheckError = '';
+                      });
                     },
-                    // controller: topicController,
+                    controller: firstnameController,
                     isCreate: true,
-                    title: 'ชื่อจริง..',
+                    title: 'ชื่อจริง',
                     color: greySecondary,
                     widthh: width * 0.9,
                     heightt: height * 0.06,
                     hasShadow: false,
                   ),
                 ),
+                firstnameCheckError == 'error'
+                    ? Container(
+                        width: width,
+                        padding: EdgeInsets.only(top: 20, left: 25),
+                        child: Text(
+                          'โปรดกรอกชื่อจริง',
+                          style: TextStyle(fontSize: 18, color: Colors.red),
+                        ),
+                      )
+                    : Container(),
                 Container(
                   padding: EdgeInsets.only(top: 15),
                   child: ChatInput(
                     onchange: (text) {
-                      // setState(() {
-                      //   topicCheck = text;
-                      // });
-                      // setState(() {
-                      //   topicCheckError = '';
-                      // });
+                      setState(() {
+                        lastnameCheck = text;
+                      });
+                      setState(() {
+                        lastnameCheckError = '';
+                      });
                     },
-                    // controller: topicController,
+                    controller: lastnameController,
                     isCreate: true,
                     title: 'นามสกุล..',
                     color: greySecondary,
@@ -334,6 +409,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     hasShadow: false,
                   ),
                 ),
+                lastnameCheckError == 'error'
+                    ? Container(
+                        width: width,
+                        padding: EdgeInsets.only(top: 20, left: 25),
+                        child: Text(
+                          'โปรดกรอกนามสกุล',
+                          style: TextStyle(fontSize: 18, color: Colors.red),
+                        ),
+                      )
+                    : Container(),
                 Container(
                     padding: EdgeInsets.only(left: 25, top: 15, bottom: 15),
                     width: width,
@@ -347,23 +432,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Container(
                     width: width * 0.6,
                     height: height * 0.1,
-                    // padding: EdgeInsets.all(20),
                     child: buildDatePicker()),
-                // Container(
-                //   padding: EdgeInsets.only(top: 15),
-                //   width: width * 0.9,
-                //   child: CalendarPicker(
-                //     title: selectedDate.toString().split(" ")[0] ==
-                //             DateTime.now().toString().split(" ")[0]
-                //         ? "วันเกิดของลูก"
-                //         : selectedDate.toString().split(" ")[0]
-                //     // changeDate(selectedDate)
-                //     ,
-                //     color: greySecondary,
-                //     fontColor: greyPrimary,
-                //     onPickDate: changeDate,
-                //   ),
-                // ),
               ],
             ),
           ),

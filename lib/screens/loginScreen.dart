@@ -129,20 +129,8 @@ class _LoginState extends State<LoginScreen> {
                       ),
                       border: InputBorder.none),
                 )),
-            Container(
-              width: width * 0.8,
-              alignment: Alignment.bottomRight,
-              child: TextButton(
-                  onPressed: () {
-                    setState(() {});
-                  },
-                  child: Text(
-                    'ลืมรหัสผ่าน?',
-                    style: TextStyle(
-                        color: blackPrimaryFont,
-                        fontFamily: 'supermarket',
-                        fontSize: 18),
-                  )),
+            SizedBox(
+              height: 30,
             ),
             Button(
                 color: yellowPrimary,
