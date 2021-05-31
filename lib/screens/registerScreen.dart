@@ -1,6 +1,7 @@
 import 'package:dekcare_frontend/components/button.dart';
 import 'package:dekcare_frontend/components/chatInput.dart';
 import 'package:dekcare_frontend/model/httpException.dart';
+import 'package:dekcare_frontend/screens/loginScreen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:dekcare_frontend/components/constants.dart';
@@ -53,6 +54,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
           lastnameController.text,
           // '2021-05-31'
           dateTime.toString().substring(0, 10));
+      Navigator.pop(context);
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return LoginScreen();
+          },
+        ),
+      );
     } on HttpException catch (error) {
       print(error);
     }

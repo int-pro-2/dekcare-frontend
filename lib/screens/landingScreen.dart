@@ -159,7 +159,16 @@ class _LandingState extends State<LandingScreen> {
                   children: [
                     Container(
                       child: CardKid(
-                        press: () {},
+                        press: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return PoopInputScreen();
+                              },
+                            ),
+                          );
+                        },
                         title: 'สุขภาพอุจจาระของลูก',
                         text: 'บันทึกข้อมูล',
                       ),
