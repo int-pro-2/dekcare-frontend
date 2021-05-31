@@ -13,8 +13,9 @@ class CardForum extends StatelessWidget {
       date,
       commentID,
       isComment,
-      url;
-
+      url,
+      hello;
+  final Function pressComment;
   const CardForum(
       {this.press,
       this.isComment,
@@ -25,7 +26,9 @@ class CardForum extends StatelessWidget {
       this.comment,
       this.isInside,
       this.date,
-      this.url});
+      this.url,
+      this.hello,
+      required this.pressComment});
 
   @override
   Widget build(BuildContext context) {
@@ -125,22 +128,47 @@ class CardForum extends StatelessWidget {
                           ),
                           isInside
                               ? isComment
-                                  ? Container(
-                                      width: width * 0.45,
-                                      child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            ChatInput(
-                                              isCreate: false,
-                                              hasShadow: false,
-                                              color: greySecondary,
-                                              title: 'แสดงความคิดเห็น',
-                                              widthh: width * 0.45,
-                                              heightt: 40,
-                                            )
-                                          ]),
-                                    )
+                                  ? Row(children: [
+                                      Container(
+                                        width: width * 0.35,
+                                        child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              ChatInput(
+                                                isCreate: false,
+                                                hasShadow: false,
+                                                color: greySecondary,
+                                                title: 'แสดงความคิดเห็น',
+                                                widthh: width * 0.35,
+                                                heightt: 40,
+                                              ),
+                                            ]),
+                                      ),
+                                      Container(
+                                        height: height * 0.05,
+                                        width: width * 0.12,
+                                        child: ElevatedButton(
+                                            onPressed: () => pressComment(),
+                                            child: Icon(
+                                              Icons.send,
+                                              color: Colors.black54,
+                                              size: 20,
+                                            ),
+                                            style: ButtonStyle(
+                                                backgroundColor:
+                                                    MaterialStateProperty.all(
+                                                        isComment == ''
+                                                            ? Colors.grey
+                                                            : Colors
+                                                                .amber[300]),
+                                                shadowColor:
+                                                    MaterialStateProperty.all<
+                                                        Color>(
+                                                  Colors.transparent,
+                                                ))),
+                                      ),
+                                    ])
                                   : Container(
                                       width: width * 0.45,
                                       child: Row(

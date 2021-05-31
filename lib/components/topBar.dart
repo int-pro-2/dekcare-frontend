@@ -9,10 +9,12 @@ class TopBar extends StatelessWidget
 // implements PreferredSizeWidget
 {
   final String titleText;
+  final press;
   final bool enableBackButton;
   final BuildContext contextFromPage;
   // Size get preferredSize => const Size.fromHeight(80);
   TopBar({
+    this.press,
     required this.titleText,
     required this.enableBackButton,
     required this.contextFromPage,
@@ -36,6 +38,7 @@ class TopBar extends StatelessWidget
             // Navigator.push(context, MaterialPageRoute(builder: (context) {
             //   return LandingScreen();
             // }));
+            press();
             Navigator.pop(contextFromPage);
           }
         },

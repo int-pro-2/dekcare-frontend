@@ -2,13 +2,17 @@ import 'package:dekcare_frontend/components/constants.dart';
 import 'package:flutter/material.dart';
 
 class ChatInput extends StatefulWidget {
-  final title, controller, hasShadow, isCreate;
+  final title, controller, hasShadow, isCreate, onchange;
+  final object;
+
   final Color color;
   final double widthh;
   final double heightt;
 
   ChatInput(
       {this.title,
+      this.onchange,
+      this.object,
       this.isCreate,
       this.hasShadow,
       required this.color,
@@ -47,27 +51,12 @@ class _ChatInputState extends State<ChatInput> {
                         )
                 ]),
             child: TextField(
-              keyboardType: TextInputType.emailAddress,
+              keyboardType: TextInputType.text,
+              onChanged: widget.onchange,
               controller: widget.controller,
               decoration: InputDecoration(
                   hintText: widget.title,
                   hintStyle: TextStyle(fontFamily: 'supermarket', fontSize: 18),
-                  suffixIcon: widget.isCreate
-                      ? Text('')
-                      : ElevatedButton(
-                          onPressed: () {
-                            print('send');
-                          },
-                          child: Icon(
-                            Icons.send,
-                            color: Colors.black54,
-                          ),
-                          style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all(widget.color),
-                              shadowColor: MaterialStateProperty.all<Color>(
-                                Colors.transparent,
-                              ))),
                   border: InputBorder.none),
             )));
   }

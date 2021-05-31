@@ -1,15 +1,40 @@
 import 'package:dekcare_frontend/components/cardForum.dart';
+import 'package:dekcare_frontend/components/constants.dart';
+import 'package:dekcare_frontend/components/emptyItem.dart';
 import 'package:dekcare_frontend/components/navBar/nav.dart';
-import 'package:dekcare_frontend/Components/TopBar.dart';
+
 import 'package:dekcare_frontend/Components/searchBar.dart';
 import 'package:dekcare_frontend/screens/createForum.dart';
 import 'package:dekcare_frontend/screens/forumInsideScreen.dart';
+import 'package:dekcare_frontend/screens/splashScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:dekcare_frontend/Components/constants.dart';
+
 import 'dart:async';
 import 'dart:math';
 import 'package:dekcare_frontend/provider/forumProvider.dart';
 import 'package:provider/provider.dart';
+import 'package:dekcare_frontend/components/pagination.dart';
+
+class Forums {
+  final int id;
+  final String ownerID;
+  final String displayname;
+  final String topic;
+  final String body;
+  final DateTime date;
+  final int count;
+  final String picture;
+
+  Forums(
+      {required this.id,
+      required this.ownerID,
+      required this.topic,
+      required this.body,
+      required this.date,
+      required this.displayname,
+      required this.count,
+      required this.picture});
+}
 
 class ForumScreen extends StatefulWidget {
   @override
@@ -18,6 +43,9 @@ class ForumScreen extends StatefulWidget {
 
 class _ForumState extends State<ForumScreen> {
   var random;
+  var initList = 0;
+  var pageRender;
+
   var refreshKey = GlobalKey<RefreshIndicatorState>();
 
   void fetchForums() async {
@@ -26,10 +54,13 @@ class _ForumState extends State<ForumScreen> {
     } catch (error) {}
   }
 
+  List<Forums> listRender = [];
+
   void initState() {
     super.initState();
     random = Random();
     fetchForums();
+
     refreshList();
   }
 
@@ -51,6 +82,20 @@ class _ForumState extends State<ForumScreen> {
       theme: ThemeData(fontFamily: 'supermarket'),
       home: Consumer<ForumProvider>(builder: (context, forumProvider, _) {
         final forumList = forumProvider.forums;
+        if (initList == 0 && forumList.length != 0) {
+          initList++;
+          for (var i = 0; i < 3; i++) {
+            listRender.add(Forums(
+                id: forumList[i].id,
+                ownerID: forumList[i].ownerID,
+                topic: forumList[i].topic,
+                body: forumList[i].body,
+                date: forumList[i].date,
+                displayname: forumList[i].displayname,
+                count: forumList[i].count,
+                picture: forumList[i].picture));
+          }
+        }
 
         return Scaffold(
           backgroundColor: greySecondary,
@@ -82,7 +127,7 @@ class _ForumState extends State<ForumScreen> {
                       Container(
                         padding: EdgeInsets.only(top: 20, bottom: 20, left: 10),
                         width: width * 0.9,
-                        child: searchBar(title: 'ค้นหาชื่อคุณหมอที่นี่'),
+                        child: searchBar(title: 'ค้นหากระทู้ที่นี่'),
                       ),
                       Container(
                         width: width * 0.1,
@@ -105,44 +150,77 @@ class _ForumState extends State<ForumScreen> {
                       ),
                     ],
                   ),
-                  Container(
-                    height: height * 0.7,
-                    child: RefreshIndicator(
-                      key: refreshKey,
-                      onRefresh: refreshList,
-                      child: SingleChildScrollView(
-                        physics: ScrollPhysics(),
-                        child: Column(children: [
-                          ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: forumList.length,
-                            itemBuilder: (context, index) => CardForum(
-                              url: forumList[index].picture,
-                              isComment: false,
-                              title: forumList[index].topic,
-                              press: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return ForumInsideScreen(
-                                        index: forumList[index].id,
+                  listRender.length == 0
+                      ? EmptyList(text: 'test')
+                      : Container(
+                          height: height * 0.7,
+                          child: RefreshIndicator(
+                            key: refreshKey,
+                            onRefresh: refreshList,
+                            child: SingleChildScrollView(
+                              physics: ScrollPhysics(),
+                              child: Column(children: [
+                                ListView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: listRender.length,
+                                  itemBuilder: (context, index) => CardForum(
+                                    pressComment: () {},
+                                    url: listRender[index].picture,
+                                    isComment: false,
+                                    title: listRender[index].topic,
+                                    text: listRender[index].body,
+                                    userName: listRender[index].displayname,
+                                    comment: listRender[index].count,
+                                    press: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) {
+                                            return ForumInsideScreen(
+                                              index: listRender[index].id,
+                                            );
+                                          },
+                                        ),
                                       );
                                     },
+                                    isInside: false,
                                   ),
-                                );
-                              },
-                              isInside: false,
-                              text: forumList[index].body,
-                              userName: forumList[index].displayname,
-                              comment: forumList[index].count,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(20),
+                                  child: Pagination(
+                                    mode: 'simple',
+                                    onChange: (page) {
+                                      setState(() {
+                                        pageRender = page;
+                                      });
+                                      print(pageRender);
+                                      listRender = [];
+                                      for (var i = ((pageRender - 1) * 3);
+                                          i < pageRender * 3;
+                                          i++) {
+                                        if (i < forumList.length) {
+                                          listRender.add(Forums(
+                                              id: forumList[i].id,
+                                              ownerID: forumList[i].ownerID,
+                                              topic: forumList[i].topic,
+                                              body: forumList[i].body,
+                                              date: forumList[i].date,
+                                              displayname:
+                                                  forumList[i].displayname,
+                                              count: forumList[i].count,
+                                              picture: forumList[i].picture));
+                                        }
+                                      }
+                                    },
+                                    totalItems: forumList.length,
+                                  ),
+                                ),
+                              ]),
                             ),
                           ),
-                        ]),
-                      ),
-                    ),
-                  )
+                        )
                 ],
               ),
             ),

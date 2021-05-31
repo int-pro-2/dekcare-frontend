@@ -11,12 +11,12 @@ class CardKid extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    return TextButton(
-      onPressed: () {},
+    return Container(
+      // onPressed: () {},
       child: Container(
-        child: SizedBox(
-          width: width * 0.5,
-          height: height * (25 / 100),
+        child: Container(
+          width: width * 0.425,
+          // height: height * (25 / 100),
           child: DecoratedBox(
               decoration: BoxDecoration(
                   color: Colors.white,
@@ -53,7 +53,10 @@ class CardKid extends StatelessWidget {
                       height: height * 0.045,
                       width: width * 0.35,
                       child: Button(
-                          color: yellowPrimary, onPress: press, title: text))
+                          color: yellowPrimary, onPress: press, title: text)),
+                  SizedBox(
+                    height: 10,
+                  )
                 ],
               )),
         ),

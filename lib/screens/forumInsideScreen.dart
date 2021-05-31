@@ -20,102 +20,7 @@ class ForumInsideScreen extends StatefulWidget {
   _ForumInsideScreenState createState() => _ForumInsideScreenState();
 }
 
-class Forum {
-  final id;
-  final ownwerID;
-  final userName;
-  final topic;
-  final body;
-  final date;
-  final comment;
-  final img;
-
-  Forum(
-      {this.id,
-      this.ownwerID,
-      this.topic,
-      this.body,
-      this.date,
-      this.userName,
-      this.comment,
-      this.img});
-}
-
-class Reply {
-  final id;
-  final ownwerID;
-  final userName;
-  final topic;
-  final body;
-  final date;
-  final comment;
-  final img;
-
-  Reply(
-      {this.id,
-      this.ownwerID,
-      this.topic,
-      this.body,
-      this.date,
-      this.userName,
-      this.comment,
-      this.img});
-}
-
-class Comment {
-  final id;
-  final userID;
-  final forumID;
-  final userName;
-  final commentID;
-  final text;
-  final date;
-  final img;
-
-  Comment(
-      {this.id,
-      this.userID,
-      this.forumID,
-      this.userName,
-      this.commentID,
-      this.text,
-      this.date,
-      this.img});
-}
-
 class _ForumInsideScreenState extends State<ForumInsideScreen> {
-  List<Forum> forum = [
-    Forum(
-        id: '01',
-        ownwerID: '8b36a2e7-a990',
-        userName: 'กาต๊าก กะตัก',
-        body:
-            "ตอนนี้ลูกสาวอายุ 15 ค่ะ เป็นเด็กคิดเยอะ (คิดร้ายกับผู้อื่น คิดว่าผู้อื่นคิดร้ายกับตัว) ชอบเพ้อฝันค่ะ กลัวอายเพื่อน กลัวมีไม่เท่าเทียมกับเพื่อน เป็นเด็กอวดเก่งอวดดี แต่ทำในสิ่งที่ตัวเองอวดไม่ได้เลย จ้องจะมีปัญหากับคนอื่นเสมอ",
-        date: '2021-05-28',
-        topic: 'ปรึกษาเรื่องลูกหน่อยค่ะ เครียดมาก...??',
-        comment: '4',
-        img: 'null'),
-  ];
-  List<Comment> comment = [
-    // Comment(
-    //     id: '01',
-    //     userID: '8b36a2e7-a990',
-    //     userName: 'บอยไง',
-    //     commentID: '01',
-    //     text:
-    //         "เรามีเวลาเอาใจใส่เขาก่อนหน้านี้ มากพอไหม เขาขาดอะไรจากคนรอบข้างบ้างหรือเปล่า บางทีเราปล่อยเขามานานไม่ค่อยได้บอกกล่าวซึ่งมาถึงจุดนี้จะเปลี่ยนแปลงก็ต้องใช้เวลาบ้าง  บอกกล่าวกันด้วยเหตุผล ผลเสียต่างๆที่จะตามมา การใช้อารมณ์น่าจะทำให้สิ่งต่างๆยิ่งแย่ลงนะ ใจเย็นๆ บางทีก็ต้องคิดดูอีกทีว่าตัวเราหรือเปล่าที่ทำให้เขาเป็นแบบนี้ หรือเพราะตัวเขาเอง",
-    //     date: '2021-05-28',
-    //     img: 'null'),
-    // Comment(
-    //     id: '02',
-    //     userID: '8b36a2e7-a990',
-    //     userName: 'เต้ยเอง',
-    //     commentID: '02',
-    //     text: "เห็นด้วยกับความคิดเห็นแรกค่ะ",
-    //     date: '2021-05-28',
-    //     img: 'null'),
-  ];
-
   void fetchForums() async {
     try {
       await Provider.of<ForumProvider>(context, listen: false)
@@ -123,8 +28,25 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
     } catch (error) {}
   }
 
+  void createComment() async {
+    print('create Forum');
+    try {
+      await Provider.of<ForumProvider>(context, listen: false).createComment(
+          widget.index.toString(),
+          commentController.text,
+          DateTime.now().toString());
+      fetchForums();
+    } catch (error) {
+      print(error);
+    }
+    print('done create forumm');
+  }
+
+  var isComment = '';
   var random;
   var refreshKey = GlobalKey<RefreshIndicatorState>();
+  var refreshKey1 = GlobalKey<RefreshIndicatorState>();
+
   void initState() {
     fetchForums();
 
@@ -138,11 +60,26 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
     await Future.delayed(Duration(seconds: 1));
 
     setState(() {});
-
+    fetchForums();
     return null;
   }
 
+  Future<Null> refreshList1() async {
+    refreshKey1.currentState?.show(atTop: false);
+    await Future.delayed(Duration(seconds: 1));
+
+    setState(() {});
+    fetchForums();
+    return null;
+  }
+
+  void test() {
+    print('boy');
+  }
+
   @override
+  final TextEditingController commentController = TextEditingController();
+
   Widget build(BuildContext context) {
     @override
     double width = MediaQuery.of(context).size.width;
@@ -155,8 +92,6 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
         if (forumList.length == 0) {
           return SplashScreen();
         }
-
-        print(forumList[0].comments.length);
 
         return Scaffold(
           backgroundColor: greySecondary,
@@ -182,117 +117,165 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
               preferredSize: Size.fromHeight(height * 0.075)),
           body: Container(
             height: height,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Container(
-                    height: height * 0.9,
-                    child: RefreshIndicator(
-                      key: refreshKey,
-                      onRefresh: refreshList,
-                      child: SingleChildScrollView(
-                        physics: ScrollPhysics(),
-                        child: Column(children: [
-                          CardForum(
-                            isInside: true,
-                            url: forumList[0].picture,
-                            isComment: false,
-                            title: forumList[0].topic,
-                            press: () {},
-                            text: forumList[0].body,
-                            userName: forumList[0].firstname,
-                            date: forumList[0].date.toString().substring(0, 19),
-                          ),
-                          Row(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(15),
-                                width: width * 0.425,
-                                child: Divider(
-                                  height: 5,
-                                  thickness: 2,
-                                  indent: 10,
-                                  endIndent: 10,
-                                ),
-                              ),
-                              Text('ความคิดเห็น',
-                                  style: TextStyle(color: Colors.grey)),
-                              Container(
-                                padding: EdgeInsets.all(15),
-                                width: width * 0.425,
-                                child: Divider(
-                                  height: 5,
-                                  thickness: 2,
-                                  indent: 10,
-                                  endIndent: 10,
-                                ),
-                              ),
-                            ],
-                          ),
-                          if (forumList[0].comments.length != 0)
-                            ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: forumList[0].comments.length,
-                              itemBuilder: (context, index) => CardForum(
-                                commentID: (index + 1).toString(),
-                                url: forumList[0].comments[index].picture,
-                                isComment: true,
+            child: RefreshIndicator(
+                key: refreshKey,
+                onRefresh: refreshList,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Container(
+                        height: height * 0.9,
+                        child: RefreshIndicator(
+                          key: refreshKey1,
+                          onRefresh: refreshList1,
+                          child: SingleChildScrollView(
+                            physics: ScrollPhysics(),
+                            child: Column(children: [
+                              CardForum(
                                 isInside: true,
-                                text: forumList[0].comments[index].text,
-                                userName:
-                                    forumList[0].comments[index].firstname,
+                                url: forumList[0].picture,
+                                isComment: false,
+                                title: forumList[0].topic,
+                                pressComment: test,
+                                hello: 'boyplus',
+                                text: forumList[0].body,
+                                userName: forumList[0].firstname,
+                                date: forumList[0]
+                                    .date
+                                    .toString()
+                                    .substring(0, 19),
                               ),
-                            ),
-                          if (forumList[0].comments.length == 0)
-                            EmptyList(text: 'ไม่มีความคิดเห็น'),
-                          Row(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(15),
-                                width: width * 0.425,
-                                child: Divider(
-                                  height: 5,
-                                  thickness: 2,
-                                  indent: 10,
-                                  endIndent: 10,
+                              Row(
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.all(15),
+                                    width: width * 0.425,
+                                    child: Divider(
+                                      height: 5,
+                                      thickness: 2,
+                                      indent: 10,
+                                      endIndent: 10,
+                                    ),
+                                  ),
+                                  Text('ความคิดเห็น',
+                                      style: TextStyle(color: Colors.grey)),
+                                  Container(
+                                    padding: EdgeInsets.all(15),
+                                    width: width * 0.425,
+                                    child: Divider(
+                                      height: 5,
+                                      thickness: 2,
+                                      indent: 10,
+                                      endIndent: 10,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              if (forumList[0].comments.length != 0)
+                                ListView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: forumList[0].comments.length,
+                                  itemBuilder: (context, index) => CardForum(
+                                    press: () {},
+                                    pressComment: () {
+                                      print('ha');
+                                    },
+                                    hello: 'from another',
+                                    // date: forumList[0].comments[index].,
+                                    commentID: (index + 1).toString(),
+                                    url: forumList[0].comments[index].picture,
+                                    isComment: true,
+                                    isInside: true,
+                                    text: forumList[0].comments[index].text,
+                                    userName:
+                                        forumList[0].comments[index].firstname,
+                                  ),
                                 ),
+                              if (forumList[0].comments.length == 0)
+                                EmptyList(text: 'ไม่มีความคิดเห็น'),
+                              Row(
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.all(15),
+                                    width: width * 0.425,
+                                    child: Divider(
+                                      height: 5,
+                                      thickness: 2,
+                                      indent: 10,
+                                      endIndent: 10,
+                                    ),
+                                  ),
+                                  Text('ความคิดเห็น',
+                                      style: TextStyle(color: Colors.grey)),
+                                  Container(
+                                    padding: EdgeInsets.all(15),
+                                    width: width * 0.425,
+                                    child: Divider(
+                                      height: 5,
+                                      thickness: 2,
+                                      indent: 10,
+                                      endIndent: 10,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Text('ความคิดเห็น',
-                                  style: TextStyle(color: Colors.grey)),
-                              Container(
-                                padding: EdgeInsets.all(15),
-                                width: width * 0.425,
-                                child: Divider(
-                                  height: 5,
-                                  thickness: 2,
-                                  indent: 10,
-                                  endIndent: 10,
+                              Row(children: [
+                                Container(
+                                  padding: EdgeInsets.all(10),
+                                  child: ChatInput(
+                                    onchange: (text) {
+                                      setState(() {
+                                        isComment = text;
+                                      });
+                                    },
+                                    controller: commentController,
+                                    isCreate: false,
+                                    hasShadow: true,
+                                    widthh: width * 0.75,
+                                    heightt: height * 0.07,
+                                    color: Colors.white,
+                                    title: 'แสดงความคิดเห็น....',
+                                  ),
                                 ),
-                              ),
-                            ],
+                                Container(
+                                  height: height * 0.07,
+                                  child: ElevatedButton(
+                                      onPressed: () {
+                                        if (isComment != '') {
+                                          createComment();
+                                          commentController.clear();
+                                        }
+                                        if (isComment == '') {
+                                          print('comment is null');
+                                        }
+                                      },
+                                      child: Icon(
+                                        Icons.send,
+                                        color: Colors.black54,
+                                      ),
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  isComment == ''
+                                                      ? Colors.grey
+                                                      : Colors.amber[300]),
+                                          shadowColor:
+                                              MaterialStateProperty.all<Color>(
+                                            Colors.transparent,
+                                          ))),
+                                ),
+                              ]),
+                              SizedBox(
+                                height: 20,
+                              )
+                            ]),
                           ),
-                          Container(
-                            padding: EdgeInsets.all(10),
-                            child: ChatInput(
-                              isCreate: false,
-                              hasShadow: true,
-                              widthh: width * 0.95,
-                              heightt: height * 0.1,
-                              color: Colors.white,
-                              title: 'แสดงความคิดเห็น....',
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          )
-                        ]),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
+                        ),
+                      )
+                    ],
+                  ),
+                )),
           ),
         );
       }),

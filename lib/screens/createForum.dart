@@ -16,6 +16,12 @@ class CreaetForumScreen extends StatefulWidget {
 
 class _CreaetForumScreenState extends State<CreaetForumScreen> {
   @override
+  var topicCheck = '';
+  var bodyCheck = '';
+
+  var topicCheckError = '';
+  var bodyCheckError = '';
+
   void createForum() async {
     print('create Forum');
     try {
@@ -52,9 +58,26 @@ class _CreaetForumScreenState extends State<CreaetForumScreen> {
           padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
           child: Button(
             title: 'ยืนยัน',
-            color: yellowPrimary,
+            color: (topicCheck != '' && bodyCheck != '')
+                ? yellowPrimary
+                : greyPrimary,
             onPress: () {
-              createForum();
+              if (topicCheck == '') {
+                setState(() {
+                  topicCheckError = 'error';
+                });
+              }
+              if (bodyCheck == '') {
+                setState(() {
+                  bodyCheckError = 'error';
+                });
+              }
+              if (topicCheck != '' && bodyCheck != '') {
+                createForum();
+              }
+              if (topicCheck == '' && bodyCheck == '') {
+                print('topic and body are not complete');
+              }
             },
           ),
         ),
@@ -69,51 +92,89 @@ class _CreaetForumScreenState extends State<CreaetForumScreen> {
           shape: RoundedRectangleBorder(
               borderRadius:
                   BorderRadius.vertical(bottom: Radius.circular(30)))),
-      body: Container(
-        width: width,
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.only(top: 15),
-              child: ChatInput(
-                controller: topicController,
-                isCreate: true,
-                title: 'ตั้งหัวข้อคำถามตรงนี้...',
-                color: whitePrimary,
-                widthh: width * 0.9,
-                heightt: height * 0.06,
-                hasShadow: false,
+      body: SingleChildScrollView(
+        child: Container(
+          width: width,
+          child: Column(
+            children: [
+              Container(
+                padding: EdgeInsets.only(top: 15),
+                child: ChatInput(
+                  onchange: (text) {
+                    setState(() {
+                      topicCheck = text;
+                    });
+                    setState(() {
+                      topicCheckError = '';
+                    });
+                  },
+                  controller: topicController,
+                  isCreate: true,
+                  title: 'ตั้งหัวข้อคำถามตรงนี้...',
+                  color: whitePrimary,
+                  widthh: width * 0.9,
+                  heightt: height * 0.06,
+                  hasShadow: false,
+                ),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.all(15),
-              child: ChatInput(
-                controller: bodyController,
-                isCreate: true,
-                title: 'เนื้อหากระทู้...',
-                color: whitePrimary,
-                widthh: width * 0.9,
-                heightt: height * 0.3,
-                hasShadow: false,
+              topicCheckError == 'error'
+                  ? Container(
+                      width: width,
+                      padding: EdgeInsets.only(top: 20, left: 25),
+                      child: Text(
+                        'โปรดกรอกหัวข้อก่อนยืนยัน',
+                        style: TextStyle(fontSize: 18, color: Colors.red),
+                      ),
+                    )
+                  : Container(),
+              Container(
+                padding: EdgeInsets.all(15),
+                child: ChatInput(
+                  controller: bodyController,
+                  isCreate: true,
+                  onchange: (text) {
+                    setState(() {
+                      bodyCheck = text;
+                    });
+                    setState(() {
+                      bodyCheckError = '';
+                    });
+                  },
+                  title: 'เนื้อหากระทู้...',
+                  color: whitePrimary,
+                  widthh: width * 0.9,
+                  heightt: height * 0.3,
+                  hasShadow: false,
+                ),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.only(left: 25, top: 25),
-              width: width,
-              child: Text(
-                '*ร่วมพูดคุยแลกเปลี่ยนความคิดเห็นในทุกประเด็น ',
-                style: TextStyle(fontSize: 18, color: blackSecondaryFont),
+              bodyCheckError == 'error'
+                  ? Container(
+                      width: width,
+                      padding: EdgeInsets.only(top: 20, left: 25),
+                      child: Text(
+                        'โปรดกรอกเนื้อหากระทู้ก่อนยืนยัน',
+                        style: TextStyle(fontSize: 18, color: Colors.red),
+                      ),
+                    )
+                  : Container(),
+              Container(
+                padding: EdgeInsets.only(left: 25, top: 25),
+                width: width,
+                child: Text(
+                  '*ร่วมพูดคุยแลกเปลี่ยนความคิดเห็นในทุกประเด็น ',
+                  style: TextStyle(fontSize: 18, color: blackSecondaryFont),
+                ),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.only(left: 25, top: 10),
-              width: width,
-              child: Text(
-                '*โปรดใช้คำพูดที่สุภาพ เพื่อสังคมที่ดีของ DekCare',
-                style: TextStyle(fontSize: 18, color: blackSecondaryFont),
-              ),
-            )
-          ],
+              Container(
+                padding: EdgeInsets.only(left: 25, top: 10),
+                width: width,
+                child: Text(
+                  '*โปรดใช้คำพูดที่สุภาพ เพื่อสังคมที่ดีของ DekCare',
+                  style: TextStyle(fontSize: 18, color: blackSecondaryFont),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
