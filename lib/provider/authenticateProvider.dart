@@ -55,17 +55,18 @@ class AuthenticateProvider with ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
 
     try {
-      print("email" +
+      print("email " +
           email +
-          "password" +
+          " password " +
           password +
-          "firstname" +
+          " firstname " +
           firstname +
-          "lastname" +
+          " lastname " +
           lastname +
-          "birthdate" +
+          " birthdate " +
           birthdate);
-      final response = await Dio().post('/api/auth/register', data: {
+
+      final response = await Dio().post('/auth/register', data: {
         "email": email,
         "password": password,
         "firstname": firstname,
@@ -77,6 +78,7 @@ class AuthenticateProvider with ChangeNotifier {
       notifyListeners();
       prefs.setString('userToken', _token);
     } catch (error) {
+      print(error);
       prefs.clear();
       throw HttpException(usedEmailException);
     }

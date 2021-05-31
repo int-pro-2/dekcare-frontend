@@ -1,5 +1,7 @@
 import 'package:dekcare_frontend/components/button.dart';
 import 'package:dekcare_frontend/components/chatInput.dart';
+import 'package:dekcare_frontend/model/httpException.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:dekcare_frontend/components/constants.dart';
 
@@ -49,8 +51,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
           passwordController.text,
           firstnameController.text,
           lastnameController.text,
+          // '2021-05-31'
           dateTime.toString().substring(0, 10));
-    } catch (error) {
+    } on HttpException catch (error) {
       print(error);
     }
   }
@@ -65,20 +68,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Widget build(BuildContext context) {
-    bool isChecked = false;
     @override
-    Color getColor(Set<MaterialState> states) {
-      const Set<MaterialState> interactiveStates = <MaterialState>{
-        MaterialState.pressed,
-        MaterialState.hovered,
-        MaterialState.focused,
-      };
-      if (states.any(interactiveStates.contains)) {
-        return Colors.blue;
-      }
-      return Colors.red;
-    }
-
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     print(dateTime);
