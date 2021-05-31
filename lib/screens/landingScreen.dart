@@ -3,6 +3,7 @@ import 'package:dekcare_frontend/components/navBar/nav.dart';
 import 'package:dekcare_frontend/components/constants.dart';
 import 'package:dekcare_frontend/components/cardBalance.dart';
 import 'package:dekcare_frontend/components/card.dart';
+import 'package:dekcare_frontend/screens/poopInfo.dart';
 import 'package:dekcare_frontend/screens/poopInputScreen.dart';
 import 'package:dekcare_frontend/screens/settingScreen.dart';
 
@@ -176,7 +177,16 @@ class _LandingState extends State<LandingScreen> {
                     Container(
                       padding: EdgeInsets.only(left: 20),
                       child: CardKid(
-                        press: () {},
+                        press: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return PoopInfo();
+                              },
+                            ),
+                          );
+                        },
                         title: 'ข้อมูลสุขภาพอุจจาระ',
                         text: 'ดูข้อมูล',
                       ),
