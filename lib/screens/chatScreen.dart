@@ -1,3 +1,4 @@
+import 'package:dekcare_frontend/Screens/individualChatScreen.dart';
 import 'package:dekcare_frontend/Screens/landingScreen.dart';
 import 'package:dekcare_frontend/components/chat/chatPreviewCard.dart';
 import 'package:dekcare_frontend/components/navBar/nav.dart';
@@ -26,6 +27,7 @@ class _ChatState extends State<ChatScreen> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(fontFamily: 'supermarket'),
         home: Scaffold(
             appBar: PreferredSize(
@@ -75,7 +77,7 @@ class _ChatState extends State<ChatScreen> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) {
-                                          return LandingScreen();
+                                          return IndividualChatScreen();
                                         },
                                       ),
                                     );
