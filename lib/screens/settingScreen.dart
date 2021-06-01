@@ -26,42 +26,44 @@ class _SettingState extends State<SettingScreen> {
     @override
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    return Scaffold(
-      appBar: AppBar(
-          title: Text(
-            'setting',
-            style: TextStyle(fontSize: 23),
-          ),
-          centerTitle: true,
-          backgroundColor: yellowPrimary,
-          shape: RoundedRectangleBorder(
-              borderRadius:
-                  BorderRadius.vertical(bottom: Radius.circular(30)))),
-      body: Container(
-        width: width,
-        child: Column(
-          children: [
-            SizedBox(
-              height: 30,
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+            title: Text(
+              'setting',
+              style: TextStyle(fontSize: 23),
             ),
-            Container(
-              child: Button(
-                onPress: () {
-                  logout();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return LoginScreen();
-                      },
-                    ),
-                  );
-                },
-                title: 'Logout',
-                color: yellowPrimary,
+            centerTitle: true,
+            backgroundColor: yellowPrimary,
+            shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.vertical(bottom: Radius.circular(30)))),
+        body: Container(
+          width: width,
+          child: Column(
+            children: [
+              SizedBox(
+                height: 30,
               ),
-            )
-          ],
+              Container(
+                child: Button(
+                  onPress: () {
+                    logout();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return LoginScreen();
+                        },
+                      ),
+                    );
+                  },
+                  title: 'Logout',
+                  color: yellowPrimary,
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

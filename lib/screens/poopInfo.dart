@@ -19,36 +19,38 @@ class _PoopInfoState extends State<PoopInfo> {
     double height = MediaQuery.of(context).size.height;
     return MaterialApp(
       theme: ThemeData(fontFamily: 'supermarket'),
-      home: Scaffold(
-          backgroundColor: greySecondary,
-          appBar: PreferredSize(
-              child: TopBar(
-                press: () {
-                  setState(() {
-                    color = '';
-                    type = '';
-                  });
-                },
-                titleText: 'ข้อมูลสุขภาพอุจจาระของลูก',
-                enableBackButton: true,
-                contextFromPage: context,
+      home: SafeArea(
+              child: Scaffold(
+            backgroundColor: greySecondary,
+            appBar: PreferredSize(
+                child: TopBar(
+                  press: () {
+                    setState(() {
+                      color = '';
+                      type = '';
+                    });
+                  },
+                  titleText: 'ข้อมูลสุขภาพอุจจาระของลูก',
+                  enableBackButton: true,
+                  contextFromPage: context,
+                ),
+                preferredSize: Size.fromHeight((height * 0.075))),
+            body: Container(
+              padding: EdgeInsets.all(20),
+              width: width,
+              height: height,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    CardPoopInfo(
+                      title: 'test',
+                      text: 'test',
+                    )
+                  ],
+                ),
               ),
-              preferredSize: Size.fromHeight((height * 0.075))),
-          body: Container(
-            padding: EdgeInsets.all(20),
-            width: width,
-            height: height,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  CardPoopInfo(
-                    title: 'test',
-                    text: 'test',
-                  )
-                ],
-              ),
-            ),
-          )),
+            )),
+      ),
     );
   }
 }
