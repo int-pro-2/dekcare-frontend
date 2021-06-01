@@ -16,7 +16,7 @@ class _SettingState extends State<SettingScreen> {
   @override
   void logout() async {
     try {
-      await Provider.of<AuthenticateProvider>(context, listen: false).logout;
+      await Provider.of<AuthenticateProvider>(context, listen: false).logout();
     } catch (error) {
       print(error);
     }
