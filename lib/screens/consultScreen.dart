@@ -17,6 +17,7 @@ class ConsultScreen extends StatefulWidget {
 
 class _ConsultState extends State<ConsultScreen> {
   var fav = false;
+  bool isLoading = false;
 
   void changeFav(newFav) {
     setState(() {
@@ -27,11 +28,17 @@ class _ConsultState extends State<ConsultScreen> {
 
   void ListDoctor(bool isFav) async {
     try {
+      setState(() {
+        isLoading = true;
+      });
       await Provider.of<ChatProvider>(context, listen: false)
           .getListOfDoctor(isFav);
     } catch (err) {
       print(err);
     }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -77,29 +84,40 @@ class _ConsultState extends State<ConsultScreen> {
                     ),
                     Consumer<ChatProvider>(builder: (context, value, child) {
                       final doctorList = value.doctorList;
-                      return ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: doctorList.length,
-                          itemBuilder: (context, index) => consultCard(
-                              id: doctorList[index].id,
-                              name: doctorList[index].firstname +
-                                  " " +
-                                  doctorList[index].lastname,
-                              profile: doctorList[index].picture,
-                              hospital: doctorList[index].hospital,
-                              isFavorite: doctorList[index].isFav,
-                              press: () {
-                                print('navigate');
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return LandingScreen();
-                                    },
-                                  ),
-                                );
-                              }));
+                      return isLoading
+                          ? Container(
+                              height: height * 0.6,
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                    color: yellowPrimary),
+                              ),
+                            )
+                          : ListView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: doctorList.length,
+                              itemBuilder: (context, index) => consultCard(
+                                  id: doctorList[index].id,
+                                  name: doctorList[index].firstname +
+                                      " " +
+                                      doctorList[index].lastname,
+                                  profile: doctorList[index].picture,
+                                  hospital: doctorList[index].hospital,
+                                  isFavorite: doctorList[index].isFav,
+                                  refresher: () {
+                                    ListDoctor(fav);
+                                  },
+                                  press: () {
+                                    print('navigate');
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) {
+                                          return LandingScreen();
+                                        },
+                                      ),
+                                    );
+                                  }));
                     }),
                   ],
                 ),

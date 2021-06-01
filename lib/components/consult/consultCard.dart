@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class consultCard extends StatefulWidget {
-  final id, name, profile, hospital, press;
+  final id, name, profile, hospital, press, refresher;
   bool isFavorite;
 
   consultCard(
@@ -13,6 +13,7 @@ class consultCard extends StatefulWidget {
       this.profile,
       this.hospital,
       this.press,
+      this.refresher,
       required this.isFavorite});
 
   @override
@@ -30,10 +31,8 @@ class _consultCardState extends State<consultCard> {
   }
 
   void refresh() {
-    setState(() {
-      updateFavorite(widget.id, !widget.isFavorite);
-      widget.isFavorite = !widget.isFavorite;
-    });
+    updateFavorite(widget.id, !widget.isFavorite);
+    widget.refresher();
   }
 
   @override

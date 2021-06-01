@@ -23,16 +23,18 @@ class _searchBarState extends State<searchBar> {
               borderRadius: BorderRadius.circular(10),
             ),
             child: TextField(
+              cursorColor: yellowPrimary,
               keyboardType: TextInputType.text,
               controller: widget.controller,
               decoration: InputDecoration(
-                  hintText: widget.title,
-                  hintStyle: TextStyle(fontFamily: 'supermarket', fontSize: 18),
-                  icon: Icon(
-                    Icons.search,
-                    color: Colors.black54,
-                  ),
-                  border: InputBorder.none),
+                hintText: widget.title,
+                hintStyle: TextStyle(fontFamily: 'supermarket', fontSize: 18),
+                icon: Icon(
+                  Icons.search,
+                  color: Colors.black54,
+                ),
+                border: InputBorder.none,
+              ),
             )));
   }
 }
