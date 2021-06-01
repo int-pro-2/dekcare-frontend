@@ -23,13 +23,13 @@ class _LandingState extends State<LandingScreen> {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SafeArea(
-        child: Scaffold(
-            backgroundColor: greySecondary,
-            bottomNavigationBar: Nav(
-              currentIndex: 0,
-            ),
-            body: Container(
+      home: Scaffold(
+          backgroundColor: greySecondary,
+          bottomNavigationBar: Nav(
+            currentIndex: 0,
+          ),
+          body: SafeArea(
+            child: Container(
               height: height,
               child: SingleChildScrollView(
                 child: Column(children: [
@@ -196,8 +196,8 @@ class _LandingState extends State<LandingScreen> {
                   )
                 ]),
               ),
-            )),
-      ),
+            ),
+          )),
     );
   }
 }
