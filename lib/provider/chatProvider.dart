@@ -48,7 +48,7 @@ class ChatProvider with ChangeNotifier {
   /*
   * Provider for the consult page
   */
-  List<DoctorCard> modifyDoctorList(data, fav) {
+  List<DoctorCard> modifyDoctorList(data, isFav) {
     List<DoctorCard> doctorList = [];
 
     data.forEach((el) {
@@ -57,7 +57,7 @@ class ChatProvider with ChangeNotifier {
           firstname: el['firstname'],
           lastname: el['lastname'],
           picture: el['picture'],
-          isFav: el['isFav'] ?? fav,
+          isFav: isFav ? true : el['isFav'],
           hospital: el['birthdate']));
     });
 
@@ -88,20 +88,19 @@ class ChatProvider with ChangeNotifier {
   Future<void> onChangeFavorite(String doctorId, bool isFav) async {
     try {
       if (isFav) {
-        print("This is favorite");
         final request = await Dio().post(apiEndpoint + '/chat/fav-doctor',
             data: {"doctorID": doctorId},
             options:
                 Options(headers: {"cookie": 'jwt=' + _token.toString() + ';'}));
-        print("Done unfavorite the doctor");
+        print("Done favorite the doctor");
       } else {
-        print("This is unfavorite");
-        final request = await Dio().post(apiEndpoint + '/chat/unfav-doctor',
+        final request = await Dio().delete(apiEndpoint + '/chat/unfav-doctor',
             data: {"doctorID": doctorId},
             options:
                 Options(headers: {"cookie": 'jwt=' + _token.toString() + ';'}));
-        print("Done favorite the doctor");
+        print("Done unfavorite the doctor");
       }
+
       notifyListeners();
     } catch (err) {
       print(err);

@@ -29,6 +29,13 @@ class _consultCardState extends State<consultCard> {
     }
   }
 
+  void refresh() {
+    setState(() {
+      updateFavorite(widget.id, !widget.isFavorite);
+      widget.isFavorite = !widget.isFavorite;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -61,24 +68,25 @@ class _consultCardState extends State<consultCard> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 35),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.name,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
+                      padding: const EdgeInsets.only(top: 35),
+                      child: Container(
+                        width: width * 0.5,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.name,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 18),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              child: Text(widget.hospital,
+                                  style: TextStyle(fontSize: 18)),
+                            ),
+                          ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: Text(widget.hospital,
-                              style: TextStyle(fontSize: 18)),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(width: width * 0.06),
+                      )),
                   Column(
                     children: [
                       Container(
@@ -96,7 +104,8 @@ class _consultCardState extends State<consultCard> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50.0)),
                           onPressed: () {
-                            updateFavorite(widget.id, !widget.isFavorite);
+                            refresh();
+                            print(widget.isFavorite);
                           },
                           padding: EdgeInsets.zero,
                         ),
