@@ -24,6 +24,11 @@ class _LandingState extends State<LandingScreen> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+          appBar: AppBar(
+            backgroundColor: yellowPrimary,
+            toolbarHeight: 0,
+            elevation: 0,
+          ),
           backgroundColor: greySecondary,
           bottomNavigationBar: Nav(
             currentIndex: 0,
