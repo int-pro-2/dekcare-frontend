@@ -1,9 +1,11 @@
 import 'package:dekcare_frontend/components/button.dart';
 import 'package:dekcare_frontend/components/constants.dart';
 import 'package:dekcare_frontend/components/navBar/nav.dart';
+import 'package:dekcare_frontend/provider/authenticateProvider.dart';
 import 'package:dekcare_frontend/screens/loginScreen.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SettingScreen extends StatefulWidget {
   @override
@@ -12,6 +14,14 @@ class SettingScreen extends StatefulWidget {
 
 class _SettingState extends State<SettingScreen> {
   @override
+  void logout() async {
+    try {
+      await Provider.of<AuthenticateProvider>(context, listen: false).logout();
+    } catch (error) {
+      print(error);
+    }
+  }
+
   Widget build(BuildContext context) {
     @override
     double width = MediaQuery.of(context).size.width;
@@ -37,6 +47,7 @@ class _SettingState extends State<SettingScreen> {
             Container(
               child: Button(
                 onPress: () {
+                  logout();
                   Navigator.push(
                     context,
                     MaterialPageRoute(
