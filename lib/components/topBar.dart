@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:dekcare_frontend/Screens/Forum.dart';
-// import 'package:dekcare_frontend/Screens/chat.dart';
-// import 'package:dekcare_frontend/Screens/consult.dart';
-import 'package:dekcare_frontend/Screens/landingScreen.dart';
 import 'package:dekcare_frontend/components/constants.dart';
 
 class TopBar extends StatelessWidget
