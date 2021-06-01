@@ -21,16 +21,17 @@ class DekCare extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (ctx) => AuthenticateProvider()),
         ChangeNotifierProxyProvider<AuthenticateProvider, ForumProvider>(
-          create: (ctx) => ForumProvider("", [], []),
+          create: (ctx) => ForumProvider(null, [], []),
           update: (ctx, auth, prev) => ForumProvider(
               auth.token,
               prev == null ? [] : prev.forums,
               prev == null ? [] : prev.specificforum),
         ),
         ChangeNotifierProxyProvider<AuthenticateProvider, ChatProvider>(
-          create: (ctx) => ChatProvider("", []),
-          update: (ctx, auth, prev) =>
-              ChatProvider(auth.token, prev == null ? [] : prev.chatPreview),
+          create: (ctx) => ChatProvider(null),
+          update: (ctx, auth, prev) => ChatProvider(auth.token),
+          // prev == null ? [] : prev.chatPreview,
+          // prev == null ? [] : prev.doctorList
         ),
       ],
       child: Consumer<AuthenticateProvider>(

@@ -4,7 +4,9 @@ import 'package:dekcare_frontend/components/consult/consultCard.dart';
 import 'package:dekcare_frontend/components/navBar/nav.dart';
 import 'package:dekcare_frontend/components/topBar.dart';
 import 'package:dekcare_frontend/components/searchBar.dart';
+import 'package:dekcare_frontend/provider/chatProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'landingScreen.dart';
 
@@ -14,11 +16,19 @@ class ConsultScreen extends StatefulWidget {
 }
 
 class _ConsultState extends State<ConsultScreen> {
+  void ListDoctor() async {
+    try {
+      await Provider.of<ChatProvider>(context).getListOfDoctor();
+    } catch (err) {
+      print(err);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    @override
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    ListDoctor();
     return MaterialApp(
         theme: ThemeData(fontFamily: 'supermarket'),
         home: Scaffold(
@@ -44,29 +54,31 @@ class _ConsultState extends State<ConsultScreen> {
                       width: width * 0.92,
                       child: searchBar(title: 'ค้นหาชื่อคุณหมอที่นี่'),
                     ),
-                    ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: 3,
-                      itemBuilder: (context, index) => consultCard(
-                        name: "นพ. วิรวรรธ ใจอารีย์",
-                        profile:
-                            "https://scontent.fkdt2-1.fna.fbcdn.net/v/t1.6435-9/53458185_2150818338340159_4143062862610300928_n.jpg?_nc_cat=100&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=TZrNhZRqI6MAX9Nv44L&_nc_ht=scontent.fkdt2-1.fna&oh=9e7fd4dc6eeb448b34a3576abd63698c&oe=60D970C9",
-                        hospital: "โรงพยาบาลจุฬาลงกรณ์",
-                        isFavorite: true,
-                        press: () {
-                          print('navigate');
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return LandingScreen();
-                              },
-                            ),
-                          );
-                        },
-                      ),
-                    ),
+                    Consumer<ChatProvider>(builder: (context, value, child) {
+                      final doctorList = value.doctorList;
+                      return ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: doctorList.length,
+                          itemBuilder: (context, index) => consultCard(
+                              name: doctorList[index].firstname +
+                                  " " +
+                                  doctorList[index].lastname,
+                              profile: doctorList[index].picture,
+                              hospital: doctorList[index].hospital,
+                              isFavorite: doctorList[index].isFav,
+                              press: () {
+                                print('navigate');
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return LandingScreen();
+                                    },
+                                  ),
+                                );
+                              }));
+                    }),
                   ],
                 ),
               ),
@@ -75,3 +87,27 @@ class _ConsultState extends State<ConsultScreen> {
         ));
   }
 }
+
+// ListView.builder(
+// physics: NeverScrollableScrollPhysics(),
+// shrinkWrap: true,
+// itemCount: 3,
+// itemBuilder: (context, index) => consultCard(
+// name: doctorList[i].firstname +
+//     " " +
+//     doctorList[i].lastname,
+// profile: doctorList[i].picture,
+// hospital: doctorList[i].hospital,
+// isFavorite: doctorList[i].isFav,
+// press: () {
+//   print('navigate');
+//   Navigator.push(
+//     context,
+//     MaterialPageRoute(
+//       builder: (context) {
+//         return LandingScreen();
+//       },
+//     ),
+//   );
+// }))
+// ),

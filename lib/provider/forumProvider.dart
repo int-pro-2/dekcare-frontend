@@ -88,7 +88,7 @@ class Forums {
 }
 
 class ForumProvider with ChangeNotifier {
-  String _token;
+  String? _token;
   List<Forums> _forums = [];
   List<Forum> _specificforum = [];
 
@@ -205,7 +205,8 @@ class ForumProvider with ChangeNotifier {
     try {
       final response = await Dio().post(apiEndpoint + '/forum/forum',
           data: {"topic": topic, "body": body, "date": date},
-          options: Options(headers: {"cookie": 'jwt=' + _token + ';'}));
+          options:
+              Options(headers: {"cookie": 'jwt=' + _token.toString() + ';'}));
 
       notifyListeners();
     } catch (error) {
@@ -219,7 +220,8 @@ class ForumProvider with ChangeNotifier {
       print(forumID + text + date);
       final response = await Dio().post(apiEndpoint + '/forum/comment',
           data: {"forumID": forumID, "text": text, "date": date},
-          options: Options(headers: {"cookie": 'jwt=' + _token + ';'}));
+          options:
+              Options(headers: {"cookie": 'jwt=' + _token.toString() + ';'}));
       print('done create comment provider');
 
       notifyListeners();
