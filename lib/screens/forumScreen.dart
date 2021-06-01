@@ -97,28 +97,28 @@ class _ForumState extends State<ForumScreen> {
           }
         }
 
-        return SafeArea(
-                  child: Scaffold(
-            backgroundColor: greySecondary,
-            appBar: PreferredSize(
-                child: AppBar(
-                  automaticallyImplyLeading: false,
-                  centerTitle: true,
-                  title: Text(
-                    'กระทู้ถาม/ตอบ',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-                  ),
-                  backgroundColor: yellowPrimary,
-                  shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.vertical(bottom: Radius.circular(30)),
-                  ),
+        return Scaffold(
+          backgroundColor: greySecondary,
+          appBar: PreferredSize(
+              child: AppBar(
+                automaticallyImplyLeading: false,
+                centerTitle: true,
+                title: Text(
+                  'กระทู้ถาม/ตอบ',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                 ),
-                preferredSize: Size.fromHeight(height * 0.075)),
-            bottomNavigationBar: Nav(
-              currentIndex: 2,
-            ),
-            body: Container(
+                backgroundColor: yellowPrimary,
+                shape: RoundedRectangleBorder(
+                  borderRadius:
+                      BorderRadius.vertical(bottom: Radius.circular(30)),
+                ),
+              ),
+              preferredSize: Size.fromHeight(height * 0.075)),
+          bottomNavigationBar: Nav(
+            currentIndex: 2,
+          ),
+          body: SafeArea(
+            child: Container(
               height: height,
               child: SingleChildScrollView(
                 child: Column(
@@ -126,7 +126,8 @@ class _ForumState extends State<ForumScreen> {
                     Row(
                       children: [
                         Container(
-                          padding: EdgeInsets.only(top: 20, bottom: 20, left: 10),
+                          padding:
+                              EdgeInsets.only(top: 20, bottom: 20, left: 10),
                           width: width * 0.9,
                           child: searchBar(title: 'ค้นหากระทู้ที่นี่'),
                         ),
