@@ -97,131 +97,133 @@ class _ForumState extends State<ForumScreen> {
           }
         }
 
-        return Scaffold(
-          backgroundColor: greySecondary,
-          appBar: PreferredSize(
-              child: AppBar(
-                automaticallyImplyLeading: false,
-                centerTitle: true,
-                title: Text(
-                  'กระทู้ถาม/ตอบ',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-                ),
-                backgroundColor: yellowPrimary,
-                shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.vertical(bottom: Radius.circular(30)),
-                ),
-              ),
-              preferredSize: Size.fromHeight(height * 0.075)),
-          bottomNavigationBar: Nav(
-            currentIndex: 2,
-          ),
-          body: Container(
-            height: height,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.only(top: 20, bottom: 20, left: 10),
-                        width: width * 0.9,
-                        child: searchBar(title: 'ค้นหากระทู้ที่นี่'),
-                      ),
-                      Container(
-                        width: width * 0.1,
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return CreaetForumScreen();
-                                },
-                              ),
-                            );
-                          },
-                          child: Icon(
-                            Icons.add_comment,
-                            color: yellowPrimary,
-                          ),
-                        ),
-                      ),
-                    ],
+        return SafeArea(
+                  child: Scaffold(
+            backgroundColor: greySecondary,
+            appBar: PreferredSize(
+                child: AppBar(
+                  automaticallyImplyLeading: false,
+                  centerTitle: true,
+                  title: Text(
+                    'กระทู้ถาม/ตอบ',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                   ),
-                  listRender.length == 0
-                      ? EmptyList(text: 'test')
-                      : Container(
-                          height: height * 0.7,
-                          child: RefreshIndicator(
-                            key: refreshKey,
-                            onRefresh: refreshList,
-                            child: SingleChildScrollView(
-                              physics: ScrollPhysics(),
-                              child: Column(children: [
-                                ListView.builder(
-                                  physics: NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: listRender.length,
-                                  itemBuilder: (context, index) => CardForum(
-                                    pressComment: () {},
-                                    url: listRender[index].picture,
-                                    isComment: false,
-                                    title: listRender[index].topic,
-                                    text: listRender[index].body,
-                                    userName: listRender[index].displayname,
-                                    comment: listRender[index].count,
-                                    press: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) {
-                                            return ForumInsideScreen(
-                                              index: listRender[index].id,
-                                            );
-                                          },
-                                        ),
-                                      );
-                                    },
-                                    isInside: false,
-                                  ),
+                  backgroundColor: yellowPrimary,
+                  shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.vertical(bottom: Radius.circular(30)),
+                  ),
+                ),
+                preferredSize: Size.fromHeight(height * 0.075)),
+            bottomNavigationBar: Nav(
+              currentIndex: 2,
+            ),
+            body: Container(
+              height: height,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.only(top: 20, bottom: 20, left: 10),
+                          width: width * 0.9,
+                          child: searchBar(title: 'ค้นหากระทู้ที่นี่'),
+                        ),
+                        Container(
+                          width: width * 0.1,
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return CreaetForumScreen();
+                                  },
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.all(20),
-                                  child: Pagination(
-                                    mode: 'simple',
-                                    onChange: (page) {
-                                      setState(() {
-                                        pageRender = page;
-                                      });
-                                      print(pageRender);
-                                      listRender = [];
-                                      for (var i = ((pageRender - 1) * 3);
-                                          i < pageRender * 3;
-                                          i++) {
-                                        if (i < forumList.length) {
-                                          listRender.add(Forums(
-                                              id: forumList[i].id,
-                                              ownerID: forumList[i].ownerID,
-                                              topic: forumList[i].topic,
-                                              body: forumList[i].body,
-                                              date: forumList[i].date,
-                                              displayname:
-                                                  forumList[i].displayname,
-                                              count: forumList[i].count,
-                                              picture: forumList[i].picture));
-                                        }
-                                      }
-                                    },
-                                    totalItems: forumList.length,
-                                  ),
-                                ),
-                              ]),
+                              );
+                            },
+                            child: Icon(
+                              Icons.add_comment,
+                              color: yellowPrimary,
                             ),
                           ),
-                        )
-                ],
+                        ),
+                      ],
+                    ),
+                    listRender.length == 0
+                        ? EmptyList(text: 'test')
+                        : Container(
+                            height: height * 0.7,
+                            child: RefreshIndicator(
+                              key: refreshKey,
+                              onRefresh: refreshList,
+                              child: SingleChildScrollView(
+                                physics: ScrollPhysics(),
+                                child: Column(children: [
+                                  ListView.builder(
+                                    physics: NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: listRender.length,
+                                    itemBuilder: (context, index) => CardForum(
+                                      pressComment: () {},
+                                      url: listRender[index].picture,
+                                      isComment: false,
+                                      title: listRender[index].topic,
+                                      text: listRender[index].body,
+                                      userName: listRender[index].displayname,
+                                      comment: listRender[index].count,
+                                      press: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) {
+                                              return ForumInsideScreen(
+                                                index: listRender[index].id,
+                                              );
+                                            },
+                                          ),
+                                        );
+                                      },
+                                      isInside: false,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(20),
+                                    child: Pagination(
+                                      mode: 'simple',
+                                      onChange: (page) {
+                                        setState(() {
+                                          pageRender = page;
+                                        });
+                                        print(pageRender);
+                                        listRender = [];
+                                        for (var i = ((pageRender - 1) * 3);
+                                            i < pageRender * 3;
+                                            i++) {
+                                          if (i < forumList.length) {
+                                            listRender.add(Forums(
+                                                id: forumList[i].id,
+                                                ownerID: forumList[i].ownerID,
+                                                topic: forumList[i].topic,
+                                                body: forumList[i].body,
+                                                date: forumList[i].date,
+                                                displayname:
+                                                    forumList[i].displayname,
+                                                count: forumList[i].count,
+                                                picture: forumList[i].picture));
+                                          }
+                                        }
+                                      },
+                                      totalItems: forumList.length,
+                                    ),
+                                  ),
+                                ]),
+                              ),
+                            ),
+                          )
+                  ],
+                ),
               ),
             ),
           ),
