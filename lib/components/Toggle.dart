@@ -4,10 +4,14 @@ import 'package:flutter/material.dart';
 class Toggle extends StatefulWidget {
   final String button1Title;
   final String button2Title;
-  bool status1 = true;
-  bool status2 = false;
+  final bool current;
+  final Function onChange;
 
-  Toggle({required this.button1Title, required this.button2Title});
+  Toggle(
+      {required this.button1Title,
+      required this.button2Title,
+      required this.current,
+      required this.onChange});
 
   @override
   _ToggleState createState() => _ToggleState();
@@ -33,7 +37,7 @@ class _ToggleState extends State<Toggle> {
                   child: Text(
                     widget.button1Title,
                     style: TextStyle(
-                        color: widget.status1 == true
+                        color: widget.current == false
                             ? whitePrimary
                             : yellowPrimary,
                         fontSize: 18),
@@ -46,8 +50,8 @@ class _ToggleState extends State<Toggle> {
                     backgroundColor: MaterialStateProperty.resolveWith<Color>(
                       (Set<MaterialState> states) {
                         if (states.contains(MaterialState.pressed) ||
-                            widget.status1 == true) return yellowPrimary;
-                        return widget.status1 == true
+                            widget.current == false) return yellowPrimary;
+                        return widget.current == false
                             ? yellowPrimary
                             : Colors
                                 .transparent; // Use the component's default.
@@ -61,10 +65,7 @@ class _ToggleState extends State<Toggle> {
                     ),
                   ),
                   onPressed: () {
-                    setState(() {
-                      widget.status1 = !widget.status1;
-                      widget.status2 = !widget.status2;
-                    });
+                    widget.onChange(!widget.current);
                   },
                 ),
               ),
@@ -74,7 +75,7 @@ class _ToggleState extends State<Toggle> {
                   child: Text(
                     widget.button2Title,
                     style: TextStyle(
-                        color: widget.status2 == true
+                        color: widget.current == true
                             ? whitePrimary
                             : yellowPrimary,
                         fontSize: 18),
@@ -87,8 +88,8 @@ class _ToggleState extends State<Toggle> {
                     backgroundColor: MaterialStateProperty.resolveWith<Color>(
                       (Set<MaterialState> states) {
                         if (states.contains(MaterialState.pressed) ||
-                            widget.status2 == true) return yellowPrimary;
-                        return widget.status2 == true
+                            widget.current == true) return yellowPrimary;
+                        return widget.current == true
                             ? yellowPrimary
                             : Colors
                                 .transparent; // Use the component's default.
@@ -102,10 +103,7 @@ class _ToggleState extends State<Toggle> {
                     ),
                   ),
                   onPressed: () {
-                    setState(() {
-                      widget.status2 = !widget.status2;
-                      widget.status1 = !widget.status1;
-                    });
+                    widget.onChange(!widget.current);
                   },
                 ),
               ),

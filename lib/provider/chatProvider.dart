@@ -23,7 +23,7 @@ class DoctorCard {
   final String lastname;
   final String picture;
   final bool isFav;
-  final DateTime hospital;
+  final String hospital;
 
   DoctorCard(
       {required this.id,
@@ -45,31 +45,66 @@ class ChatProvider with ChangeNotifier {
   // Constructor
   ChatProvider(this._token);
 
-  List<DoctorCard> modifyDoctorList(data) {
+  /*
+  * Provider for the consult page
+  */
+  List<DoctorCard> modifyDoctorList(data, fav) {
     List<DoctorCard> doctorList = [];
 
-    data.forEach((el) => {
-          doctorList.add(DoctorCard(
-              id: el['id'],
-              firstname: el['firstname'],
-              lastname: el['lastname'],
-              picture: el['picture'],
-              isFav: el['isFav'],
-              hospital: el['birthdate']))
-        });
+    data.forEach((el) {
+      doctorList.add(DoctorCard(
+          id: el['id'],
+          firstname: el['firstname'],
+          lastname: el['lastname'],
+          picture: el['picture'],
+          isFav: el['isFav'] ?? fav,
+          hospital: el['birthdate']));
+    });
 
     return doctorList;
   }
 
-  Future<List<DoctorCard>> getListOfDoctor() async {
+  Future<List<DoctorCard>> getListOfDoctor(bool isFav) async {
     try {
-      final response = await Dio().get(apiEndpoint + '/chat/doctors');
-      doctorList = modifyDoctorList(response.data);
-      print(response.data);
-      notifyListeners();
+      if (isFav) {
+        final response = await Dio().get(apiEndpoint + '/chat/fav-doctors',
+            options:
+                Options(headers: {"cookie": 'jwt=' + _token.toString() + ';'}));
+        doctorList = modifyDoctorList(response.data, isFav);
+        notifyListeners();
+      } else {
+        final response = await Dio().get(apiEndpoint + '/chat/doctors',
+            options:
+                Options(headers: {"cookie": 'jwt=' + _token.toString() + ';'}));
+        doctorList = modifyDoctorList(response.data, isFav);
+        notifyListeners();
+      }
     } catch (err) {
       print(err);
     }
     return doctorList;
+  }
+
+  Future<void> onChangeFavorite(String doctorId, bool isFav) async {
+    try {
+      if (isFav) {
+        print("This is favorite");
+        final request = await Dio().post(apiEndpoint + '/chat/fav-doctor',
+            data: {"doctorID": doctorId},
+            options:
+                Options(headers: {"cookie": 'jwt=' + _token.toString() + ';'}));
+        print("Done unfavorite the doctor");
+      } else {
+        print("This is unfavorite");
+        final request = await Dio().post(apiEndpoint + '/chat/unfav-doctor',
+            data: {"doctorID": doctorId},
+            options:
+                Options(headers: {"cookie": 'jwt=' + _token.toString() + ';'}));
+        print("Done favorite the doctor");
+      }
+      notifyListeners();
+    } catch (err) {
+      print(err);
+    }
   }
 }

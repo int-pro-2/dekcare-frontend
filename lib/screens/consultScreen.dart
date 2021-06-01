@@ -16,19 +16,35 @@ class ConsultScreen extends StatefulWidget {
 }
 
 class _ConsultState extends State<ConsultScreen> {
-  void ListDoctor() async {
+  var fav = false;
+
+  void changeFav(newFav) {
+    setState(() {
+      fav = newFav;
+    });
+    ListDoctor(fav);
+  }
+
+  void ListDoctor(bool isFav) async {
     try {
-      await Provider.of<ChatProvider>(context).getListOfDoctor();
+      await Provider.of<ChatProvider>(context, listen: false)
+          .getListOfDoctor(isFav);
     } catch (err) {
       print(err);
     }
   }
 
   @override
+  void initState() {
+    ListDoctor(fav);
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    ListDoctor();
     return MaterialApp(
         theme: ThemeData(fontFamily: 'supermarket'),
         home: Scaffold(
@@ -49,7 +65,12 @@ class _ConsultState extends State<ConsultScreen> {
               child: Center(
                 child: Column(
                   children: [
-                    Toggle(button1Title: 'ค้นหาหมอ', button2Title: 'หมอติดดาว'),
+                    Toggle(
+                      button1Title: 'ค้นหาหมอ',
+                      button2Title: 'หมอติดดาว',
+                      current: fav,
+                      onChange: changeFav,
+                    ),
                     Container(
                       width: width * 0.92,
                       child: searchBar(title: 'ค้นหาชื่อคุณหมอที่นี่'),
@@ -61,6 +82,7 @@ class _ConsultState extends State<ConsultScreen> {
                           shrinkWrap: true,
                           itemCount: doctorList.length,
                           itemBuilder: (context, index) => consultCard(
+                              id: doctorList[index].id,
                               name: doctorList[index].firstname +
                                   " " +
                                   doctorList[index].lastname,

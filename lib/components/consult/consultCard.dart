@@ -1,12 +1,15 @@
 import 'package:dekcare_frontend/components/constants.dart';
+import 'package:dekcare_frontend/provider/chatProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class consultCard extends StatefulWidget {
-  final name, profile, hospital, press;
+  final id, name, profile, hospital, press;
   bool isFavorite;
 
   consultCard(
-      {this.name,
+      {this.id,
+      this.name,
       this.profile,
       this.hospital,
       this.press,
@@ -17,6 +20,15 @@ class consultCard extends StatefulWidget {
 }
 
 class _consultCardState extends State<consultCard> {
+  void updateFavorite(String doctorId, bool isFav) async {
+    try {
+      await Provider.of<ChatProvider>(context, listen: false)
+          .onChangeFavorite(doctorId, isFav);
+    } catch (err) {
+      print(err);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -66,7 +78,7 @@ class _consultCardState extends State<consultCard> {
                       ],
                     ),
                   ),
-                  SizedBox(width: width * 0.175),
+                  SizedBox(width: width * 0.06),
                   Column(
                     children: [
                       Container(
@@ -84,9 +96,7 @@ class _consultCardState extends State<consultCard> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50.0)),
                           onPressed: () {
-                            setState(() {
-                              widget.isFavorite = !widget.isFavorite;
-                            });
+                            updateFavorite(widget.id, !widget.isFavorite);
                           },
                           padding: EdgeInsets.zero,
                         ),
