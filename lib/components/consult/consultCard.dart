@@ -66,26 +66,28 @@ class _consultCardState extends State<consultCard> {
                       radius: 45,
                     ),
                   ),
-                  Padding(
-                      padding: const EdgeInsets.only(top: 35),
-                      child: Container(
-                        width: width * 0.5,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              widget.name,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 10),
-                              child: Text(widget.hospital,
-                                  style: TextStyle(fontSize: 18)),
-                            ),
-                          ],
-                        ),
-                      )),
+                  Expanded(
+                    child: Padding(
+                        padding: const EdgeInsets.only(top: 35),
+                        child: Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.name,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 18),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10),
+                                child: Text(widget.hospital,
+                                    style: TextStyle(fontSize: 18)),
+                              ),
+                            ],
+                          ),
+                        )),
+                  ),
                   Column(
                     children: [
                       Container(

@@ -17,7 +17,7 @@ class _chatPreviewCardState extends State<chatPreviewCard> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: Container(
-          height: height * 0.15,
+          height: 125,
           width: width * 0.95,
           child: MaterialButton(
             child: DecoratedBox(

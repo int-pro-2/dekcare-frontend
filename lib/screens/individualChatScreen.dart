@@ -1,5 +1,6 @@
 import 'package:dekcare_frontend/components/chat/chatHeader.dart';
 import 'package:dekcare_frontend/components/chat/messageBox.dart';
+import 'package:dekcare_frontend/components/chat/messageBubble.dart';
 import 'package:dekcare_frontend/components/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +13,18 @@ class IndividualChatScreen extends StatefulWidget {
 }
 
 class _IndividualChatScreenState extends State<IndividualChatScreen> {
+  List<bool> mockChat = [
+    true,
+    false,
+    true,
+    false,
+    true,
+    true,
+    false,
+    false,
+    false
+  ];
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -29,19 +42,27 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
                 contextFromPage: context),
             preferredSize: Size.fromHeight(height * 0.12),
           ),
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SingleChildScrollView(
-                  child: ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: 15,
-                      itemBuilder: (context, index) {
-                        return Text("This is mock up data");
-                      })),
-              MessageBox()
-            ],
+          body: Padding(
+            padding: const EdgeInsets.only(top: 20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                      child: ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: mockChat.length,
+                          itemBuilder: (context, index) {
+                            return MessageBubble(
+                              isOwner: mockChat[index],
+                              datetime: 'เมื่อวาน 22:08',
+                            );
+                          })),
+                ),
+                MessageBox()
+              ],
+            ),
           ),
         ));
   }
