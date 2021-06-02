@@ -2,7 +2,7 @@ import 'package:dekcare_frontend/components/constants.dart';
 import 'package:flutter/material.dart';
 
 class ChatInput extends StatefulWidget {
-  final title, controller, hasShadow, isCreate, onchange;
+  final title, controller, hasShadow, isCreate, onchange,focusNode;
   final object;
 
   final Color color;
@@ -11,6 +11,7 @@ class ChatInput extends StatefulWidget {
 
   ChatInput(
       {this.title,
+      this.focusNode,
       this.onchange,
       this.object,
       this.isCreate,
@@ -51,6 +52,7 @@ class _ChatInputState extends State<ChatInput> {
                         )
                 ]),
             child: TextField(
+              focusNode: widget.focusNode,
               keyboardType: TextInputType.text,
               onChanged: widget.onchange,
               controller: widget.controller,

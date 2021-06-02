@@ -5,6 +5,8 @@ import 'package:dekcare_frontend/components/constants.dart';
 
 class CardForum extends StatelessWidget {
   final press,
+      myFocusNode,
+      replypress,
       text,
       controller,
       title,
@@ -19,6 +21,8 @@ class CardForum extends StatelessWidget {
   final Function pressComment;
   const CardForum(
       {this.press,
+      this.myFocusNode,
+      this.replypress,
       this.controller,
       this.isComment,
       this.commentID,
@@ -137,9 +141,8 @@ class CardForum extends StatelessWidget {
                                               MainAxisAlignment.end,
                                           children: [
                                             TextButton(
-                                                onPressed: () {
-                                                  print('แสดงความคิดเห็น');
-                                                },
+                                                onPressed: replypress,
+                                                focusNode: myFocusNode,
                                                 child: Text('แสดงความคิดเห็น'))
                                           ]),
                                     )
