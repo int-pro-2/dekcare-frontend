@@ -229,4 +229,20 @@ class ForumProvider with ChangeNotifier {
       print(error);
     }
   }
+
+  Future<void> createReply(String commentID, String text, String date) async {
+    final prefs = await SharedPreferences.getInstance();
+    try {
+      print(commentID + text + date);
+      final response = await Dio().post(apiEndpoint + '/forum/reply',
+          data: {"commentID": commentID, "text": text, "date": date},
+          options:
+              Options(headers: {"cookie": 'jwt=' + _token.toString() + ';'}));
+      print('done create reply provider');
+
+      notifyListeners();
+    } catch (error) {
+      print(error);
+    }
+  }
 }
