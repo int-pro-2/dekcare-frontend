@@ -57,6 +57,7 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
   }
 
   var isComment = '';
+  List isShow = [];
   var random;
   var refreshKey = GlobalKey<RefreshIndicatorState>();
   var refreshKey1 = GlobalKey<RefreshIndicatorState>();
@@ -119,7 +120,9 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
         if (forumList.length == 0) {
           return SplashScreen();
         }
-
+        for (int i = 0; i < forumList.length; i++) {
+          isShow.add(false);
+        }
         return Scaffold(
           resizeToAvoidBottomInset: true,
           // bottomNavigationBar:
@@ -163,9 +166,6 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
                                 physics: ScrollPhysics(),
                                 child: Column(children: [
                                   CardForum(
-                                    replypress: () {
-                                      print('แสดงที่นี่');
-                                    },
                                     isInside: true,
                                     url: forumList[0].picture,
                                     isComment: false,
@@ -211,42 +211,115 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
                                       shrinkWrap: true,
                                       itemCount: forumList[0].comments.length,
                                       itemBuilder: (context, index) =>
-                                          CardForum(
-                                        controller: replyController,
-                                        // myFocusNode: myFocusNode,
-                                        press: () {},
-                                        replypress: () {
-                                          print('inside');
-                                          setState(() {
-                                            commentID =
-                                                forumList[0].comments[index].id;
-                                          });
-                                          myFocusNode.requestFocus();
-                                          commentController.text =
-                                              '@ความคิดเห็นที่ ' +
-                                                  (index + 1).toString();
-                                        },
-                                        pressComment: () {
-                                          print('ha');
-                                          createReply(forumList[0]
+                                          Column(children: [
+                                        CardForum(
+                                          isReply: true,
+                                          controller: replyController,
+                                          // myFocusNode: myFocusNode,
+                                          press: () {},
+                                          replypress: () {
+                                            print('inside');
+                                            setState(() {
+                                              commentID = forumList[0]
+                                                  .comments[index]
+                                                  .id;
+                                            });
+                                            myFocusNode.requestFocus();
+                                            commentController.text =
+                                                '@ความคิดเห็นที่ ' +
+                                                    (index + 1).toString();
+                                          },
+
+                                          pressComment: () {
+                                            print('ha');
+                                            createReply(forumList[0]
+                                                .comments[index]
+                                                .id
+                                                .toString());
+                                            print(forumList[0]
+                                                .comments[index]
+                                                .id);
+                                          },
+                                          // date: forumList[0].comments[index].,
+                                          commentID: (index + 1).toString(),
+                                          url: forumList[0]
                                               .comments[index]
-                                              .id
-                                              .toString());
-                                          print(
-                                              forumList[0].comments[index].id);
-                                        },
-                                        // date: forumList[0].comments[index].,
-                                        commentID: (index + 1).toString(),
-                                        url: forumList[0]
-                                            .comments[index]
-                                            .picture,
-                                        isComment: true,
-                                        isInside: true,
-                                        text: forumList[0].comments[index].text,
-                                        userName: forumList[0]
-                                            .comments[index]
-                                            .firstname,
-                                      ),
+                                              .picture,
+                                          isComment: true,
+                                          isInside: true,
+                                          text:
+                                              forumList[0].comments[index].text,
+                                          userName: forumList[0]
+                                              .comments[index]
+                                              .firstname,
+                                        ),
+                                        if (forumList[0]
+                                                .comments[index]
+                                                .replies
+                                                .length !=
+                                            0)
+                                          TextButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  isShow[index] =
+                                                      !isShow[index];
+                                                  print(isShow[index]);
+                                                });
+                                              },
+                                              child:
+                                                  Text('อ่านข้อความตอบกลับ')),
+                                        if (isShow.length > 0)
+                                          if (isShow[index] == true)
+                                            ListView.builder(
+                                                physics:
+                                                    NeverScrollableScrollPhysics(),
+                                                shrinkWrap: true,
+                                                itemCount: forumList[0]
+                                                    .comments[index]
+                                                    .replies
+                                                    .length,
+                                                itemBuilder: (context,
+                                                        index1) =>
+                                                    Column(children: [
+                                                      TextButton(
+                                                          onPressed: () {},
+                                                          child: Container(
+                                                            width: width * 0.9,
+                                                            child: CardForum(
+                                                              pressComment:
+                                                                  () {},
+                                                              commentID:
+                                                                  index1 + 1,
+                                                              isReply: false,
+                                                              title: 'title',
+                                                              date: 'date',
+                                                              isComment: true,
+                                                              text: forumList[0]
+                                                                  .comments[
+                                                                      index]
+                                                                  .replies[
+                                                                      index1]
+                                                                  .text,
+                                                              userName:
+                                                                  'username',
+                                                              url: forumList[0]
+                                                                  .comments[
+                                                                      index]
+                                                                  .replies[
+                                                                      index1]
+                                                                  .picture,
+                                                              isInside: true,
+                                                              comment:
+                                                                  forumList[0]
+                                                                      .comments[
+                                                                          index]
+                                                                      .replies[
+                                                                          index1]
+                                                                      .picture,
+                                                            ),
+                                                          ))
+                                                    ]))
+                                      ]),
                                     ),
                                   if (forumList[0].comments.length == 0)
                                     EmptyList(text: 'ไม่มีความคิดเห็น'),
@@ -328,6 +401,7 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
                                     .contains('@ความคิดเห็นที่')) {
                                   createReply(commentID.toString());
                                 }
+                                commentController.clear();
                               },
                               child: Icon(
                                 Icons.send,

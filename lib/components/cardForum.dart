@@ -5,6 +5,7 @@ import 'package:dekcare_frontend/components/constants.dart';
 
 class CardForum extends StatelessWidget {
   final press,
+      isReply,
       myFocusNode,
       replypress,
       text,
@@ -21,6 +22,7 @@ class CardForum extends StatelessWidget {
   final Function pressComment;
   const CardForum(
       {this.press,
+      this.isReply,
       this.myFocusNode,
       this.replypress,
       this.controller,
@@ -134,18 +136,21 @@ class CardForum extends StatelessWidget {
                           ),
                           isInside
                               ? isComment
-                                  ? Container(
-                                      width: width * 0.45,
-                                      child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            TextButton(
-                                                onPressed: replypress,
-                                                focusNode: myFocusNode,
-                                                child: Text('แสดงความคิดเห็น'))
-                                          ]),
-                                    )
+                                  ? isReply
+                                      ? Container(
+                                          width: width * 0.45,
+                                          child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                TextButton(
+                                                    onPressed: replypress,
+                                                    focusNode: myFocusNode,
+                                                    child:
+                                                        Text('แสดงความคิดเห็น'))
+                                              ]),
+                                        )
+                                      : Container()
                                   : Container(
                                       width: width * 0.45,
                                       child: Row(
