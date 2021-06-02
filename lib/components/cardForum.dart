@@ -6,6 +6,7 @@ import 'package:dekcare_frontend/components/constants.dart';
 class CardForum extends StatelessWidget {
   final press,
       text,
+      controller,
       title,
       userName,
       comment,
@@ -18,6 +19,7 @@ class CardForum extends StatelessWidget {
   final Function pressComment;
   const CardForum(
       {this.press,
+      this.controller,
       this.isComment,
       this.commentID,
       this.text,
@@ -128,47 +130,19 @@ class CardForum extends StatelessWidget {
                           ),
                           isInside
                               ? isComment
-                                  ? Row(children: [
-                                      Container(
-                                        width: width * 0.35,
-                                        child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: [
-                                              ChatInput(
-                                                isCreate: false,
-                                                hasShadow: false,
-                                                color: greySecondary,
-                                                title: 'แสดงความคิดเห็น',
-                                                widthh: width * 0.35,
-                                                heightt: 40,
-                                              ),
-                                            ]),
-                                      ),
-                                      Container(
-                                        height: height * 0.05,
-                                        width: width * 0.12,
-                                        child: ElevatedButton(
-                                            onPressed: () => pressComment(),
-                                            child: Icon(
-                                              Icons.send,
-                                              color: Colors.black54,
-                                              size: 20,
-                                            ),
-                                            style: ButtonStyle(
-                                                backgroundColor:
-                                                    MaterialStateProperty.all(
-                                                        isComment == ''
-                                                            ? Colors.grey
-                                                            : Colors
-                                                                .amber[300]),
-                                                shadowColor:
-                                                    MaterialStateProperty.all<
-                                                        Color>(
-                                                  Colors.transparent,
-                                                ))),
-                                      ),
-                                    ])
+                                  ? Container(
+                                      width: width * 0.45,
+                                      child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            TextButton(
+                                                onPressed: () {
+                                                  print('แสดงความคิดเห็น');
+                                                },
+                                                child: Text('แสดงความคิดเห็น'))
+                                          ]),
+                                    )
                                   : Container(
                                       width: width * 0.45,
                                       child: Row(

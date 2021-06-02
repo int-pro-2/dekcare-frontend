@@ -42,6 +42,18 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
     print('done create forumm');
   }
 
+  void createReply(String commentID) async {
+    print('create refly inside');
+    try {
+      await Provider.of<ForumProvider>(context, listen: false).createReply(
+          commentID, replyController.text, DateTime.now().toString());
+      fetchForums();
+    } catch (error) {
+      print(error);
+    }
+    print('done create reply');
+  }
+
   var isComment = '';
   var random;
   var refreshKey = GlobalKey<RefreshIndicatorState>();
@@ -79,6 +91,7 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
 
   @override
   final TextEditingController commentController = TextEditingController();
+  final TextEditingController replyController = TextEditingController();
 
   Widget build(BuildContext context) {
     @override
@@ -177,11 +190,16 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
                                   shrinkWrap: true,
                                   itemCount: forumList[0].comments.length,
                                   itemBuilder: (context, index) => CardForum(
+                                    controller: replyController,
                                     press: () {},
                                     pressComment: () {
                                       print('ha');
+                                      createReply(forumList[0]
+                                          .comments[index]
+                                          .id
+                                          .toString());
+                                      print(forumList[0].comments[index].id);
                                     },
-                                    hello: 'from another',
                                     // date: forumList[0].comments[index].,
                                     commentID: (index + 1).toString(),
                                     url: forumList[0].comments[index].picture,

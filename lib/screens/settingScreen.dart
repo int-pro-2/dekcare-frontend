@@ -20,6 +20,14 @@ class _SettingState extends State<SettingScreen> {
     } catch (error) {
       print(error);
     }
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return LoginScreen();
+        },
+      ),
+    );
   }
 
   Widget build(BuildContext context) {
@@ -49,14 +57,6 @@ class _SettingState extends State<SettingScreen> {
                 child: Button(
                   onPress: () {
                     logout();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return LoginScreen();
-                        },
-                      ),
-                    );
                   },
                   title: 'Logout',
                   color: yellowPrimary,
