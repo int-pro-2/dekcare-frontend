@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:dekcare_frontend/Screens/individualChatScreen.dart';
 import 'package:dekcare_frontend/components/Toggle.dart';
 import 'package:dekcare_frontend/components/constants.dart';
@@ -18,7 +20,7 @@ class ConsultScreen extends StatefulWidget {
 
 class _ConsultState extends State<ConsultScreen> {
   var fav = false;
-  bool isLoading = false;
+  bool isLoading = true;
 
   void changeFav(newFav) {
     setState(() {
@@ -54,14 +56,15 @@ class _ConsultState extends State<ConsultScreen> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(fontFamily: 'supermarket'),
         home: Scaffold(
           appBar: PreferredSize(
             child: TopBar(
-              titleText: 'ปรึกษาลูกน้อยกับหมอ',
-              enableBackButton: true,
-              contextFromPage: context,
-            ),
+                titleText: 'ปรึกษาลูกน้อยกับหมอ',
+                enableBackButton: true,
+                contextFromPage: context,
+                press: Null),
             preferredSize: Size.fromHeight((height * 0.075)),
           ),
           bottomNavigationBar: Nav(

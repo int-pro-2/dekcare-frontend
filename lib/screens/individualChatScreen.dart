@@ -1,9 +1,11 @@
 import 'package:dekcare_frontend/components/chat/chatHeader.dart';
+import 'package:dekcare_frontend/components/chat/messageBox.dart';
+import 'package:dekcare_frontend/components/constants.dart';
 import 'package:flutter/material.dart';
 
 class IndividualChatScreen extends StatefulWidget {
-  final id;
-  IndividualChatScreen({this.id});
+  final id, name, picture;
+  IndividualChatScreen({this.id, this.name, this.picture});
 
   @override
   _IndividualChatScreenState createState() => _IndividualChatScreenState();
@@ -18,13 +20,28 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(fontFamily: 'supermarket'),
         home: Scaffold(
+          backgroundColor: greySecondary,
+          resizeToAvoidBottomInset: true,
           appBar: PreferredSize(
             child: ChatHeader(
-              name: 'นพ.วิรวรรธ ใจอารีย์',
-              profile: image,
-              contextFromPage: context,
-            ),
+                name: widget.name,
+                profile: widget.picture,
+                contextFromPage: context),
             preferredSize: Size.fromHeight(height * 0.12),
+          ),
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SingleChildScrollView(
+                  child: ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: 15,
+                      itemBuilder: (context, index) {
+                        return Text("This is mock up data");
+                      })),
+              MessageBox()
+            ],
           ),
         ));
   }

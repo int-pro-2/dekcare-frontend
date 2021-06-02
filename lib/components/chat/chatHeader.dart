@@ -4,9 +4,9 @@ import 'package:dekcare_frontend/components/constants.dart';
 class ChatHeader extends StatelessWidget
 // implements PreferredSizeWidget
 {
-  final name, profile, press, contextFromPage;
+  final name, profile, contextFromPage;
   // Size get preferredSize => const Size.fromHeight(80);
-  ChatHeader({this.name, this.profile, this.press, this.contextFromPage});
+  ChatHeader({this.name, this.profile, this.contextFromPage});
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -37,7 +37,6 @@ class ChatHeader extends StatelessWidget
       leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            press();
             Navigator.pop(contextFromPage);
           },
           tooltip: 'Back'),

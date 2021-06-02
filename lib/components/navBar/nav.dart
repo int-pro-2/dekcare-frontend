@@ -1,5 +1,5 @@
+import 'package:dekcare_frontend/Screens/mainChatScreen.dart';
 import 'package:dekcare_frontend/screens/forumScreen.dart';
-import 'package:dekcare_frontend/screens/chatScreen.dart';
 import 'package:dekcare_frontend/screens/consultScreen.dart';
 import 'package:dekcare_frontend/screens/landingScreen.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +39,7 @@ class _State extends State<Nav> {
       LandingScreen(),
       ConsultScreen(),
       ForumScreen(),
-      ChatScreen()
+      MainChatScreen()
     ];
     return Container(
       height: 60,

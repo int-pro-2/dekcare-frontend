@@ -4,19 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../config/api.dart';
 
-class ChatRoomPreview {
-  final String doctorFirstName;
-  final String doctorLastName;
-  final String latestMessages;
-  final String doctorPicture;
-
-  ChatRoomPreview(
-      {required this.doctorFirstName,
-      required this.doctorLastName,
-      required this.doctorPicture,
-      required this.latestMessages});
-}
-
 class DoctorCard {
   final String id;
   final String firstname;
@@ -34,23 +21,38 @@ class DoctorCard {
       required this.hospital});
 }
 
+class ChatPreviewCard {
+  final String message;
+  final String targetID;
+  final String firstname;
+  final String lastname;
+  final String picture;
+  ChatPreviewCard({
+    required this.message,
+    required this.targetID,
+    required this.firstname,
+    required this.lastname,
+    required this.picture,
+  });
+}
+
 class ChatProvider with ChangeNotifier {
   String? _token;
   // Consult page
   List<DoctorCard> doctorList = [];
 
   // Chat Page
-  List<ChatRoomPreview> chatPreview = [];
+  List<ChatPreviewCard> chatPreviewList = [];
 
   // Constructor
   ChatProvider(this._token);
 
   /*
-  * Provider for the consult page
+  *  #############################################
+  *  ## Provider functions for the consult page ##
+  *  #############################################
   */
   List<DoctorCard> modifyDoctorList(data, isFav) {
-    List<DoctorCard> doctorList = [];
-
     data.forEach((el) {
       doctorList.add(DoctorCard(
           id: el['id'],
@@ -58,7 +60,7 @@ class ChatProvider with ChangeNotifier {
           lastname: el['lastname'],
           picture: el['picture'],
           isFav: isFav ? true : el['isFav'],
-          hospital: el['birthdate']));
+          hospital: el['hospitalName']));
     });
 
     return doctorList;
@@ -105,5 +107,39 @@ class ChatProvider with ChangeNotifier {
     } catch (err) {
       print(err);
     }
+  }
+
+  /* 
+  *  ##########################################
+  *  ## Provider functions for the chat page ##
+  *  ##########################################
+  */
+  List<ChatPreviewCard> modifyChatPreviewList(data) {
+    List<ChatPreviewCard> chatList = [];
+    data.forEach((el) {
+      chatList.add(
+        ChatPreviewCard(
+            targetID: el['targetID'],
+            firstname: el['firstname'],
+            lastname: el['lastname'],
+            picture: el['picture'],
+            message: el['message']),
+      );
+    });
+
+    return chatList;
+  }
+
+  Future<List<ChatPreviewCard>> getListOfChatPreview() async {
+    try {
+      final response = await Dio().get(apiEndpoint + '/chat/preview',
+          options:
+              Options(headers: {"cookie": 'jwt=' + _token.toString() + ';'}));
+      chatPreviewList = modifyChatPreviewList(response.data);
+      notifyListeners();
+    } catch (err) {
+      print(err);
+    }
+    return chatPreviewList;
   }
 }
