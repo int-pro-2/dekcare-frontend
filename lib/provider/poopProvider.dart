@@ -17,11 +17,29 @@ class PoopType {
   PoopType({required this.id, required this.text});
 }
 
+class PoopResult {
+  final String typeHeader;
+  final String typeCode;
+  final String typeBody;
+  final String colorHeader;
+  final String colorCode;
+  final String colorBody;
+  PoopResult({
+    required this.typeHeader,
+    required this.typeCode,
+    required this.typeBody,
+    required this.colorHeader,
+    required this.colorCode,
+    required this.colorBody,
+  });
+}
+
 class PoopProvider with ChangeNotifier {
   String? _token;
   List<PoopColor> _colors = [];
   List<PoopType> _types = [];
-  PoopProvider(this._token, this._colors, this._types);
+  PoopResult? _poopAnswer;
+  PoopProvider(this._token, this._colors, this._types, this._poopAnswer);
 
   List<PoopColor> get colors {
     return _colors;
@@ -29,6 +47,38 @@ class PoopProvider with ChangeNotifier {
 
   List<PoopType> get types {
     return _types;
+  }
+
+  PoopResult? get poopAnswer {
+    return _poopAnswer;
+  }
+
+  Future<void> addPoopInfo(int typeID, int colorID, String dateTime) async {
+    try {
+      final response = await Dio().post(apiEndpoint + '/poop' + '/poop',
+          data: {
+            "typeID": typeID,
+            "colorID": colorID,
+            "dateTime": dateTime,
+          },
+          options: Options(
+            headers: {"cookie": 'jwt=' + _token.toString() + ';'},
+          ));
+      print('response is');
+      print(response.data);
+      _poopAnswer = PoopResult(
+        typeHeader: response.data['type']['header'],
+        typeCode: response.data['type']['code'],
+        typeBody: response.data['type']['body'],
+        colorHeader: response.data['color']['header'],
+        colorCode: response.data['color']['code'],
+        colorBody: response.data['color']['body'],
+      );
+      print(_poopAnswer?.typeHeader);
+      notifyListeners();
+    } catch (error) {
+      print(error);
+    }
   }
 
   Future<void> fetchData() async {
