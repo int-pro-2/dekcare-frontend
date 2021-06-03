@@ -89,13 +89,17 @@ class AuthenticateProvider with ChangeNotifier {
     prefs.clear();
   }
 
-  Future<void> changePassword(String newPassword) async {
-    // try {
-    //   await Dio().patch(apiEndpoint + '/auth/reset',
-    //       data: {"token": _recoveryToken, "password": newPassword});
-    //   Timer(Duration(milliseconds: 500), () => notifyListeners());
-    // } catch (error) {
-    //   throw HttpException(generalException);
-    // }
+  Future<void> changePassword(String password, String newPassword) async {
+    print(password + ' ' + newPassword);
+    try {
+      await Dio().patch(apiEndpoint + '/auth/change-password',
+          data: {"password": password, "newPassword": newPassword},
+          options: Options(headers: {"cookie": 'jwt=' + token + ';'}));
+      Timer(Duration(milliseconds: 500), () => notifyListeners());
+    } catch (error) {
+      throw HttpException(generalException);
+    }
   }
+
+  
 }
