@@ -82,17 +82,6 @@ class _LandingState extends State<LandingScreen> {
                                       children: [
                                         Container(
                                           padding: EdgeInsets.only(top: 20),
-                                          width: 40,
-                                          child: TextButton(
-                                            onPressed: () {},
-                                            child: Icon(
-                                              Icons.notifications,
-                                              color: whitePrimary,
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          padding: EdgeInsets.only(top: 20),
                                           width: 30,
                                           child: TextButton(
                                             onPressed: () {
