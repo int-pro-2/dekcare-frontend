@@ -68,6 +68,26 @@ class Forum {
       required this.comments});
 }
 
+class UserProfile {
+  final String email;
+  final String firstname;
+  final String lastname;
+  final String money;
+  final DateTime birthdate;
+  final String picture;
+  final String isDoctor;
+
+  UserProfile({
+    required this.email,
+    required this.firstname,
+    required this.lastname,
+    required this.birthdate,
+    required this.money,
+    required this.picture,
+    required this.isDoctor,
+  });
+}
+
 class Forums {
   final int id;
   final String ownerID;
@@ -93,14 +113,20 @@ class ForumProvider with ChangeNotifier {
   String? _token;
   List<Forums> _forums = [];
   List<Forum> _specificforum = [];
+  List<UserProfile> _userProfile = [];
 
-  ForumProvider(this._token, this._forums, this._specificforum);
+  ForumProvider(
+      this._token, this._forums, this._specificforum, this._userProfile);
   List<Forums> get forums {
     return _forums;
   }
 
   List<Forum> get specificforum {
     return _specificforum;
+  }
+
+  List<UserProfile> get userProfile {
+    return _userProfile;
   }
 
   Future<void> fetchForums() async {
@@ -249,5 +275,38 @@ class ForumProvider with ChangeNotifier {
     } catch (error) {
       print(error);
     }
+  }
+
+  Future<void> getUserProfile() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (!prefs.containsKey('userToken')) return;
+    String token = prefs.getString('userToken').toString();
+    _token = token;
+    try {
+      // print("tokne in provider" + token);
+      final response = await Dio().get(apiEndpoint + '/auth/profile',
+          options: Options(headers: {"cookie": 'jwt=' + token + ';'}));
+
+      _userProfile = modifyResponseUserProfile(response.data);
+      notifyListeners();
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  List<UserProfile> modifyResponseUserProfile(data) {
+    List<UserProfile> userProfile = [];
+
+    userProfile.add(UserProfile(
+      email: data["email"].toString(),
+      firstname: data["firstname"].toString(),
+      lastname: data["lastname"].toString(),
+      money: data["money"].toString(),
+      isDoctor: data['isDoctor'].toString(),
+      birthdate: DateTime.parse(data["birthdate"]),
+      picture: data["picture"].toString(),
+    ));
+
+    return userProfile;
   }
 }

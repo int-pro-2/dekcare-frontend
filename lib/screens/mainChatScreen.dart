@@ -94,16 +94,21 @@ class _ChatState extends State<MainChatScreen> {
                               Consumer<ChatProvider>(
                                   builder: (context, value, child) {
                                 final chatPreviewList = value.chatPreviewList;
-                                return (chatPreviewList.length == 0
-                                    ? EmptyCard(
-                                        pevContext: context,
+                                return (isLoading
+                                    ? Container(
+                                        height: height * 0.6,
+                                        child: Center(
+                                          child: CircularProgressIndicator(
+                                              backgroundColor: yellowPrimary),
+                                        ),
                                       )
                                     : isLoading
                                         ? Container(
                                             height: height * 0.6,
                                             child: Center(
                                               child: CircularProgressIndicator(
-                                                  color: yellowPrimary),
+                                                  backgroundColor:
+                                                      yellowPrimary),
                                             ),
                                           )
                                         : ListView.builder(

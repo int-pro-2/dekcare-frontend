@@ -100,4 +100,6 @@ class AuthenticateProvider with ChangeNotifier {
       throw HttpException(generalException);
     }
   }
+
+  
 }
