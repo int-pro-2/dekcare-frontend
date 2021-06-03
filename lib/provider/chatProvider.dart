@@ -36,6 +36,18 @@ class ChatPreviewCard {
   });
 }
 
+class ChatContent {
+  final String datetime;
+  final String message;
+  final bool isFromYourself;
+
+  ChatContent({
+    required this.datetime,
+    required this.message,
+    required this.isFromYourself,
+  });
+}
+
 class ChatProvider with ChangeNotifier {
   String? _token;
   // Consult page
@@ -43,6 +55,7 @@ class ChatProvider with ChangeNotifier {
 
   // Chat Page
   List<ChatPreviewCard> chatPreviewList = [];
+  List<List<ChatContent>> chatContentList = [];
 
   // Constructor
   ChatProvider(this._token);
@@ -141,5 +154,36 @@ class ChatProvider with ChangeNotifier {
       print(err);
     }
     return chatPreviewList;
+  }
+
+  List<List<ChatContent>> modifyChatContentList(data) {
+    List<List<ChatContent>> contentList = [];
+
+    data.forEach((el) {
+      List<ChatContent> temp = [];
+      el.forEach((el2) {
+        temp.add(ChatContent(
+          datetime: el2['datetime'],
+          message: el2['message'],
+          isFromYourself: el2['isFromYourself'],
+        ));
+      });
+      contentList.add(temp);
+    });
+
+    return contentList;
+  }
+
+  Future<List<List<ChatContent>>> getListOfChatContent(id) async {
+    try {
+      final response = await Dio().get(apiEndpoint + '/chat/messages/$id',
+          options:
+              Options(headers: {"cookie": 'jwt=' + _token.toString() + ';'}));
+      chatContentList = modifyChatContentList(response.data);
+      notifyListeners();
+    } catch (err) {
+      print(err);
+    }
+    return chatContentList;
   }
 }

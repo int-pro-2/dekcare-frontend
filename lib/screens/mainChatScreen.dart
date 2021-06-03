@@ -129,6 +129,9 @@ class _ChatState extends State<MainChatScreen> {
                                                   MaterialPageRoute(
                                                     builder: (context) {
                                                       return IndividualChatScreen(
+                                                          id: chatPreviewList[
+                                                                  index]
+                                                              .targetID,
                                                           name: chatPreviewList[
                                                                       index]
                                                                   .firstname +

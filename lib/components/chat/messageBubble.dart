@@ -7,6 +7,11 @@ class MessageBubble extends StatelessWidget {
   MessageBubble(
       {required this.isOwner, this.message, this.datetime, this.profile});
 
+  String formattedDateTime() {
+    final processedTime = datetime.substring(11, 16);
+    return processedTime;
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -18,33 +23,59 @@ class MessageBubble extends StatelessWidget {
           * ####################
           */
         Padding(
-            padding: const EdgeInsets.only(bottom: 10.0),
+            padding: const EdgeInsets.only(bottom: 20.0),
             child: Container(
                 width: width * 0.9,
-                height: 61,
                 padding: EdgeInsets.only(right: 10),
                 alignment: Alignment.centerRight,
-                child: Column(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Container(
-                      padding: EdgeInsets.all(12.0),
-                      child: Text("This is from me!",
-                          style: TextStyle(fontSize: 18)),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(15),
-                              bottomLeft: Radius.circular(15),
-                              bottomRight: Radius.circular(15)),
-                          color: whitePrimary),
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 3, right: 10),
+                          child: Text(
+                            formattedDateTime(),
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: blackSecondaryFont,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10.0, left: 10),
-                      child: Text(
-                        datetime,
-                        style:
-                            TextStyle(fontSize: 13, color: blackSecondaryFont),
-                      ),
-                    ),
+                    message.length > 32
+                        ? Container(
+                            padding: EdgeInsets.all(12.0),
+                            width: width * 0.7,
+                            child: Text(message,
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: blackSecondaryFont,
+                                    height: 1.1)),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(15),
+                                    bottomLeft: Radius.circular(15),
+                                    bottomRight: Radius.circular(15)),
+                                color: whitePrimary),
+                          )
+                        : Container(
+                            padding: EdgeInsets.all(12.0),
+                            child: Text(message,
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: blackSecondaryFont,
+                                    height: 1.1)),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(15),
+                                    bottomLeft: Radius.circular(15),
+                                    bottomRight: Radius.circular(15)),
+                                color: whitePrimary),
+                          ),
                   ],
                 )))
         : /* 
@@ -53,12 +84,11 @@ class MessageBubble extends StatelessWidget {
           * ######################
           */
         Padding(
-            padding: const EdgeInsets.only(bottom: 10.0),
+            padding: const EdgeInsets.only(bottom: 20.0),
             child: Container(
               padding: EdgeInsets.only(left: 10),
               alignment: Alignment.centerLeft,
               width: width * 0.9,
-              height: 80,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -66,7 +96,7 @@ class MessageBubble extends StatelessWidget {
                     padding: EdgeInsets.only(right: 10),
                     child: Container(
                       child: CircleAvatar(
-                        backgroundImage: NetworkImage(image),
+                        backgroundImage: NetworkImage(profile),
                         maxRadius: 25,
                       ),
                       decoration: BoxDecoration(
@@ -83,33 +113,65 @@ class MessageBubble extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 20.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Container(
-                          height: 38,
-                          child: Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Text(
-                                "This is from doctor!",
-                                style: TextStyle(fontSize: 18),
+                        message.length > 32
+                            ? Container(
+                                width: width * 0.6,
+                                child: Center(
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Container(
+                                        child: Text(
+                                          message,
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              color: blackSecondaryFont,
+                                              height: 1.1),
+                                        ),
+                                      )),
+                                ),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(15),
+                                        bottomLeft: Radius.circular(15),
+                                        bottomRight: Radius.circular(15)),
+                                    color: whitePrimary),
+                              )
+                            : Container(
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Text(
+                                      message,
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          color: blackSecondaryFont,
+                                          height: 1.1),
+                                    ),
+                                  ),
+                                ),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(15),
+                                        bottomLeft: Radius.circular(15),
+                                        bottomRight: Radius.circular(15)),
+                                    color: whitePrimary),
                               ),
-                            ),
-                          ),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(15),
-                                  bottomLeft: Radius.circular(15),
-                                  bottomRight: Radius.circular(15)),
-                              color: whitePrimary),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10.0, left: 10),
-                          child: Text(
-                            datetime,
-                            style: TextStyle(
-                                fontSize: 13, color: blackSecondaryFont),
+                        Container(
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(bottom: 3, left: 10),
+                                child: Text(
+                                  formattedDateTime(),
+                                  style: TextStyle(
+                                      fontSize: 13, color: blackSecondaryFont),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -121,5 +183,3 @@ class MessageBubble extends StatelessWidget {
           ));
   }
 }
-
-var image = 'https://cdn.discordapp.com/emojis/844792977243373569.png?v=1';

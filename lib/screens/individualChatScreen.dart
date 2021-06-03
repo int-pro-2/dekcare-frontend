@@ -2,7 +2,9 @@ import 'package:dekcare_frontend/components/chat/chatHeader.dart';
 import 'package:dekcare_frontend/components/chat/messageBox.dart';
 import 'package:dekcare_frontend/components/chat/messageBubble.dart';
 import 'package:dekcare_frontend/components/constants.dart';
+import 'package:dekcare_frontend/provider/chatProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class IndividualChatScreen extends StatefulWidget {
   final id, name, picture;
@@ -25,6 +27,22 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
     false
   ];
 
+  void getChatContentList(id) async {
+    try {
+      print(id);
+      await Provider.of<ChatProvider>(context, listen: false)
+          .getListOfChatContent(id);
+    } catch (err) {
+      print(err);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getChatContentList(widget.id);
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -43,22 +61,78 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
             preferredSize: Size.fromHeight(height * 0.12),
           ),
           body: Padding(
-            padding: const EdgeInsets.only(top: 20.0),
+            padding: const EdgeInsets.only(top: 5.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
                   child: SingleChildScrollView(
-                      child: ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: mockChat.length,
-                          itemBuilder: (context, index) {
-                            return MessageBubble(
-                              isOwner: mockChat[index],
-                              datetime: 'เมื่อวาน 22:08',
-                            );
-                          })),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 15.0),
+                      child: Consumer<ChatProvider>(
+                        builder: (context, value, child) {
+                          final chatContent = value.chatContentList;
+                          return ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: chatContent.length,
+                            itemBuilder: (context, index) {
+                              String processedDate() {
+                                var temp = chatContent[index][0]
+                                    .datetime
+                                    .substring(0, 10)
+                                    .split("-");
+                                return temp[2] + "/" + temp[1] + "/" + temp[0];
+                              }
+
+                              return Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10.0),
+                                    child: Container(
+                                      margin: EdgeInsets.zero,
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 5, horizontal: 10),
+                                        child: Text(
+                                          processedDate(),
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              color: greySecondary),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(30),
+                                        color: blackPrimaryFont.withAlpha(100),
+                                      ),
+                                      // style: BoxDecoration(),
+                                    ),
+                                  ),
+                                  ListView.builder(
+                                      physics: NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: chatContent[index].length,
+                                      itemBuilder: (context, index2) {
+                                        return MessageBubble(
+                                          message: chatContent[index][index2]
+                                              .message,
+                                          isOwner: chatContent[index][index2]
+                                              .isFromYourself,
+                                          datetime: chatContent[index][index2]
+                                              .datetime,
+                                          profile: widget.picture,
+                                        );
+                                      }),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ),
                 ),
                 MessageBox()
               ],
@@ -67,6 +141,3 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
         ));
   }
 }
-
-final String image =
-    'https://scontent.fkdt2-1.fna.fbcdn.net/v/t1.6435-9/53458185_2150818338340159_4143062862610300928_n.jpg?_nc_cat=100&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=TZrNhZRqI6MAX9Nv44L&_nc_ht=scontent.fkdt2-1.fna&oh=9e7fd4dc6eeb448b34a3576abd63698c&oe=60D970C9';
