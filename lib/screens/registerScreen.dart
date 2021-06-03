@@ -28,6 +28,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   var confirmPasswordCheck = '';
   var firstnameCheck = '';
   var lastnameCheck = '';
+  var emailCheckUsed = '';
 
   bool passwordEqual = true;
 
@@ -65,6 +66,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       );
     } on HttpException catch (error) {
+      setState(() {
+        emailCheckUsed = error.toString();
+      });
+
+      print(emailCheckUsed + 'ใช้แล้ว');
       print(error);
     }
   }
@@ -238,6 +244,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         padding: EdgeInsets.only(top: 20, left: 25),
                         child: Text(
                           'โปรดใส่อีเมลบัญชีผู้ใช้',
+                          style: TextStyle(fontSize: 18, color: Colors.red),
+                        ),
+                      )
+                    : Container(),
+                emailCheckUsed != ''
+                    ? Container(
+                        width: width,
+                        padding: EdgeInsets.only(top: 20, left: 25),
+                        child: Text(
+                          'บัญชีนี้มีผู้ใช้แล้ว',
                           style: TextStyle(fontSize: 18, color: Colors.red),
                         ),
                       )

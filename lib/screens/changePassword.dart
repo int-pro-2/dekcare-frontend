@@ -31,6 +31,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   var passwordCheck = '';
   var confirmPasswordCheck = '';
 
+  var emailCheckUsed = '';
+
   bool passwordEqual = true;
 
   var oldPasswordCheckError = '';
@@ -66,6 +68,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         ),
       );
     } catch (error) {
+      setState(() {
+        emailCheckUsed = error.toString();
+      });
       print(error);
     }
   }
@@ -200,6 +205,16 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         padding: EdgeInsets.only(top: 20, left: 25),
                         child: Text(
                           'โปรดกรอกรหัสผ่านเดิม',
+                          style: TextStyle(fontSize: 18, color: Colors.red),
+                        ),
+                      )
+                    : Container(),
+                emailCheckUsed != ''
+                    ? Container(
+                        width: width,
+                        padding: EdgeInsets.only(top: 20, left: 25),
+                        child: Text(
+                          'รหัสผ่านผิด',
                           style: TextStyle(fontSize: 18, color: Colors.red),
                         ),
                       )
