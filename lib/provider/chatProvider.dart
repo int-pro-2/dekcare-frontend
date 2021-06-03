@@ -52,9 +52,10 @@ class ChatProvider with ChangeNotifier {
   *  ## Provider functions for the consult page ##
   *  #############################################
   */
-  List<DoctorCard> modifyDoctorList(data, isFav) {
+  List<DoctorCard> modifyDoctorList(data, bool isFav) {
+    List<DoctorCard> docList = [];
     data.forEach((el) {
-      doctorList.add(DoctorCard(
+      docList.add(DoctorCard(
           id: el['id'],
           firstname: el['firstname'],
           lastname: el['lastname'],
@@ -63,24 +64,25 @@ class ChatProvider with ChangeNotifier {
           hospital: el['hospitalName']));
     });
 
-    return doctorList;
+    return docList;
   }
 
   Future<List<DoctorCard>> getListOfDoctor(bool isFav) async {
     try {
       if (isFav) {
+        // Get list of favorite doctors
         final response = await Dio().get(apiEndpoint + '/chat/fav-doctors',
             options:
                 Options(headers: {"cookie": 'jwt=' + _token.toString() + ';'}));
-        doctorList = modifyDoctorList(response.data, isFav);
-        notifyListeners();
+        doctorList = modifyDoctorList(response.data, true);
       } else {
+        // Get list of all doctors
         final response = await Dio().get(apiEndpoint + '/chat/doctors',
             options:
                 Options(headers: {"cookie": 'jwt=' + _token.toString() + ';'}));
         doctorList = modifyDoctorList(response.data, isFav);
-        notifyListeners();
       }
+      notifyListeners();
     } catch (err) {
       print(err);
     }
@@ -94,13 +96,11 @@ class ChatProvider with ChangeNotifier {
             data: {"doctorID": doctorId},
             options:
                 Options(headers: {"cookie": 'jwt=' + _token.toString() + ';'}));
-        print("Done favorite the doctor");
       } else {
         final request = await Dio().delete(apiEndpoint + '/chat/unfav-doctor',
             data: {"doctorID": doctorId},
             options:
                 Options(headers: {"cookie": 'jwt=' + _token.toString() + ';'}));
-        print("Done unfavorite the doctor");
       }
 
       notifyListeners();
