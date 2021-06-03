@@ -36,6 +36,7 @@ class _chatPreviewCardState extends State<chatPreviewCard> {
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: CircleAvatar(
                       backgroundImage: NetworkImage(widget.profile),
+                      backgroundColor: Colors.white,
                       // backgroundColor: greyPrimary,
                       radius: 45,
                     ),
@@ -57,7 +58,10 @@ class _chatPreviewCardState extends State<chatPreviewCard> {
                               Icons.reply,
                               size: 18,
                             ),
-                            Text(widget.message,
+                            Text(
+                                widget.message.length > 26
+                                    ? widget.message.substring(0, 26) + "..."
+                                    : widget.message,
                                 style: TextStyle(fontSize: 18)),
                           ]),
                         ),

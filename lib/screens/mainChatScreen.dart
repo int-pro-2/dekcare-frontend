@@ -1,4 +1,4 @@
-import 'package:dekcare_frontend/Screens/individualChatScreen.dart';
+import 'package:dekcare_frontend/screens/individualChatScreen.dart';
 import 'package:dekcare_frontend/components/chat/chatPreviewCard.dart';
 import 'package:dekcare_frontend/components/chat/emptyCard.dart';
 import 'package:dekcare_frontend/components/navBar/nav.dart';
@@ -129,6 +129,9 @@ class _ChatState extends State<MainChatScreen> {
                                                   MaterialPageRoute(
                                                     builder: (context) {
                                                       return IndividualChatScreen(
+                                                          id: chatPreviewList[
+                                                                  index]
+                                                              .targetID,
                                                           name: chatPreviewList[
                                                                       index]
                                                                   .firstname +

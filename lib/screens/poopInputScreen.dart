@@ -2,7 +2,9 @@ import 'package:dekcare_frontend/components/button.dart';
 import 'package:dekcare_frontend/components/constants.dart';
 import 'package:dekcare_frontend/components/topBar.dart';
 import 'package:dekcare_frontend/components/text.dart';
+import 'package:dekcare_frontend/provider/poopProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PoopInputScreen extends StatefulWidget {
   @override
@@ -13,13 +15,25 @@ var color = '';
 var type = '';
 
 class _PoopInputScreenState extends State<PoopInputScreen> {
+  void fetchData() async {
+    try {
+      await Provider.of<PoopProvider>(context).fetchData();
+    } catch (error) {}
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return MaterialApp(
       theme: ThemeData(fontFamily: 'supermarket'),
       home: SafeArea(
-              child: Scaffold(
+        child: Scaffold(
             backgroundColor: greySecondary,
             bottomNavigationBar: Container(
               height: height * 0.09,
@@ -29,8 +43,9 @@ class _PoopInputScreenState extends State<PoopInputScreen> {
                     EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
                 child: Button(
                     title: 'ยืนยัน',
-                    color:
-                        (type != '' && color != '') ? yellowPrimary : greyPrimary,
+                    color: (type != '' && color != '')
+                        ? yellowPrimary
+                        : greyPrimary,
                     onPress: () {
                       print(type + color);
                     }),
