@@ -11,22 +11,20 @@ import 'package:dekcare_frontend/provider/chatProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'landingScreen.dart';
-
 class ConsultScreen extends StatefulWidget {
+  bool fav = false;
   @override
   _ConsultState createState() => _ConsultState();
 }
 
 class _ConsultState extends State<ConsultScreen> {
-  var fav = false;
   bool isLoading = true;
 
   void changeFav(newFav) {
     setState(() {
-      fav = newFav;
+      widget.fav = newFav;
     });
-    ListDoctor(fav);
+    ListDoctor(widget.fav);
   }
 
   void ListDoctor(bool isFav) async {
@@ -34,6 +32,7 @@ class _ConsultState extends State<ConsultScreen> {
       setState(() {
         isLoading = true;
       });
+      print(isFav);
       await Provider.of<ChatProvider>(context, listen: false)
           .getListOfDoctor(isFav);
     } catch (err) {
@@ -46,7 +45,8 @@ class _ConsultState extends State<ConsultScreen> {
 
   @override
   void initState() {
-    ListDoctor(fav);
+    print(widget.fav);
+    ListDoctor(widget.fav);
     // TODO: implement initState
     super.initState();
   }
@@ -61,10 +61,10 @@ class _ConsultState extends State<ConsultScreen> {
         home: Scaffold(
           appBar: PreferredSize(
             child: TopBar(
-                titleText: 'ปรึกษาลูกน้อยกับหมอ',
-                enableBackButton: true,
-                contextFromPage: context,
-                press: Null),
+              titleText: 'ปรึกษาลูกน้อยกับหมอ',
+              enableBackButton: true,
+              contextFromPage: context,
+            ),
             preferredSize: Size.fromHeight((height * 0.075)),
           ),
           bottomNavigationBar: Nav(
@@ -79,7 +79,7 @@ class _ConsultState extends State<ConsultScreen> {
                     Toggle(
                       button1Title: 'ค้นหาหมอ',
                       button2Title: 'หมอติดดาว',
-                      current: fav,
+                      current: widget.fav,
                       onChange: changeFav,
                     ),
                     Container(
@@ -109,7 +109,7 @@ class _ConsultState extends State<ConsultScreen> {
                                   hospital: doctorList[index].hospital,
                                   isFavorite: doctorList[index].isFav,
                                   refresher: () {
-                                    ListDoctor(fav);
+                                    ListDoctor(widget.fav);
                                   },
                                   press: () {
                                     print('navigate');
@@ -117,7 +117,13 @@ class _ConsultState extends State<ConsultScreen> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) {
-                                          return IndividualChatScreen();
+                                          return IndividualChatScreen(
+                                            id: doctorList[index].id,
+                                            name: doctorList[index].firstname +
+                                                " " +
+                                                doctorList[index].lastname,
+                                            picture: doctorList[index].picture,
+                                          );
                                         },
                                       ),
                                     );

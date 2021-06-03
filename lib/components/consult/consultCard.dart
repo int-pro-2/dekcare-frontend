@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dekcare_frontend/components/constants.dart';
 import 'package:dekcare_frontend/provider/chatProvider.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +34,9 @@ class _consultCardState extends State<consultCard> {
 
   void refresh() {
     updateFavorite(widget.id, !widget.isFavorite);
-    widget.refresher();
+    Timer _timer = new Timer(const Duration(milliseconds: 200), () {
+      widget.refresher();
+    });
   }
 
   @override
@@ -106,7 +110,6 @@ class _consultCardState extends State<consultCard> {
                               borderRadius: BorderRadius.circular(50.0)),
                           onPressed: () {
                             refresh();
-                            print(widget.isFavorite);
                           },
                           padding: EdgeInsets.zero,
                         ),

@@ -9,34 +9,31 @@ class MessageBox extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    return Container(
-      color: yellowPrimary,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10.0),
-        child: Center(
-          child: Container(
-            width: width * 0.95,
-            child: TextField(
-              cursorColor: yellowPrimary,
-              decoration: InputDecoration(
-                fillColor: whitePrimary,
-                hintText: "Type a message...",
-                hintStyle: TextStyle(color: greyPrimary),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: greyPrimary, width: 1.0),
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                border: new OutlineInputBorder(
-                  borderSide: new BorderSide(color: greyPrimary, width: 1.0),
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                contentPadding: EdgeInsets.symmetric(horizontal: 20),
-                suffixIcon: Icon(
-                  Icons.send,
-                  color: yellowPrimary,
-                ),
-                filled: true,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      child: Center(
+        child: Container(
+          width: width * 0.95,
+          child: TextField(
+            cursorColor: yellowPrimary,
+            decoration: InputDecoration(
+              fillColor: whitePrimary,
+              hintText: "Type a message...",
+              hintStyle: TextStyle(color: greyPrimary),
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: greyPrimary, width: 1.0),
+                borderRadius: BorderRadius.circular(10.0),
               ),
+              border: new OutlineInputBorder(
+                borderSide: new BorderSide(color: greyPrimary, width: 1.0),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              contentPadding: EdgeInsets.symmetric(horizontal: 20),
+              suffixIcon: Icon(
+                Icons.send,
+                color: yellowPrimary,
+              ),
+              filled: true,
             ),
           ),
         ),
