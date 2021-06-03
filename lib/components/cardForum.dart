@@ -5,7 +5,9 @@ import 'package:dekcare_frontend/components/constants.dart';
 
 class CardForum extends StatelessWidget {
   final press,
+      commentorReply,
       isReply,
+      color,
       myFocusNode,
       replypress,
       text,
@@ -22,6 +24,8 @@ class CardForum extends StatelessWidget {
   final Function pressComment;
   const CardForum(
       {this.press,
+      this.commentorReply,
+      this.color,
       this.isReply,
       this.myFocusNode,
       this.replypress,
@@ -50,7 +54,7 @@ class CardForum extends StatelessWidget {
           // height: height * (25 / 100),
           child: DecoratedBox(
               decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: color,
                   borderRadius: BorderRadius.circular(23),
                   boxShadow: [
                     BoxShadow(
@@ -68,7 +72,7 @@ class CardForum extends StatelessWidget {
                           padding: EdgeInsets.only(left: 20, top: 10),
                           alignment: Alignment.bottomLeft,
                           child: Text(
-                            ('ความคิดเห็นที่ ' + (commentID).toString()),
+                            (commentorReply + (commentID).toString()),
                             style: TextStyle(
                                 fontSize: 20,
                                 fontFamily: 'supermarket',

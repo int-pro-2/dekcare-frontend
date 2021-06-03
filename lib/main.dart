@@ -4,6 +4,7 @@ import 'package:dekcare_frontend/Screens/splashScreen.dart';
 import 'package:dekcare_frontend/provider/authenticateProvider.dart';
 import 'package:dekcare_frontend/provider/forumProvider.dart';
 import 'package:dekcare_frontend/provider/chatProvider.dart';
+import 'package:dekcare_frontend/provider/poopProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -33,6 +34,14 @@ class DekCare extends StatelessWidget {
           // prev == null ? [] : prev.chatPreview,
           // prev == null ? [] : prev.doctorList
         ),
+        ChangeNotifierProxyProvider<AuthenticateProvider, PoopProvider>(
+          create: (ctx) => PoopProvider(null, [], []),
+          update: (ctx, auth, prev) => PoopProvider(
+            auth.token,
+            prev == null ? [] : prev.colors,
+            prev == null ? [] : prev.types,
+          ),
+        )
       ],
       child: Consumer<AuthenticateProvider>(
         builder: (ctx, auth, child) => MaterialApp(

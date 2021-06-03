@@ -167,6 +167,7 @@ class _ForumState extends State<ForumScreen> {
                                     shrinkWrap: true,
                                     itemCount: listRender.length,
                                     itemBuilder: (context, index) => CardForum(
+                                      color: Colors.white,
                                       pressComment: () {},
                                       url: listRender[index].picture,
                                       isComment: false,
