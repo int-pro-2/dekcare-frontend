@@ -1,5 +1,6 @@
 import 'package:dekcare_frontend/components/button.dart';
 import 'package:dekcare_frontend/components/buttonSetting.dart';
+import 'package:dekcare_frontend/components/chatInput.dart';
 import 'package:dekcare_frontend/components/constants.dart';
 import 'package:dekcare_frontend/components/text.dart';
 import 'package:dekcare_frontend/components/textBoxSetting.dart';
@@ -46,6 +47,10 @@ class _SettingState extends State<SettingScreen> {
     fetchUserProfile();
   }
 
+  final TextEditingController updatePictureController = TextEditingController();
+
+  var isUpdatePicture = false;
+
   Widget build(BuildContext context) {
     @override
     double width = MediaQuery.of(context).size.width;
@@ -53,7 +58,7 @@ class _SettingState extends State<SettingScreen> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'supermarket'),
-      home: Consumer<ForumProvider>(builder: (context, forumProvider, _) {
+      home: Consumer<ForumProvider>(builder: (context1, forumProvider, _) {
         final userProfile = forumProvider.userProfile;
         if (userProfile.length == 0) {
           return SplashScreen();
@@ -83,7 +88,11 @@ class _SettingState extends State<SettingScreen> {
                     children: [
                       Container(
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() {
+                              isUpdatePicture = true;
+                            });
+                          },
                           child: Stack(
                             children: [
                               Positioned(
@@ -110,6 +119,39 @@ class _SettingState extends State<SettingScreen> {
                           ),
                         ),
                       ),
+                      isUpdatePicture
+                          ? Column(
+                              children: [
+                                TextKT(text: 'อัพเดทรูปโปรไฟล์'),
+                                Container(
+                                  padding: EdgeInsets.only(top: 15),
+                                  child: ChatInput(
+                                    onchange: (text) {
+                                      setState(() {
+                                        // topicCheck = text;
+                                      });
+                                    },
+                                    controller: updatePictureController,
+                                    isCreate: true,
+                                    title: 'โปรคใส่ลิงค์รูปภาพ...',
+                                    color: whitePrimary,
+                                    widthh: width * 0.9,
+                                    heightt: height * 0.075,
+                                    hasShadow: false,
+                                  ),
+                                ),
+                                Container(
+                                  width: width * 0.6,
+                                  padding: EdgeInsets.all(20),
+                                  child: Button(
+                                    title: 'ยืนยัน',
+                                    color: yellowPrimary,
+                                    onPress: () {},
+                                  ),
+                                )
+                              ],
+                            )
+                          : Container(),
                       TextKT(text: 'บัญชี'),
                       TextBoxSetting(
                         title: 'บัญชี',
