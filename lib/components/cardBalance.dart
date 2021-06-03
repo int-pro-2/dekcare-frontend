@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dekcare_frontend/components/constants.dart';
 
 class CardMoney extends StatelessWidget {
+  final money;
   final pressAddmoney, pressWithdraw, pressTransfer;
   final fontsize;
   final colorCircle, textColor;
@@ -9,6 +10,7 @@ class CardMoney extends StatelessWidget {
   final icon;
 
   const CardMoney({
+    this.money,
     this.pressAddmoney,
     this.pressWithdraw,
     this.pressTransfer,
@@ -58,7 +60,7 @@ class CardMoney extends StatelessWidget {
                         Container(
                           width: width * 0.4,
                           child: Text(
-                            '400 Baht',
+                            money+' Baht',
                             textAlign: TextAlign.right,
                             style: TextStyle(
                               fontFamily: 'supermarket',

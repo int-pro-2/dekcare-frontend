@@ -101,5 +101,14 @@ class AuthenticateProvider with ChangeNotifier {
     }
   }
 
-  
+  Future<void> updateProfilePicture(String pictureURL) async {
+    try {
+      await Dio().patch(apiEndpoint + '/auth/profile-picture',
+          data: {"pictureURL": pictureURL},
+          options: Options(headers: {"cookie": 'jwt=' + token + ';'}));
+      Timer(Duration(milliseconds: 500), () => notifyListeners());
+    } catch (error) {
+      throw HttpException(generalException);
+    }
+  }
 }

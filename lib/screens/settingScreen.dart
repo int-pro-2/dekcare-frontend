@@ -42,6 +42,16 @@ class _SettingState extends State<SettingScreen> {
     } catch (error) {}
   }
 
+  void updatePic() async {
+    try {
+      await Provider.of<AuthenticateProvider>(context, listen: false)
+          .updateProfilePicture(updatePictureController.text);
+      fetchUserProfile();
+    } catch (error) {
+      print(error);
+    }
+  }
+
   void initState() {
     super.initState();
     fetchUserProfile();
@@ -90,7 +100,7 @@ class _SettingState extends State<SettingScreen> {
                         child: TextButton(
                           onPressed: () {
                             setState(() {
-                              isUpdatePicture = true;
+                              isUpdatePicture = !isUpdatePicture;
                             });
                           },
                           child: Stack(
@@ -146,7 +156,9 @@ class _SettingState extends State<SettingScreen> {
                                   child: Button(
                                     title: 'ยืนยัน',
                                     color: yellowPrimary,
-                                    onPress: () {},
+                                    onPress: () {
+                                      updatePic();
+                                    },
                                   ),
                                 )
                               ],
