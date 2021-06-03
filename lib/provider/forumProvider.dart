@@ -6,6 +6,7 @@ import '../config/api.dart';
 
 class Replies {
   final int id;
+  final int commentID;
   final String userID;
   final String text;
   final String firstname;
@@ -14,6 +15,7 @@ class Replies {
   final DateTime date;
   Replies({
     required this.id,
+    required this.commentID,
     required this.picture,
     required this.userID,
     required this.text,
@@ -148,6 +150,8 @@ class ForumProvider with ChangeNotifier {
           options: Options(headers: {"cookie": 'jwt=' + token + ';'}));
       _specificforum = modifyResponseSpecificForum(response.data);
       notifyListeners();
+      // print(response);
+      // print(specificforum[0].comments[1].replies[0].text);
     } catch (error) {
       print(error);
     }
@@ -164,6 +168,7 @@ class ForumProvider with ChangeNotifier {
           (el1) => {
             replies.add(Replies(
                 id: el1['id'],
+                commentID: el1['commentID'],
                 userID: el1['userID'],
                 text: el1['text'],
                 firstname: el1['firstname'],
