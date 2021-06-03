@@ -168,13 +168,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
           ),
         ),
-        appBar: PreferredSize(
-            child: TopBar(
-              titleText: 'สมัครสมาชิก',
-              enableBackButton: true,
-              contextFromPage: context,
+        appBar: AppBar(
+            leading: IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: () {
+                  Navigator.pop(context);
+                }),
+            title: Text(
+              'สมัครสมาชิก',
+              style: TextStyle(fontSize: 23),
             ),
-            preferredSize: Size.fromHeight((height * 0.075))),
+            centerTitle: true,
+            backgroundColor: yellowPrimary,
+            shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.vertical(bottom: Radius.circular(30)))),
         body: SingleChildScrollView(
           child: Container(
             width: width,
