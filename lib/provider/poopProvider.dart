@@ -12,7 +12,7 @@ class PoopColor {
 }
 
 class PoopType {
-  final String id;
+  final int id;
   final String text;
   PoopType({required this.id, required this.text});
 }
@@ -33,8 +33,10 @@ class PoopProvider with ChangeNotifier {
 
   Future<void> fetchData() async {
     try {
+      print('provider');
       final colorResponse = await Dio().get(apiEndpoint + '/poop/color');
       final typeResponse = await Dio().get(apiEndpoint + '/poop/type');
+      print('inside fetch length = ' + colorResponse.data.length.toString());
       _colors = modifyResponsePoopColor(colorResponse.data.toList());
       _types = modifyResponsePoopType(typeResponse.data.toList());
       notifyListeners();
