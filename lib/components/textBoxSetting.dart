@@ -20,25 +20,24 @@ class TextBoxSetting extends StatelessWidget {
       child: Container(
         child: Row(
           children: [
-            Expanded(
-                child: Container(
+            Container(
+              width: width * 0.2,
               padding: EdgeInsets.only(left: 15),
               child: Text(
                 title,
                 style: TextStyle(fontSize: 17),
               ),
-            )),
-            Expanded(
-              child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                Container(
-                  padding: EdgeInsets.only(right: 15),
-                  child: Text(
-                    info,
-                    style: TextStyle(fontSize: 17, color: blackSecondaryFont),
-                  ),
-                ),
-              ]),
             ),
+            Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+              Container(
+                width: width * 0.7,
+                padding: EdgeInsets.only(right: 15),
+                child: Text(
+                  info,
+                  style: TextStyle(fontSize: 17, color: blackSecondaryFont),
+                ),
+              ),
+            ]),
           ],
         ),
       ),
