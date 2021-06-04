@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../config/api.dart';
 
 class PoopColor {
@@ -64,8 +63,6 @@ class PoopProvider with ChangeNotifier {
           options: Options(
             headers: {"cookie": 'jwt=' + _token.toString() + ';'},
           ));
-      print('response is');
-      print(response.data);
       _poopAnswer = PoopResult(
         typeHeader: response.data['type']['header'],
         typeCode: response.data['type']['code'],
@@ -74,7 +71,6 @@ class PoopProvider with ChangeNotifier {
         colorCode: response.data['color']['code'],
         colorBody: response.data['color']['body'],
       );
-      print(_poopAnswer?.typeHeader);
       notifyListeners();
     } catch (error) {
       print(error);
@@ -86,7 +82,6 @@ class PoopProvider with ChangeNotifier {
       print('provider');
       final colorResponse = await Dio().get(apiEndpoint + '/poop/color');
       final typeResponse = await Dio().get(apiEndpoint + '/poop/type');
-      print('inside fetch length = ' + colorResponse.data.length.toString());
       _colors = modifyResponsePoopColor(colorResponse.data.toList());
       _types = modifyResponsePoopType(typeResponse.data.toList());
       notifyListeners();
