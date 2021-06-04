@@ -3,7 +3,9 @@ import 'package:dekcare_frontend/components/cardForum.dart';
 import 'package:dekcare_frontend/components/chatInput.dart';
 import 'package:dekcare_frontend/components/constants.dart';
 import 'package:dekcare_frontend/components/navBar/nav.dart';
+import 'package:dekcare_frontend/provider/authenticateProvider.dart';
 import 'package:dekcare_frontend/screens/forumScreen.dart';
+import 'package:dekcare_frontend/screens/landingScreen.dart';
 import 'package:dekcare_frontend/screens/loginScreen.dart';
 import 'package:dekcare_frontend/provider/forumProvider.dart';
 import 'package:provider/provider.dart';
@@ -25,26 +27,26 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
 
   var bankIDCheckError = '';
 
-  // void createForum() async {
-  //   print('create Forum');
-  //   try {
-  //     await Provider.of<ForumProvider>(context, listen: false).createForum(
-  //         topicController.text, bankIDController.text, DateTime.now().toString());
-  //     Navigator.pop(context);
+  void addMoney() async {
+    print('addmoney' + amountController.text);
+    try {
+      await Provider.of<AuthenticateProvider>(context, listen: false)
+          .addMoney(int.parse(amountController.text));
+      Navigator.pop(context);
 
-  //     Navigator.pushReplacement(
-  //       context,
-  //       MaterialPageRoute(
-  //         builder: (context) {
-  //           return ForumScreen();
-  //         },
-  //       ),
-  //     );
-  //   } catch (error) {
-  //     print(error);
-  //   }
-  //   print('done create forumm');
-  // }
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return LandingScreen();
+          },
+        ),
+      );
+    } catch (error) {
+      print(error);
+    }
+    print('done create forumm');
+  }
 
   final TextEditingController amountController = TextEditingController();
   final TextEditingController bankIDController = TextEditingController();
@@ -85,8 +87,8 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
                     bankIDCheckError = 'error';
                   });
                 }
-                if (amount != '' && bankID != '') {
-                  // createForum();
+                if (amount != '' && bankID != '' && type != '') {
+                  addMoney();
                 }
                 if (amount == '' && bankID == '') {
                   print('topic and body are not complete');

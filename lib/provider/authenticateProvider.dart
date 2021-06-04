@@ -111,4 +111,15 @@ class AuthenticateProvider with ChangeNotifier {
       throw HttpException(generalException);
     }
   }
+
+  Future<void> addMoney(int money) async {
+    try {
+      await Dio().post(apiEndpoint + '/bank/add-money',
+          data: {"money": money},
+          options: Options(headers: {"cookie": 'jwt=' + token + ';'}));
+      Timer(Duration(milliseconds: 500), () => notifyListeners());
+    } catch (error) {
+      throw HttpException(generalException);
+    }
+  }
 }
