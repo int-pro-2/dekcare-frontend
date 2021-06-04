@@ -1,9 +1,6 @@
-import 'package:dekcare_frontend/components/button.dart';
-import 'package:dekcare_frontend/components/text.dart';
 import 'package:dekcare_frontend/model/hexColor.dart';
 import 'package:dekcare_frontend/provider/poopProvider.dart';
 import 'package:flutter/material.dart';
-import 'package:dekcare_frontend/components/constants.dart';
 
 class CardPoopInfo extends StatefulWidget {
   final PoopInfoItem data;
@@ -18,7 +15,6 @@ class _CardPoopInfoState extends State<CardPoopInfo> {
   Widget buildInfo(BuildContext context) {
     if (_isExpanded) {
       return Container(
-        // color: Colors.red,
         padding: const EdgeInsets.only(left: 25),
         child: Column(
           children: [
@@ -109,42 +105,6 @@ class _CardPoopInfoState extends State<CardPoopInfo> {
                 ),
               ),
               buildInfo(context),
-              // Row(
-              //   children: [
-              // Container(
-              //   padding: const EdgeInsets.only(left: 20, top: 20, right: 20),
-              //   width: 100,
-              //   child: const CircleAvatar(
-              //     backgroundColor: yellowPrimary,
-              //   ),
-              // ),
-              //     Container(
-              //       padding: const EdgeInsets.only(top: 20, right: 20),
-              //       child: Text(
-              //         'เหลว+เหลือง',
-              //         style: const TextStyle(fontSize: 18),
-              //       ),
-              //     ),
-              //   ],
-              // ),
-              // Row(
-              //   children: [
-              //     Container(
-              //       padding: const EdgeInsets.only(left: 20, top: 20, right: 20),
-              //       width: 100,
-              //       child: const CircleAvatar(
-              //         backgroundColor: yellowPrimary,
-              //       ),
-              //     ),
-              //     Container(
-              //       padding: EdgeInsets.only(top: 20, right: 20),
-              //       child: Text(
-              //         'เหลว+เหลือง',
-              //         style: TextStyle(fontSize: 18),
-              //       ),
-              //     ),
-              //   ],
-              // ),
               Container(
                 padding: const EdgeInsets.only(left: 25, top: 5, bottom: 15),
                 width: width,
