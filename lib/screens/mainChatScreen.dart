@@ -21,7 +21,7 @@ class _ChatState extends State<MainChatScreen> {
   Future<Null> refreshList() async {
     refreshKey.currentState?.show(atTop: false);
     await Future.delayed(Duration(seconds: 1));
-    setState(() {});
+    GetPreviewList();
     return null;
   }
 
@@ -87,6 +87,7 @@ class _ChatState extends State<MainChatScreen> {
                         child: RefreshIndicator(
                           key: refreshKey,
                           onRefresh: refreshList,
+                          color: yellowPrimary,
                           child: Expanded(
                               child: SingleChildScrollView(
                             physics: ScrollPhysics(),
@@ -94,21 +95,16 @@ class _ChatState extends State<MainChatScreen> {
                               Consumer<ChatProvider>(
                                   builder: (context, value, child) {
                                 final chatPreviewList = value.chatPreviewList;
-                                return (isLoading
-                                    ? Container(
-                                        height: height * 0.6,
-                                        child: Center(
-                                          child: CircularProgressIndicator(
-                                              backgroundColor: yellowPrimary),
-                                        ),
+                                return (chatPreviewList.length == 0
+                                    ? EmptyCard(
+                                        pevContext: context,
                                       )
                                     : isLoading
                                         ? Container(
                                             height: height * 0.6,
                                             child: Center(
                                               child: CircularProgressIndicator(
-                                                  backgroundColor:
-                                                      yellowPrimary),
+                                                  color: yellowPrimary),
                                             ),
                                           )
                                         : ListView.builder(
