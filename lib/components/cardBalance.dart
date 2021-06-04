@@ -99,8 +99,11 @@ class CardMoney extends StatelessWidget {
                             height: 90,
                             width: 70,
                             child: CircleAvatar(
-                              backgroundColor: greyPrimary,
-                            ),
+                                backgroundColor: yellowPrimary,
+                                child: Icon(
+                                  Icons.account_balance_wallet,
+                                  color: whitePrimary,
+                                )),
                           ),
                           Text(
                             'เติมเงิน',
@@ -129,8 +132,11 @@ class CardMoney extends StatelessWidget {
                             height: 90,
                             width: 70,
                             child: CircleAvatar(
-                              backgroundColor: greyPrimary,
-                            ),
+                                backgroundColor: yellowPrimary,
+                                child: Icon(
+                                  Icons.account_balance,
+                                  color: whitePrimary,
+                                )),
                           ),
                           Text(
                             'ถอนเงิน',
@@ -159,7 +165,11 @@ class CardMoney extends StatelessWidget {
                             height: 90,
                             width: 70,
                             child: CircleAvatar(
-                              backgroundColor: greyPrimary,
+                              backgroundColor: yellowPrimary,
+                              child: Icon(
+                                Icons.transform,
+                                color: whitePrimary,
+                              ),
                             ),
                           ),
                           Text(

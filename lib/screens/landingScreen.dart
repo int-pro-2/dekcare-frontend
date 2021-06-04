@@ -195,6 +195,7 @@ class _LandingState extends State<LandingScreen> {
                         children: [
                           Container(
                             child: CardKid(
+                              image: 'doctor1',
                               press: () {
                                 Navigator.push(
                                   context,
@@ -212,6 +213,7 @@ class _LandingState extends State<LandingScreen> {
                           Container(
                             padding: EdgeInsets.only(left: 20),
                             child: CardKid(
+                              image: 'Doctor',
                               press: () {
                                 Navigator.push(
                                   context,
