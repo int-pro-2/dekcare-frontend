@@ -17,7 +17,6 @@ class IndividualChatScreen extends StatefulWidget {
 class _IndividualChatScreenState extends State<IndividualChatScreen> {
   void getChatContentList(id) async {
     try {
-      print(id);
       await Provider.of<ChatProvider>(context, listen: false)
           .getListOfChatContent(id);
     } catch (err) {
