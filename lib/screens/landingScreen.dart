@@ -9,6 +9,7 @@ import 'package:dekcare_frontend/screens/poopInfo.dart';
 import 'package:dekcare_frontend/screens/poopInputScreen.dart';
 import 'package:dekcare_frontend/screens/settingScreen.dart';
 import 'package:dekcare_frontend/screens/splashScreen.dart';
+import 'package:dekcare_frontend/screens/withdrawMoney.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -166,6 +167,17 @@ class _LandingState extends State<LandingScreen> {
                       ),
                       CardMoney(
                         money: userProfile[0].money,
+                        pressWithdraw: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return WithdrawMoneyScreen(
+                                    userProfile[0].money);
+                              },
+                            ),
+                          );
+                        },
                         pressAddmoney: () {
                           Navigator.push(
                             context,

@@ -122,4 +122,15 @@ class AuthenticateProvider with ChangeNotifier {
       throw HttpException(generalException);
     }
   }
+
+  Future<void> withdrawMoney(int money) async {
+    try {
+      await Dio().post(apiEndpoint + '/bank/withdraw',
+          data: {"money": money},
+          options: Options(headers: {"cookie": 'jwt=' + token + ';'}));
+      Timer(Duration(milliseconds: 500), () => notifyListeners());
+    } catch (error) {
+      throw HttpException(generalException);
+    }
+  }
 }
