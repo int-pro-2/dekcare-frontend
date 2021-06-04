@@ -49,51 +49,51 @@ class _CreaetForumScreenState extends State<CreaetForumScreen> {
     @override
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: greySecondary,
-        bottomNavigationBar: Container(
-          height: height * 0.09,
-          color: whitePrimary,
-          child: Container(
-            padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-            child: Button(
-              title: 'ยืนยัน',
-              color: (topicCheck != '' && bodyCheck != '')
-                  ? yellowPrimary
-                  : greyPrimary,
-              onPress: () {
-                if (topicCheck == '') {
-                  setState(() {
-                    topicCheckError = 'error';
-                  });
-                }
-                if (bodyCheck == '') {
-                  setState(() {
-                    bodyCheckError = 'error';
-                  });
-                }
-                if (topicCheck != '' && bodyCheck != '') {
-                  createForum();
-                }
-                if (topicCheck == '' && bodyCheck == '') {
-                  print('topic and body are not complete');
-                }
-              },
-            ),
+    return Scaffold(
+      backgroundColor: greySecondary,
+      bottomNavigationBar: Container(
+        height: height * 0.09,
+        color: whitePrimary,
+        child: Container(
+          padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+          child: Button(
+            title: 'ยืนยัน',
+            color: (topicCheck != '' && bodyCheck != '')
+                ? yellowPrimary
+                : greyPrimary,
+            onPress: () {
+              if (topicCheck == '') {
+                setState(() {
+                  topicCheckError = 'error';
+                });
+              }
+              if (bodyCheck == '') {
+                setState(() {
+                  bodyCheckError = 'error';
+                });
+              }
+              if (topicCheck != '' && bodyCheck != '') {
+                createForum();
+              }
+              if (topicCheck == '' && bodyCheck == '') {
+                print('topic and body are not complete');
+              }
+            },
           ),
         ),
-        appBar: AppBar(
-            title: Text(
-              'สร้างกระทู้',
-              style: TextStyle(fontSize: 23),
-            ),
-            centerTitle: true,
-            backgroundColor: yellowPrimary,
-            shape: RoundedRectangleBorder(
-                borderRadius:
-                    BorderRadius.vertical(bottom: Radius.circular(30)))),
-        body: SingleChildScrollView(
+      ),
+      appBar: AppBar(
+          title: Text(
+            'สร้างกระทู้',
+            style: TextStyle(fontSize: 23),
+          ),
+          centerTitle: true,
+          backgroundColor: yellowPrimary,
+          shape: RoundedRectangleBorder(
+              borderRadius:
+                  BorderRadius.vertical(bottom: Radius.circular(30)))),
+      body: SingleChildScrollView(
+        child: SafeArea(
           child: Container(
             width: width,
             child: Column(
