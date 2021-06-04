@@ -15,21 +15,8 @@ class IndividualChatScreen extends StatefulWidget {
 }
 
 class _IndividualChatScreenState extends State<IndividualChatScreen> {
-  List<bool> mockChat = [
-    true,
-    false,
-    true,
-    false,
-    true,
-    true,
-    false,
-    false,
-    false
-  ];
-
   void getChatContentList(id) async {
     try {
-      print(id);
       await Provider.of<ChatProvider>(context, listen: false)
           .getListOfChatContent(id);
     } catch (err) {
@@ -67,6 +54,8 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
               children: [
                 Expanded(
                   child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    reverse: true,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 15.0),
                       child: Consumer<ChatProvider>(

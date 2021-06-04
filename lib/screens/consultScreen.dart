@@ -19,6 +19,14 @@ class ConsultScreen extends StatefulWidget {
 
 class _ConsultState extends State<ConsultScreen> {
   bool isLoading = true;
+  var refreshKey = GlobalKey<RefreshIndicatorState>();
+
+  Future<Null> refreshList() async {
+    refreshKey.currentState?.show(atTop: false);
+    await Future.delayed(Duration(seconds: 1));
+    ListDoctor(widget.fav);
+    return null;
+  }
 
   void changeFav(newFav) {
     setState(() {
@@ -71,66 +79,79 @@ class _ConsultState extends State<ConsultScreen> {
             currentIndex: 1,
           ),
           backgroundColor: greySecondary,
-          body: SingleChildScrollView(
-            child: SafeArea(
-              child: Center(
-                child: Column(
-                  children: [
-                    Toggle(
-                      button1Title: 'ค้นหาหมอ',
-                      button2Title: 'หมอติดดาว',
-                      current: widget.fav,
-                      onChange: changeFav,
-                    ),
-                    Container(
+          body: SafeArea(
+            child: Center(
+              child: Column(
+                children: [
+                  Toggle(
+                    button1Title: 'ค้นหาหมอ',
+                    button2Title: 'หมอติดดาว',
+                    current: widget.fav,
+                    onChange: changeFav,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0),
+                    child: Container(
                       width: width * 0.92,
                       child: searchBar(title: 'ค้นหาชื่อคุณหมอที่นี่'),
                     ),
-                    Consumer<ChatProvider>(builder: (context, value, child) {
-                      final doctorList = value.doctorList;
-                      return isLoading
-                          ? Container(
-                              height: height * 0.6,
-                              child: Center(
-                                child: CircularProgressIndicator(
-                                    color: yellowPrimary),
-                              ),
-                            )
-                          : ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: doctorList.length,
-                              itemBuilder: (context, index) => consultCard(
-                                  id: doctorList[index].id,
-                                  name: doctorList[index].firstname +
-                                      " " +
-                                      doctorList[index].lastname,
-                                  profile: doctorList[index].picture,
-                                  hospital: doctorList[index].hospital,
-                                  isFavorite: doctorList[index].isFav,
-                                  refresher: () {
-                                    ListDoctor(widget.fav);
-                                  },
-                                  press: () {
-                                    print('navigate');
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) {
-                                          return IndividualChatScreen(
-                                            id: doctorList[index].id,
-                                            name: doctorList[index].firstname +
-                                                " " +
-                                                doctorList[index].lastname,
-                                            picture: doctorList[index].picture,
-                                          );
-                                        },
-                                      ),
-                                    );
-                                  }));
-                    }),
-                  ],
-                ),
+                  ),
+                  Expanded(
+                    child: RefreshIndicator(
+                      key: refreshKey,
+                      onRefresh: refreshList,
+                      color: yellowPrimary,
+                      child: SingleChildScrollView(
+                        child: Consumer<ChatProvider>(
+                            builder: (context, value, child) {
+                          final doctorList = value.doctorList;
+                          return isLoading
+                              ? Container(
+                                  height: height * 0.6,
+                                  child: Center(
+                                    child: CircularProgressIndicator(
+                                        color: yellowPrimary),
+                                  ),
+                                )
+                              : ListView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: doctorList.length,
+                                  itemBuilder: (context, index) => consultCard(
+                                      id: doctorList[index].id,
+                                      name: doctorList[index].firstname +
+                                          " " +
+                                          doctorList[index].lastname,
+                                      profile: doctorList[index].picture,
+                                      hospital: doctorList[index].hospital,
+                                      isFavorite: doctorList[index].isFav,
+                                      refresher: () {
+                                        ListDoctor(widget.fav);
+                                      },
+                                      press: () {
+                                        print('navigate');
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) {
+                                              return IndividualChatScreen(
+                                                id: doctorList[index].id,
+                                                name: doctorList[index]
+                                                        .firstname +
+                                                    " " +
+                                                    doctorList[index].lastname,
+                                                picture:
+                                                    doctorList[index].picture,
+                                              );
+                                            },
+                                          ),
+                                        );
+                                      }));
+                        }),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

@@ -34,7 +34,7 @@ class _consultCardState extends State<consultCard> {
 
   void refresh() {
     updateFavorite(widget.id, !widget.isFavorite);
-    Timer _timer = new Timer(const Duration(milliseconds: 200), () {
+    Timer _timer = new Timer(const Duration(milliseconds: 20), () {
       widget.refresher();
     });
   }
