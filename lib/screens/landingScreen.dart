@@ -4,6 +4,7 @@ import 'package:dekcare_frontend/components/constants.dart';
 import 'package:dekcare_frontend/components/cardBalance.dart';
 import 'package:dekcare_frontend/components/card.dart';
 import 'package:dekcare_frontend/provider/forumProvider.dart';
+import 'package:dekcare_frontend/screens/addMoney.dart';
 import 'package:dekcare_frontend/screens/poopInfo.dart';
 import 'package:dekcare_frontend/screens/poopInputScreen.dart';
 import 'package:dekcare_frontend/screens/settingScreen.dart';
@@ -165,6 +166,16 @@ class _LandingState extends State<LandingScreen> {
                       ),
                       CardMoney(
                         money: userProfile[0].money,
+                        pressAddmoney: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return AddMoneyScreen();
+                              },
+                            ),
+                          );
+                        },
                       ),
                       SizedBox(
                         height: 10,

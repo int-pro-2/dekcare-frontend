@@ -60,7 +60,7 @@ class CardMoney extends StatelessWidget {
                         Container(
                           width: width * 0.4,
                           child: Text(
-                            money+' Baht',
+                            money + ' Baht',
                             textAlign: TextAlign.right,
                             style: TextStyle(
                               fontFamily: 'supermarket',
@@ -123,7 +123,7 @@ class CardMoney extends StatelessWidget {
                               fontSize: 40,
                               fontStyle: FontStyle.italic),
                         ),
-                        onPressed: pressAddmoney,
+                        onPressed: pressWithdraw,
                         child: Column(children: [
                           Container(
                             height: 90,
@@ -153,7 +153,7 @@ class CardMoney extends StatelessWidget {
                               fontSize: 40,
                               fontStyle: FontStyle.italic),
                         ),
-                        onPressed: pressAddmoney,
+                        onPressed: pressTransfer,
                         child: Column(children: [
                           Container(
                             height: 90,
