@@ -60,7 +60,7 @@ class CardMoney extends StatelessWidget {
                         Container(
                           width: width * 0.4,
                           child: Text(
-                            money+' Baht',
+                            money + ' Baht',
                             textAlign: TextAlign.right,
                             style: TextStyle(
                               fontFamily: 'supermarket',
@@ -99,8 +99,11 @@ class CardMoney extends StatelessWidget {
                             height: 90,
                             width: 70,
                             child: CircleAvatar(
-                              backgroundColor: greyPrimary,
-                            ),
+                                backgroundColor: yellowPrimary,
+                                child: Icon(
+                                  Icons.account_balance_wallet,
+                                  color: whitePrimary,
+                                )),
                           ),
                           Text(
                             'เติมเงิน',
@@ -123,14 +126,17 @@ class CardMoney extends StatelessWidget {
                               fontSize: 40,
                               fontStyle: FontStyle.italic),
                         ),
-                        onPressed: pressAddmoney,
+                        onPressed: pressWithdraw,
                         child: Column(children: [
                           Container(
                             height: 90,
                             width: 70,
                             child: CircleAvatar(
-                              backgroundColor: greyPrimary,
-                            ),
+                                backgroundColor: yellowPrimary,
+                                child: Icon(
+                                  Icons.account_balance,
+                                  color: whitePrimary,
+                                )),
                           ),
                           Text(
                             'ถอนเงิน',
@@ -153,13 +159,17 @@ class CardMoney extends StatelessWidget {
                               fontSize: 40,
                               fontStyle: FontStyle.italic),
                         ),
-                        onPressed: pressAddmoney,
+                        onPressed: pressTransfer,
                         child: Column(children: [
                           Container(
                             height: 90,
                             width: 70,
                             child: CircleAvatar(
-                              backgroundColor: greyPrimary,
+                              backgroundColor: yellowPrimary,
+                              child: Icon(
+                                Icons.transform,
+                                color: whitePrimary,
+                              ),
                             ),
                           ),
                           Text(

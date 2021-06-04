@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:dekcare_frontend/components/constants.dart';
 
 class CardKid extends StatelessWidget {
-  final press, text, title;
+  final press, text, title, image;
 
-  const CardKid({this.press, this.text, this.title});
+  const CardKid({this.press, this.text, this.title, this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +47,7 @@ class CardKid extends StatelessWidget {
                     width: 70,
                     child: CircleAvatar(
                       backgroundColor: greyPrimary,
+                      backgroundImage: AssetImage('assets/images/$image.png'),
                     ),
                   ),
                   Container(
