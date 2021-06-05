@@ -70,24 +70,23 @@ class _ChatState extends State<MainChatScreen> {
                 preferredSize: Size.fromHeight(height * 0.075)),
             bottomNavigationBar: Nav(currentIndex: 3),
             backgroundColor: greySecondary,
-            body: SingleChildScrollView(
-              child: SafeArea(
-                child: Center(
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Container(
-                          width: width * 0.92,
-                          child: searchBar(title: 'ค้นหาชื่อเพื่อน'),
-                        ),
+            body: SafeArea(
+              child: Center(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
+                      child: Container(
+                        width: width * 0.92,
+                        child: searchBar(title: 'ค้นหาชื่อเพื่อน'),
                       ),
-                      RefreshIndicator(
+                    ),
+                    Expanded(
+                      child: RefreshIndicator(
                         key: refreshKey,
                         onRefresh: refreshList,
                         color: yellowPrimary,
-                        child: Expanded(
-                            child: SingleChildScrollView(
+                        child: SingleChildScrollView(
                           physics: ScrollPhysics(),
                           child: Column(children: [
                             Consumer<ChatProvider>(
@@ -149,10 +148,10 @@ class _ChatState extends State<MainChatScreen> {
                                         ));
                             })
                           ]),
-                        )),
+                        ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             )));
