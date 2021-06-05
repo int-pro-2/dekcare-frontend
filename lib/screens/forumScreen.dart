@@ -153,7 +153,7 @@ class _ForumState extends State<ForumScreen> {
                       ],
                     ),
                     listRender.length == 0
-                        ? EmptyList(text: 'test')
+                        ? EmptyList(text: 'ไม่มีกระทู้ ณ ขณะนี้')
                         : Container(
                             height: height * 0.7,
                             child: RefreshIndicator(
