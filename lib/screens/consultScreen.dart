@@ -22,6 +22,9 @@ class _ConsultState extends State<ConsultScreen> {
   Future<Null> refreshList() async {
     refreshKey.currentState?.show(atTop: false);
     await Future.delayed(Duration(seconds: 1));
+    setState(() {
+      isLoading = true;
+    });
     ListDoctor(widget.fav);
     return null;
   }
@@ -65,7 +68,7 @@ class _ConsultState extends State<ConsultScreen> {
           appBar: PreferredSize(
             child: TopBar(
               titleText: 'ปรึกษาลูกน้อยกับหมอ',
-              enableBackButton: true,
+              enableBackButton: false,
               contextFromPage: context,
             ),
             preferredSize: Size.fromHeight((height * 0.075)),
@@ -84,13 +87,13 @@ class _ConsultState extends State<ConsultScreen> {
                     current: widget.fav,
                     onChange: changeFav,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10.0),
-                    child: Container(
-                      width: width * 0.92,
-                      child: searchBar(title: 'ค้นหาชื่อคุณหมอที่นี่'),
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(bottom: 10.0),
+                  //   child: Container(
+                  //     width: width * 0.92,
+                  //     child: searchBar(title: 'ค้นหาชื่อคุณหมอที่นี่'),
+                  //   ),
+                  // ),
                   Expanded(
                     child: RefreshIndicator(
                       key: refreshKey,

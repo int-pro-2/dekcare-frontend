@@ -367,8 +367,9 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
                                                                             .comments[index]
                                                                             .replies[index1]
                                                                             .text,
-                                                                        userName:
-                                                                            'username',
+                                                                        userName: forumList[0].comments[index].replies[index1].firstname +
+                                                                            " " +
+                                                                            forumList[0].comments[index].replies[index1].lastname,
                                                                         url: forumList[0]
                                                                             .comments[index]
                                                                             .replies[index1]

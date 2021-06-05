@@ -116,13 +116,13 @@ class _ChatState extends State<MainChatScreen> {
               child: Center(
                 child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
-                      child: Container(
-                        width: width * 0.92,
-                        child: searchBar(title: 'ค้นหาชื่อหมอ'),
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
+                    //   child: Container(
+                    //     width: width * 0.92,
+                    //     child: searchBar(title: 'ค้นหาชื่อหมอ'),
+                    //   ),
+                    // ),
                     Expanded(
                       child: RefreshIndicator(
                         key: refreshKey,
