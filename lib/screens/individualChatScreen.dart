@@ -21,13 +21,13 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
     try {
       await Provider.of<ChatProvider>(context, listen: false)
           .getListOfChatContent(id);
+      setState(() {});
     } catch (err) {
       print(err);
     }
   }
 
   Widget renderScreenChanges(id) {
-    getChatContentList(id);
     return Consumer<ChatProvider>(
       builder: (context, value, child) {
         final chatContent = value.chatContentList;
@@ -87,9 +87,9 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
   @override
   void initState() {
     super.initState();
-
-    Timer.periodic(Duration(seconds: 10), (timer) {
-      renderScreenChanges(widget.id);
+    getChatContentList(widget.id);
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      getChatContentList(widget.id);
     });
   }
 

@@ -89,15 +89,10 @@ class _ChatState extends State<MainChatScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Timer.periodic(Duration(seconds: 10), (timer) {
-      renderChatList();
+    isLoading = true;
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      GetPreviewList();
     });
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
   }
 
   @override

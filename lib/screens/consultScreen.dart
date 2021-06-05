@@ -37,9 +37,6 @@ class _ConsultState extends State<ConsultScreen> {
 
   void ListDoctor(bool isFav) async {
     try {
-      setState(() {
-        isLoading = true;
-      });
       print(isFav);
       await Provider.of<ChatProvider>(context, listen: false)
           .getListOfDoctor(isFav);
@@ -53,7 +50,7 @@ class _ConsultState extends State<ConsultScreen> {
 
   @override
   void initState() {
-    print(widget.fav);
+    isLoading = true;
     ListDoctor(widget.fav);
     // TODO: implement initState
     super.initState();
