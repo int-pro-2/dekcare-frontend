@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:dekcare_frontend/screens/individualChatScreen.dart';
 import 'package:dekcare_frontend/components/Toggle.dart';
 import 'package:dekcare_frontend/components/constants.dart';

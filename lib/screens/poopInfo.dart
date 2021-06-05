@@ -37,91 +37,90 @@ class _PoopInfoState extends State<PoopInfo> {
     double height = MediaQuery.of(context).size.height;
     return MaterialApp(
       theme: ThemeData(fontFamily: 'supermarket'),
-      home: SafeArea(
-        child: Scaffold(
-          backgroundColor: greySecondary,
-          appBar: PreferredSize(
-            child: TopBar(
-              titleText: 'ข้อมูลสุขภาพอุจจาระของลูก',
-              enableBackButton: true,
-              contextFromPage: context,
-              press: () => {},
-            ),
-            preferredSize: Size.fromHeight((height * 0.075)),
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: greySecondary,
+        appBar: PreferredSize(
+          child: TopBar(
+            titleText: 'ข้อมูลสุขภาพอุจจาระของลูก',
+            enableBackButton: true,
+            contextFromPage: context,
+            press: () => {},
           ),
-          body: Consumer<PoopProvider>(builder: (context, poopProvider, _) {
-            List<PoopInfoItem> poops = poopProvider.poopsInfo;
+          preferredSize: Size.fromHeight((height * 0.075)),
+        ),
+        body: Consumer<PoopProvider>(builder: (context, poopProvider, _) {
+          List<PoopInfoItem> poops = poopProvider.poopsInfo;
 
-            return Container(
-              padding: const EdgeInsets.all(20),
-              width: width,
-              height: height,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        showMonthPicker(
-                          context: context,
-                          firstDate: DateTime(DateTime.now().year - 1, 5),
-                          lastDate: DateTime(DateTime.now().year + 1, 9),
-                          initialDate: selectedDate,
-                          locale: Locale("th"),
-                        ).then((date) {
-                          if (date != null) {
-                            setState(() {
-                              selectedDate = date;
-                            });
-                            fetchData();
-                          }
-                        });
-                      },
-                      child: Container(
-                        width: width,
-                        height: height * 0.08,
-                        color: Colors.white,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 15),
-                          child: Row(
-                            children: [
-                              Icon(Icons.calendar_today),
-                              Container(
-                                margin: EdgeInsets.all(10),
-                                child: Text(
-                                  selectedDate.month.toString() +
-                                      '/' +
-                                      selectedDate.year.toString(),
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                              )
-                            ],
-                          ),
+          return Container(
+            padding: const EdgeInsets.all(20),
+            width: width,
+            height: height,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      showMonthPicker(
+                        context: context,
+                        firstDate: DateTime(DateTime.now().year - 1, 5),
+                        lastDate: DateTime(DateTime.now().year + 1, 9),
+                        initialDate: selectedDate,
+                        locale: Locale("th"),
+                      ).then((date) {
+                        if (date != null) {
+                          setState(() {
+                            selectedDate = date;
+                          });
+                          fetchData();
+                        }
+                      });
+                    },
+                    child: Container(
+                      width: width,
+                      height: height * 0.08,
+                      color: Colors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 15),
+                        child: Row(
+                          children: [
+                            Icon(Icons.calendar_today),
+                            Container(
+                              margin: EdgeInsets.all(10),
+                              child: Text(
+                                selectedDate.month.toString() +
+                                    '/' +
+                                    selectedDate.year.toString(),
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            )
+                          ],
                         ),
                       ),
                     ),
-                    _isLoading
-                        ? Container(
-                            height: height * 0.6,
-                            child: Center(
-                              child: CircularProgressIndicator(
-                                backgroundColor: yellowPrimary,
-                              ),
+                  ),
+                  _isLoading
+                      ? Container(
+                          height: height * 0.6,
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              backgroundColor: yellowPrimary,
                             ),
-                          )
-                        : ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: poops.length,
-                            itemBuilder: (ctx, index) {
-                              return CardPoopInfo(data: poops[index]);
-                            },
                           ),
-                  ],
-                ),
+                        )
+                      : ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: poops.length,
+                          itemBuilder: (ctx, index) {
+                            return CardPoopInfo(data: poops[index]);
+                          },
+                        ),
+                ],
               ),
-            );
-          }),
-        ),
+            ),
+          );
+        }),
       ),
     );
   }

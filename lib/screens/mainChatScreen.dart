@@ -120,7 +120,7 @@ class _ChatState extends State<MainChatScreen> {
                       padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
                       child: Container(
                         width: width * 0.92,
-                        child: searchBar(title: 'ค้นหาชื่อเพื่อน'),
+                        child: searchBar(title: 'ค้นหาชื่อหมอ'),
                       ),
                     ),
                     Expanded(
