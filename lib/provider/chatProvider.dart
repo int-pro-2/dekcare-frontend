@@ -105,12 +105,12 @@ class ChatProvider with ChangeNotifier {
   Future<void> onChangeFavorite(String doctorId, bool isFav) async {
     try {
       if (isFav) {
-        final request = await Dio().post(apiEndpoint + '/chat/fav-doctor',
+        final response = await Dio().post(apiEndpoint + '/chat/fav-doctor',
             data: {"doctorID": doctorId},
             options:
                 Options(headers: {"cookie": 'jwt=' + _token.toString() + ';'}));
       } else {
-        final request = await Dio().delete(apiEndpoint + '/chat/unfav-doctor',
+        final response = await Dio().delete(apiEndpoint + '/chat/unfav-doctor',
             data: {"doctorID": doctorId},
             options:
                 Options(headers: {"cookie": 'jwt=' + _token.toString() + ';'}));
@@ -185,5 +185,22 @@ class ChatProvider with ChangeNotifier {
       print(err);
     }
     return chatContentList;
+  }
+
+  Future<void> sendMessage(targetID, message, dateTime) async {
+    try {
+      final response = await Dio().post(apiEndpoint + '/chat/message',
+          data: {
+            "targetID": targetID,
+            "message": message,
+            "dateTime": dateTime
+          },
+          options:
+              Options(headers: {"cookie": 'jwt=' + _token.toString() + ';'}));
+      notifyListeners();
+      print(response.data);
+    } catch (err) {
+      print(err);
+    }
   }
 }

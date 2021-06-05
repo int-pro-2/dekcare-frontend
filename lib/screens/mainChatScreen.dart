@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dekcare_frontend/screens/individualChatScreen.dart';
 import 'package:dekcare_frontend/components/chat/chatPreviewCard.dart';
 import 'package:dekcare_frontend/components/chat/emptyCard.dart';
@@ -27,24 +29,69 @@ class _ChatState extends State<MainChatScreen> {
 
   void GetPreviewList() async {
     try {
-      setState(() {
-        isLoading = true;
-      });
       await Provider.of<ChatProvider>(context, listen: false)
           .getListOfChatPreview();
+      setState(() {
+        isLoading = false;
+      });
     } catch (err) {
       print(err);
     }
-    setState(() {
-      isLoading = false;
+  }
+
+  Widget renderChatList() {
+    GetPreviewList();
+    return Consumer<ChatProvider>(builder: (context, value, child) {
+      final chatPreviewList = value.chatPreviewList;
+      return (chatPreviewList.length == 0
+          ? EmptyCard(
+              pevContext: context,
+            )
+          : isLoading
+              ? Container(
+                  height: 120,
+                  child: Center(
+                    child: CircularProgressIndicator(color: yellowPrimary),
+                  ),
+                )
+              : ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: chatPreviewList.length,
+                  itemBuilder: (context, index) => chatPreviewCard(
+                    name: chatPreviewList[index].firstname +
+                        " " +
+                        chatPreviewList[index].lastname,
+                    profile: chatPreviewList[index].picture,
+                    message: chatPreviewList[index].message,
+                    press: () {
+                      print('navigate');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return IndividualChatScreen(
+                                id: chatPreviewList[index].targetID,
+                                name: chatPreviewList[index].firstname +
+                                    " " +
+                                    chatPreviewList[index].lastname,
+                                picture: chatPreviewList[index].picture);
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                ));
     });
   }
 
   @override
   void initState() {
-    GetPreviewList();
     // TODO: implement initState
     super.initState();
+    Timer.periodic(Duration(seconds: 10), (timer) {
+      renderChatList();
+    });
   }
 
   @override
@@ -89,64 +136,7 @@ class _ChatState extends State<MainChatScreen> {
                         child: SingleChildScrollView(
                           physics: ScrollPhysics(),
                           child: Column(children: [
-                            Consumer<ChatProvider>(
-                                builder: (context, value, child) {
-                              final chatPreviewList = value.chatPreviewList;
-                              return (chatPreviewList.length == 0
-                                  ? EmptyCard(
-                                      pevContext: context,
-                                    )
-                                  : isLoading
-                                      ? Container(
-                                          height: height * 0.6,
-                                          child: Center(
-                                            child: CircularProgressIndicator(
-                                                color: yellowPrimary),
-                                          ),
-                                        )
-                                      : ListView.builder(
-                                          physics:
-                                              NeverScrollableScrollPhysics(),
-                                          shrinkWrap: true,
-                                          itemCount: chatPreviewList.length,
-                                          itemBuilder: (context, index) =>
-                                              chatPreviewCard(
-                                            name: chatPreviewList[index]
-                                                    .firstname +
-                                                " " +
-                                                chatPreviewList[index].lastname,
-                                            profile:
-                                                chatPreviewList[index].picture,
-                                            message:
-                                                chatPreviewList[index].message,
-                                            press: () {
-                                              print('navigate');
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) {
-                                                    return IndividualChatScreen(
-                                                        id: chatPreviewList[
-                                                                index]
-                                                            .targetID,
-                                                        name: chatPreviewList[
-                                                                    index]
-                                                                .firstname +
-                                                            " " +
-                                                            chatPreviewList[
-                                                                    index]
-                                                                .lastname,
-                                                        picture:
-                                                            chatPreviewList[
-                                                                    index]
-                                                                .picture);
-                                                  },
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        ));
-                            })
+                            renderChatList(),
                           ]),
                         ),
                       ),
