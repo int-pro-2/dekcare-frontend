@@ -367,9 +367,10 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
                                                                             .comments[index]
                                                                             .replies[index1]
                                                                             .text,
-                                                                        userName: forumList[0].comments[index].replies[index1].firstname +
-                                                                            " " +
-                                                                            forumList[0].comments[index].replies[index1].lastname,
+                                                                        userName: forumList[0]
+                                                                            .comments[index]
+                                                                            .replies[index1]
+                                                                            .firstname,
                                                                         url: forumList[0]
                                                                             .comments[index]
                                                                             .replies[index1]
@@ -453,7 +454,8 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
                             ),
                           ),
                           Container(
-                            height: height * 0.07,
+                            width: width * 0.175,
+                            height: height * 0.065,
                             child: ElevatedButton(
                                 onPressed: () {
                                   if (isComment != '' &&
