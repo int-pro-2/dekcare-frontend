@@ -90,9 +90,7 @@ class _ChatState extends State<MainChatScreen> {
     // TODO: implement initState
     super.initState();
     isLoading = true;
-    Timer.periodic(Duration(seconds: 1), (timer) {
-      GetPreviewList();
-    });
+    GetPreviewList();
   }
 
   @override
