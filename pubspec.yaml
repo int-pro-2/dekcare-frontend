@@ -17,6 +17,7 @@ dependencies:
   flutter_vant_kit: ^0.2.7
   shared_preferences: ^2.0.5
   date_format: ^2.0.2
+  month_picker_dialog: ^0.4.0
   dio: ^4.0.0
   flutter:
     sdk: flutter

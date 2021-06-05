@@ -67,7 +67,18 @@ class _PoopInputScreenState extends State<PoopInputScreen> {
         initialDate: selectedDate,
         initialDatePickerMode: DatePickerMode.day,
         firstDate: DateTime(2015),
-        lastDate: DateTime(2101));
+        lastDate: DateTime(2101),
+        builder: (BuildContext context, Widget? child) {
+          return Theme(
+            data: ThemeData.light().copyWith(
+              colorScheme: ColorScheme.light().copyWith(
+                primary: yellowPrimary,
+              ),
+            ),
+            child: child == null ? Container() : child,
+          );
+        });
+
     if (picked != null)
       setState(() {
         selectedDate = picked;
@@ -99,6 +110,8 @@ class _PoopInputScreenState extends State<PoopInputScreen> {
           .addPoopInfo(int.parse(type), int.parse(color), temp.toString());
       setState(() {
         _isShowInfo = true;
+        color = '';
+        type = '';
       });
     } catch (error) {
       print(error);
@@ -364,8 +377,11 @@ class _PoopInputScreenState extends State<PoopInputScreen> {
     double height = MediaQuery.of(context).size.height;
 
     return MaterialApp(
-      theme: ThemeData(fontFamily: 'supermarket'),
-      home: SafeArea(
+      theme: ThemeData(
+        fontFamily: 'supermarket',
+      ),
+      home: Container(
+        color: yellowPrimary,
         child: buildScreen(context),
       ),
     );

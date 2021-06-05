@@ -110,7 +110,7 @@ class _ConsultState extends State<ConsultScreen> {
                                   height: height * 0.6,
                                   child: Center(
                                     child: CircularProgressIndicator(
-                                        color: yellowPrimary),
+                                        backgroundColor: yellowPrimary),
                                   ),
                                 )
                               : ListView.builder(

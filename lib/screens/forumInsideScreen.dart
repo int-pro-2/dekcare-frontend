@@ -157,161 +157,125 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
                 ),
               ),
               preferredSize: Size.fromHeight(height * 0.075)),
-          body: Container(
-            height: height,
-            child: RefreshIndicator(
-                key: refreshKey,
-                onRefresh: refreshList,
-                child: Column(children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Container(
-                            height: height * 0.9,
-                            child: RefreshIndicator(
-                              key: refreshKey1,
-                              onRefresh: refreshList1,
-                              child: SingleChildScrollView(
-                                physics: ScrollPhysics(),
-                                child: Column(children: [
-                                  CardForum(
-                                    color: Colors.white,
-                                    isInside: true,
-                                    url: forumList[0].picture,
-                                    isComment: false,
-                                    title: forumList[0].topic,
-                                    pressComment: test,
-                                    hello: 'boyplus',
-                                    text: forumList[0].body,
-                                    userName: forumList[0].firstname,
-                                    date: forumList[0]
-                                        .date
-                                        .toString()
-                                        .substring(0, 19),
-                                  ),
-                                  Row(
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.all(15),
-                                        width: width * 0.425,
-                                        child: Divider(
-                                          height: 5,
-                                          thickness: 2,
-                                          indent: 10,
-                                          endIndent: 10,
+          body: SafeArea(
+            child: Container(
+              height: height,
+              child: RefreshIndicator(
+                  key: refreshKey,
+                  onRefresh: refreshList,
+                  child: Column(children: [
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Container(
+                              height: height * 0.9,
+                              child: RefreshIndicator(
+                                key: refreshKey1,
+                                onRefresh: refreshList1,
+                                child: SingleChildScrollView(
+                                  physics: ScrollPhysics(),
+                                  child: Column(children: [
+                                    CardForum(
+                                      color: Colors.white,
+                                      isInside: true,
+                                      url: forumList[0].picture,
+                                      isComment: false,
+                                      title: forumList[0].topic,
+                                      pressComment: test,
+                                      hello: 'boyplus',
+                                      text: forumList[0].body,
+                                      userName: forumList[0].firstname,
+                                      date: forumList[0]
+                                          .date
+                                          .toString()
+                                          .substring(0, 19),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Container(
+                                          padding: EdgeInsets.all(15),
+                                          width: width * 0.425,
+                                          child: Divider(
+                                            height: 5,
+                                            thickness: 2,
+                                            indent: 10,
+                                            endIndent: 10,
+                                          ),
                                         ),
-                                      ),
-                                      Text('ความคิดเห็น',
-                                          style: TextStyle(color: Colors.grey)),
-                                      Container(
-                                        padding: EdgeInsets.all(15),
-                                        width: width * 0.425,
-                                        child: Divider(
-                                          height: 5,
-                                          thickness: 2,
-                                          indent: 10,
-                                          endIndent: 10,
+                                        Text('ความคิดเห็น',
+                                            style:
+                                                TextStyle(color: Colors.grey)),
+                                        Container(
+                                          padding: EdgeInsets.all(15),
+                                          width: width * 0.425,
+                                          child: Divider(
+                                            height: 5,
+                                            thickness: 2,
+                                            indent: 10,
+                                            endIndent: 10,
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  if (forumList[0].comments.length != 0)
-                                    ListView.builder(
-                                        physics: NeverScrollableScrollPhysics(),
-                                        shrinkWrap: true,
-                                        itemCount: forumList[0].comments.length,
-                                        itemBuilder: (context, index) {
-                                          var count = 0;
-                                          return Column(children: [
-                                            CardForum(
-                                              commentorReply: 'ความคิดเห็นที่ ',
-                                              color: Colors.white,
-                                              isReply: true,
-                                              controller: replyController,
-                                              // myFocusNode: myFocusNode,
-                                              press: () {},
-                                              replypress: () {
-                                                print('inside');
-                                                setState(() {
-                                                  commentID = forumList[0]
-                                                      .comments[index]
-                                                      .id;
-                                                });
-                                                myFocusNode.requestFocus();
-                                                commentController.text =
-                                                    '@ความคิดเห็นที่ ' +
-                                                        (index + 1).toString();
-                                              },
+                                      ],
+                                    ),
+                                    if (forumList[0].comments.length != 0)
+                                      ListView.builder(
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
+                                          shrinkWrap: true,
+                                          itemCount:
+                                              forumList[0].comments.length,
+                                          itemBuilder: (context, index) {
+                                            var count = 0;
+                                            return Column(children: [
+                                              CardForum(
+                                                commentorReply:
+                                                    'ความคิดเห็นที่ ',
+                                                color: Colors.white,
+                                                isReply: true,
+                                                controller: replyController,
+                                                // myFocusNode: myFocusNode,
+                                                press: () {},
+                                                replypress: () {
+                                                  print('inside');
+                                                  setState(() {
+                                                    commentID = forumList[0]
+                                                        .comments[index]
+                                                        .id;
+                                                  });
+                                                  myFocusNode.requestFocus();
+                                                  commentController.text =
+                                                      '@ความคิดเห็นที่ ' +
+                                                          (index + 1)
+                                                              .toString();
+                                                },
 
-                                              pressComment: () {
-                                                print('ha');
-                                                createReply(forumList[0]
-                                                    .comments[index]
-                                                    .id
-                                                    .toString());
-                                                print(forumList[0]
-                                                    .comments[index]
-                                                    .id);
-                                              },
-                                              // date: forumList[0].comments[index].,
-                                              commentID: (index + 1).toString(),
-                                              url: forumList[0]
-                                                  .comments[index]
-                                                  .picture,
-                                              isComment: true,
-                                              isInside: true,
-                                              text: forumList[0]
-                                                  .comments[index]
-                                                  .text,
-                                              userName: forumList[0]
-                                                  .comments[index]
-                                                  .firstname,
-                                            ),
-                                            if (isShow.length > 0)
-                                              ListView.builder(
-                                                  physics:
-                                                      NeverScrollableScrollPhysics(),
-                                                  shrinkWrap: true,
-                                                  itemCount: forumList[0]
+                                                pressComment: () {
+                                                  print('ha');
+                                                  createReply(forumList[0]
                                                       .comments[index]
-                                                      .replies
-                                                      .length,
-                                                  itemBuilder:
-                                                      (context, index1) {
-                                                    if (forumList[0]
-                                                            .comments[index]
-                                                            .replies[index1]
-                                                            .commentID ==
-                                                        forumList[0]
-                                                            .comments[index]
-                                                            .id) count++;
-                                                    if (count == 1)
-                                                      return forumList[0]
-                                                                  .comments[
-                                                                      index]
-                                                                  .replies[
-                                                                      index1]
-                                                                  .commentID ==
-                                                              forumList[0]
-                                                                  .comments[
-                                                                      index]
-                                                                  .id
-                                                          ? TextButton(
-                                                              onPressed: () {
-                                                                setState(() {
-                                                                  isShow[index] =
-                                                                      !isShow[
-                                                                          index];
-                                                                });
-                                                              },
-                                                              child: Text(
-                                                                  'อ่านข้อความตอบกลับ'))
-                                                          : Container();
-                                                    return Container();
-                                                  }),
-                                            if (isShow.length > 0)
-                                              if (isShow[index] == true)
+                                                      .id
+                                                      .toString());
+                                                  print(forumList[0]
+                                                      .comments[index]
+                                                      .id);
+                                                },
+                                                // date: forumList[0].comments[index].,
+                                                commentID:
+                                                    (index + 1).toString(),
+                                                url: forumList[0]
+                                                    .comments[index]
+                                                    .picture,
+                                                isComment: true,
+                                                isInside: true,
+                                                text: forumList[0]
+                                                    .comments[index]
+                                                    .text,
+                                                userName: forumList[0]
+                                                    .comments[index]
+                                                    .firstname,
+                                              ),
+                                              if (isShow.length > 0)
                                                 ListView.builder(
                                                     physics:
                                                         NeverScrollableScrollPhysics(),
@@ -328,164 +292,203 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
                                                               .commentID ==
                                                           forumList[0]
                                                               .comments[index]
-                                                              .id)
-                                                        return Column(
-                                                            children: [
-                                                              TextButton(
-                                                                  onPressed:
-                                                                      () {},
-                                                                  child:
-                                                                      Container(
-                                                                    width:
-                                                                        width,
-                                                                    child:
-                                                                        CardForum(
-                                                                      commentorReply:
-                                                                          'ความคิดเห็นตอบกลับ ',
-                                                                      color: Colors
-                                                                              .grey[
-                                                                          200],
-                                                                      pressComment:
-                                                                          () {},
-                                                                      commentID:
-                                                                          '',
-                                                                      isReply:
-                                                                          false,
-                                                                      title:
-                                                                          'title',
-                                                                      date:
-                                                                          'date',
-                                                                      isComment:
-                                                                          true,
-                                                                      text: forumList[0]
-                                                                          .comments[
-                                                                              index]
-                                                                          .replies[
-                                                                              index1]
-                                                                          .text,
-                                                                      userName:
-                                                                          'username',
-                                                                      url: forumList[0]
-                                                                          .comments[
-                                                                              index]
-                                                                          .replies[
-                                                                              index1]
-                                                                          .picture,
-                                                                      isInside:
-                                                                          true,
-                                                                      comment: forumList[0]
-                                                                          .comments[
-                                                                              index]
-                                                                          .replies[
-                                                                              index1]
-                                                                          .picture,
-                                                                    ),
-                                                                  ))
-                                                            ]);
-
+                                                              .id) count++;
+                                                      if (count == 1)
+                                                        return forumList[0]
+                                                                    .comments[
+                                                                        index]
+                                                                    .replies[
+                                                                        index1]
+                                                                    .commentID ==
+                                                                forumList[0]
+                                                                    .comments[
+                                                                        index]
+                                                                    .id
+                                                            ? TextButton(
+                                                                onPressed: () {
+                                                                  setState(() {
+                                                                    isShow[index] =
+                                                                        !isShow[
+                                                                            index];
+                                                                  });
+                                                                },
+                                                                child: Text(
+                                                                    'อ่านข้อความตอบกลับ'))
+                                                            : Container();
                                                       return Container();
-                                                    })
-                                          ]);
-                                        }),
-                                  if (forumList[0].comments.length == 0)
-                                    EmptyList(text: 'ไม่มีความคิดเห็น'),
-                                  Row(
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.all(15),
-                                        width: width * 0.425,
-                                        child: Divider(
-                                          height: 5,
-                                          thickness: 2,
-                                          indent: 10,
-                                          endIndent: 10,
+                                                    }),
+                                              if (isShow.length > 0)
+                                                if (isShow[index] == true)
+                                                  ListView.builder(
+                                                      physics:
+                                                          NeverScrollableScrollPhysics(),
+                                                      shrinkWrap: true,
+                                                      itemCount: forumList[0]
+                                                          .comments[index]
+                                                          .replies
+                                                          .length,
+                                                      itemBuilder:
+                                                          (context, index1) {
+                                                        if (forumList[0]
+                                                                .comments[index]
+                                                                .replies[index1]
+                                                                .commentID ==
+                                                            forumList[0]
+                                                                .comments[index]
+                                                                .id)
+                                                          return Column(
+                                                              children: [
+                                                                TextButton(
+                                                                    onPressed:
+                                                                        () {},
+                                                                    child:
+                                                                        Container(
+                                                                      width:
+                                                                          width,
+                                                                      child:
+                                                                          CardForum(
+                                                                        commentorReply:
+                                                                            'ความคิดเห็นตอบกลับ ',
+                                                                        color: Colors
+                                                                            .grey[200],
+                                                                        pressComment:
+                                                                            () {},
+                                                                        commentID:
+                                                                            '',
+                                                                        isReply:
+                                                                            false,
+                                                                        title:
+                                                                            'title',
+                                                                        date:
+                                                                            'date',
+                                                                        isComment:
+                                                                            true,
+                                                                        text: forumList[0]
+                                                                            .comments[index]
+                                                                            .replies[index1]
+                                                                            .text,
+                                                                        userName:
+                                                                            'username',
+                                                                        url: forumList[0]
+                                                                            .comments[index]
+                                                                            .replies[index1]
+                                                                            .picture,
+                                                                        isInside:
+                                                                            true,
+                                                                        comment: forumList[0]
+                                                                            .comments[index]
+                                                                            .replies[index1]
+                                                                            .picture,
+                                                                      ),
+                                                                    ))
+                                                              ]);
+
+                                                        return Container();
+                                                      })
+                                            ]);
+                                          }),
+                                    if (forumList[0].comments.length == 0)
+                                      EmptyList(text: 'ไม่มีความคิดเห็น'),
+                                    Row(
+                                      children: [
+                                        Container(
+                                          padding: EdgeInsets.all(15),
+                                          width: width * 0.425,
+                                          child: Divider(
+                                            height: 5,
+                                            thickness: 2,
+                                            indent: 10,
+                                            endIndent: 10,
+                                          ),
                                         ),
-                                      ),
-                                      Text('ความคิดเห็น',
-                                          style: TextStyle(color: Colors.grey)),
-                                      Container(
-                                        padding: EdgeInsets.all(15),
-                                        width: width * 0.425,
-                                        child: Divider(
-                                          height: 5,
-                                          thickness: 2,
-                                          indent: 10,
-                                          endIndent: 10,
+                                        Text('ความคิดเห็น',
+                                            style:
+                                                TextStyle(color: Colors.grey)),
+                                        Container(
+                                          padding: EdgeInsets.all(15),
+                                          width: width * 0.425,
+                                          child: Divider(
+                                            height: 5,
+                                            thickness: 2,
+                                            indent: 10,
+                                            endIndent: 10,
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 20,
-                                  )
-                                ]),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    )
+                                  ]),
+                                ),
                               ),
-                            ),
-                          )
-                        ],
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Container(
-                    height: height * 0.09,
-                    color: whitePrimary,
-                    child: Container(
-                      color: Colors.grey[200],
-                      child: Row(children: [
-                        Container(
-                          padding: EdgeInsets.all(10),
-                          child: ChatInput(
-                            onchange: (text) {
-                              setState(() {
-                                isComment = text;
-                              });
-                            },
-                            controller: commentController,
-                            isCreate: false,
-                            hasShadow: true,
-                            widthh: width * 0.75,
-                            heightt: height * 0.07,
-                            color: Colors.white,
-                            title: 'แสดงความคิดเห็น....',
-                            focusNode: myFocusNode,
-                          ),
-                        ),
-                        Container(
-                          height: height * 0.07,
-                          child: ElevatedButton(
-                              onPressed: () {
-                                if (isComment != '' &&
-                                    !commentController.text
-                                        .contains('@ความคิดเห็นที่')) {
-                                  createComment();
-                                  commentController.clear();
-                                }
-                                if (isComment == '') {
-                                  print('comment is null');
-                                }
-                                if (commentController.text
-                                    .contains('@ความคิดเห็นที่')) {
-                                  createReply(commentID.toString());
-                                }
-                                commentController.clear();
+                    Container(
+                      height: height * 0.09,
+                      color: whitePrimary,
+                      child: Container(
+                        color: Colors.grey[200],
+                        child: Row(children: [
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            child: ChatInput(
+                              onchange: (text) {
+                                setState(() {
+                                  isComment = text;
+                                });
                               },
-                              child: Icon(
-                                Icons.send,
-                                color: Colors.black54,
-                              ),
-                              style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                      isComment == ''
-                                          ? Colors.grey
-                                          : Colors.amber[300]),
-                                  shadowColor: MaterialStateProperty.all<Color>(
-                                    Colors.transparent,
-                                  ))),
-                        ),
-                      ]),
+                              controller: commentController,
+                              isCreate: false,
+                              hasShadow: true,
+                              widthh: width * 0.75,
+                              heightt: height * 0.07,
+                              color: Colors.white,
+                              title: 'แสดงความคิดเห็น....',
+                              focusNode: myFocusNode,
+                            ),
+                          ),
+                          Container(
+                            height: height * 0.07,
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  if (isComment != '' &&
+                                      !commentController.text
+                                          .contains('@ความคิดเห็นที่')) {
+                                    createComment();
+                                    commentController.clear();
+                                  }
+                                  if (isComment == '') {
+                                    print('comment is null');
+                                  }
+                                  if (commentController.text
+                                      .contains('@ความคิดเห็นที่')) {
+                                    createReply(commentID.toString());
+                                  }
+                                  commentController.clear();
+                                },
+                                child: Icon(
+                                  Icons.send,
+                                  color: Colors.black54,
+                                ),
+                                style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        isComment == ''
+                                            ? Colors.grey
+                                            : Colors.amber[300]),
+                                    shadowColor:
+                                        MaterialStateProperty.all<Color>(
+                                      Colors.transparent,
+                                    ))),
+                          ),
+                        ]),
+                      ),
                     ),
-                  ),
-                ])),
+                  ])),
+            ),
           ),
         );
       }),

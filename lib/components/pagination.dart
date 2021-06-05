@@ -70,7 +70,7 @@ class _Pagination extends State<Pagination> {
     bool disabled = (isFirstButton && _current == 1) ||
         (isLastButton && _current == pagesLength);
     bool isSimple = widget.mode == 'simple';
-    //TODO:点击反馈
+
     return DecoratedBox(
       decoration: BoxDecoration(
           border: Border(

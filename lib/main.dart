@@ -36,12 +36,13 @@ class DekCare extends StatelessWidget {
           // prev == null ? [] : prev.doctorList
         ),
         ChangeNotifierProxyProvider<AuthenticateProvider, PoopProvider>(
-          create: (ctx) => PoopProvider(null, [], [], null),
+          create: (ctx) => PoopProvider(null, [], [], null, []),
           update: (ctx, auth, prev) => PoopProvider(
             auth.token,
             prev == null ? [] : prev.colors,
             prev == null ? [] : prev.types,
             prev == null ? null : prev.poopAnswer,
+            prev == null ? [] : prev.poopsInfo,
           ),
         )
       ],
