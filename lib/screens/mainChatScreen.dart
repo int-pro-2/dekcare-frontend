@@ -89,15 +89,10 @@ class _ChatState extends State<MainChatScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Timer.periodic(Duration(seconds: 10), (timer) {
-      renderChatList();
+    isLoading = true;
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      GetPreviewList();
     });
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
   }
 
   @override
@@ -121,13 +116,13 @@ class _ChatState extends State<MainChatScreen> {
               child: Center(
                 child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
-                      child: Container(
-                        width: width * 0.92,
-                        child: searchBar(title: 'ค้นหาชื่อเพื่อน'),
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
+                    //   child: Container(
+                    //     width: width * 0.92,
+                    //     child: searchBar(title: 'ค้นหาชื่อหมอ'),
+                    //   ),
+                    // ),
                     Expanded(
                       child: RefreshIndicator(
                         key: refreshKey,
