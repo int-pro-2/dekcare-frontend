@@ -12,6 +12,8 @@ class User {
   String picture;
   DateTime birthdate;
   int money;
+  bool isDoctor;
+  bool privilege;
 
   User({
     required this.firstname,
@@ -19,12 +21,21 @@ class User {
     required this.picture,
     required this.birthdate,
     required this.money,
+    required this.isDoctor,
+    required this.privilege,
   });
 }
 
 class AuthenticateProvider with ChangeNotifier {
   String _token = "";
-  User? _user = null;
+  User _user = User(
+      firstname: '',
+      lastname: '',
+      picture: '',
+      birthdate: DateTime.now(),
+      money: 0,
+      isDoctor: false,
+      privilege: false);
 
   AuthenticateProvider();
   bool get isAuth {
@@ -35,6 +46,21 @@ class AuthenticateProvider with ChangeNotifier {
     return _token;
   }
 
+  User get user {
+    return _user;
+  }
+
+  User modifyUserData(response) {
+    return User(
+        firstname: response.data['firstname'],
+        lastname: response.data['lastname'],
+        picture: response.data['picture'],
+        birthdate: DateTime.parse(response.data['birthdate']),
+        money: response.data['money'],
+        isDoctor: response.data['isDoctor'],
+        privilege: response.data['privilege']);
+  }
+
   Future<void> login(String email, String password) async {
     final prefs = await SharedPreferences.getInstance();
     try {
@@ -42,6 +68,10 @@ class AuthenticateProvider with ChangeNotifier {
           data: {"email": email, "password": password});
       final token = response.data["token"];
       _token = token;
+      final res = await Dio().get(apiEndpoint + '/auth/profile',
+          options: Options(headers: {"cookie": 'jwt=' + _token + ';'}));
+
+      _user = modifyUserData(res);
       prefs.setString('userToken', _token);
       notifyListeners();
     } catch (error) {
@@ -72,8 +102,9 @@ class AuthenticateProvider with ChangeNotifier {
     String token = prefs.getString('userToken').toString();
     _token = token;
     try {
-      await Dio().get(apiEndpoint + '/auth/profile',
+      final res = await Dio().get(apiEndpoint + '/auth/profile',
           options: Options(headers: {"cookie": 'jwt=' + token + ';'}));
+      _user = modifyUserData(res);
       notifyListeners();
     } catch (error) {
       prefs.clear();
