@@ -1,8 +1,8 @@
 import 'dart:async';
-
-import 'package:dekcare_frontend/Screens/landingScreen.dart';
+import 'package:dekcare_frontend/Screens/transferMoney.dart';
 import 'package:dekcare_frontend/components/errorCard.dart';
 import 'package:dekcare_frontend/screens/individualChatScreen.dart';
+import 'package:dekcare_frontend/Screens/transferMoney.dart';
 import 'package:dekcare_frontend/components/chat/chatPreviewCard.dart';
 import 'package:dekcare_frontend/components/chat/emptyCard.dart';
 import 'package:dekcare_frontend/components/navBar/nav.dart';
@@ -137,7 +137,7 @@ class _ChatState extends State<MainChatScreen> {
                                 : errorCard(
                                     width: width,
                                     height: height,
-                                    page: LandingScreen(),
+                                    page: () => TransferMoneyScreen,
                                   )
                           ]),
                         ),

@@ -1,11 +1,12 @@
+import 'package:dekcare_frontend/Screens/transferMoney.dart';
 import 'package:dekcare_frontend/components/errorCard.dart';
 import 'package:dekcare_frontend/screens/individualChatScreen.dart';
+import 'package:dekcare_frontend/Screens/transferMoney.dart';
 import 'package:dekcare_frontend/components/Toggle.dart';
 import 'package:dekcare_frontend/components/constants.dart';
 import 'package:dekcare_frontend/components/consult/consultCard.dart';
 import 'package:dekcare_frontend/components/navBar/nav.dart';
 import 'package:dekcare_frontend/components/topBar.dart';
-import 'package:dekcare_frontend/components/searchBar.dart';
 import 'package:dekcare_frontend/provider/chatProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -122,33 +123,36 @@ class _ConsultState extends State<ConsultScreen> {
         ),
         backgroundColor: greySecondary,
         body: SafeArea(
-          child: Center(
-              child: widget.privilege
-                  ? Column(children: [
-                      Toggle(
-                        button1Title: 'ค้นหาหมอ',
-                        button2Title: 'หมอติดดาว',
-                        current: widget.fav,
-                        onChange: changeFav,
-                      ),
-                      // Padding(
-                      //   padding: const EdgeInsets.only(bottom: 10.0),
-                      //   child: Container(
-                      //     width: width * 0.92,
-                      //     child: searchBar(title: 'ค้นหาชื่อคุณหมอที่นี่'),
-                      //   ),
-                      // ),
-                      Expanded(
-                          child: RefreshIndicator(
-                              key: refreshKey,
-                              onRefresh: refreshList,
-                              color: yellowPrimary,
-                              child: SingleChildScrollView(
-                                child: renderDoctorList(height),
-                              ))),
-                    ])
-                  : errorCard(width: width, height: height)),
-        ),
+            child: Center(
+          child: widget.privilege
+              ? Column(children: [
+                  Toggle(
+                    button1Title: 'ค้นหาหมอ',
+                    button2Title: 'หมอติดดาว',
+                    current: widget.fav,
+                    onChange: changeFav,
+                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(bottom: 10.0),
+                  //   child: Container(
+                  //     width: width * 0.92,
+                  //     child: searchBar(title: 'ค้นหาชื่อคุณหมอที่นี่'),
+                  //   ),
+                  // ),
+                  Expanded(
+                      child: RefreshIndicator(
+                          key: refreshKey,
+                          onRefresh: refreshList,
+                          color: yellowPrimary,
+                          child: SingleChildScrollView(
+                            child: renderDoctorList(height),
+                          ))),
+                ])
+              : errorCard(
+                  width: width,
+                  height: height,
+                  page: () => TransferMoneyScreen),
+        )),
       ),
     );
   }
