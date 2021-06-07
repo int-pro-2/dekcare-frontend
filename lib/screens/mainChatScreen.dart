@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:dekcare_frontend/Screens/landingScreen.dart';
+import 'package:dekcare_frontend/components/errorCard.dart';
 import 'package:dekcare_frontend/screens/individualChatScreen.dart';
 import 'package:dekcare_frontend/components/chat/chatPreviewCard.dart';
 import 'package:dekcare_frontend/components/chat/emptyCard.dart';
@@ -19,6 +21,7 @@ class MainChatScreen extends StatefulWidget {
 class _ChatState extends State<MainChatScreen> {
   var refreshKey = GlobalKey<RefreshIndicatorState>();
   bool isLoading = true;
+  bool privilege = false;
 
   Future<Null> refreshList() async {
     refreshKey.currentState?.show(atTop: false);
@@ -129,7 +132,13 @@ class _ChatState extends State<MainChatScreen> {
                         child: SingleChildScrollView(
                           physics: ScrollPhysics(),
                           child: Column(children: [
-                            renderChatList(),
+                            privilege
+                                ? renderChatList()
+                                : errorCard(
+                                    width: width,
+                                    height: height,
+                                    page: LandingScreen(),
+                                  )
                           ]),
                         ),
                       ),
