@@ -21,13 +21,13 @@ class LandingScreen extends StatefulWidget {
 }
 
 class _LandingState extends State<LandingScreen> {
-  @override
   void fetchUserProfile() async {
     try {
       await Provider.of<ForumProvider>(context, listen: false).getUserProfile();
     } catch (error) {}
   }
 
+  @override
   void initState() {
     super.initState();
     fetchUserProfile();
@@ -45,7 +45,6 @@ class _LandingState extends State<LandingScreen> {
         if (userProfile.length == 0) {
           return SplashScreen();
         }
-        print(userProfile);
         return Container(
           color: yellowPrimary,
           child: SafeArea(

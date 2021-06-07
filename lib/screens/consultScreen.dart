@@ -1,4 +1,5 @@
 import 'package:dekcare_frontend/components/errorCard.dart';
+import 'package:dekcare_frontend/provider/authenticateProvider.dart';
 import 'package:dekcare_frontend/provider/forumProvider.dart';
 import 'package:dekcare_frontend/screens/individualChatScreen.dart';
 import 'package:dekcare_frontend/components/Toggle.dart';
@@ -39,9 +40,8 @@ class _ConsultState extends State<ConsultScreen> {
     ListDoctor(widget.fav);
   }
 
-  void ListDoctor(bool isFav) async {
+  Future<void> ListDoctor(bool isFav) async {
     try {
-      print(isFav);
       await Provider.of<ChatProvider>(context, listen: false)
           .getListOfDoctor(isFav);
     } catch (err) {
@@ -52,87 +52,93 @@ class _ConsultState extends State<ConsultScreen> {
     });
   }
 
-  void fetchUserProfile() async {
+  Future<void> fetchUserProfile() async {
     try {
-      await Provider.of<ForumProvider>(context, listen: false).getUserProfile();
+      await Provider.of<AuthenticateProvider>(context, listen: false)
+          .fetchProfile();
     } catch (error) {}
   }
 
   Widget renderDoctorList(width, height, userProfile) {
-    return Consumer<ChatProvider>(builder: (context, value, child) {
-      final doctorList = value.doctorList;
-      print(value.getPrivilegeStatus);
-      return value.getPrivilegeStatus
-          ? Column(children: [
-              Toggle(
-                button1Title: 'ค้นหาหมอ',
-                button2Title: 'หมอติดดาว',
-                current: widget.fav,
-                onChange: changeFav,
-              ),
-              // Padding(
-              //   padding: const EdgeInsets.only(bottom: 10.0),
-              //   child: Container(
-              //     width: width * 0.92,
-              //     child: searchBar(title: 'ค้นหาชื่อคุณหมอที่นี่'),
-              //   ),
-              // ),
-              Expanded(
-                  child: RefreshIndicator(
-                      key: refreshKey,
-                      onRefresh: refreshList,
-                      color: yellowPrimary,
-                      child: SingleChildScrollView(
-                        child: isLoading
-                            ? Container(
-                                height: height * 0.6,
-                                child: Center(
-                                  child: CircularProgressIndicator(
-                                      backgroundColor: yellowPrimary),
-                                ),
-                              )
-                            : ListView.builder(
-                                physics: NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: doctorList.length,
-                                itemBuilder: (context, index) => consultCard(
-                                    id: doctorList[index].id,
-                                    name: doctorList[index].firstname +
-                                        " " +
-                                        doctorList[index].lastname,
-                                    profile: doctorList[index].picture,
-                                    hospital: doctorList[index].hospital,
-                                    isFavorite: doctorList[index].isFav,
-                                    refresher: () {
-                                      ListDoctor(widget.fav);
-                                    },
-                                    press: () {
-                                      print('navigate');
-                                      Navigator.push(context,
-                                          MaterialPageRoute(builder: (context) {
-                                        return IndividualChatScreen(
-                                          id: doctorList[index].id,
-                                          name: doctorList[index].firstname +
-                                              " " +
-                                              doctorList[index].lastname,
-                                          picture: doctorList[index].picture,
-                                        );
-                                      }));
-                                    })),
-                      ))),
-            ])
-          : errorCard(
-              width: width,
-              height: height,
-              page: TransferMoneyScreen(userProfile[0].money));
+    return Consumer<AuthenticateProvider>(builder: (context, authen, child) {
+      return Consumer<ChatProvider>(builder: (context, value, child) {
+        final doctorList = value.doctorList;
+        return authen.user.privilege
+            ? Column(children: [
+                Toggle(
+                  button1Title: 'ค้นหาหมอ',
+                  button2Title: 'หมอติดดาว',
+                  current: widget.fav,
+                  onChange: changeFav,
+                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(bottom: 10.0),
+                //   child: Container(
+                //     width: width * 0.92,
+                //     child: searchBar(title: 'ค้นหาชื่อคุณหมอที่นี่'),
+                //   ),
+                // ),
+                Expanded(
+                    child: RefreshIndicator(
+                        key: refreshKey,
+                        onRefresh: refreshList,
+                        color: yellowPrimary,
+                        child: SingleChildScrollView(
+                          child: isLoading
+                              ? Container(
+                                  height: height * 0.6,
+                                  child: Center(
+                                    child: CircularProgressIndicator(
+                                        backgroundColor: yellowPrimary),
+                                  ),
+                                )
+                              : ListView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: doctorList.length,
+                                  itemBuilder: (context, index) => consultCard(
+                                      id: doctorList[index].id,
+                                      name: doctorList[index].firstname +
+                                          " " +
+                                          doctorList[index].lastname,
+                                      profile: doctorList[index].picture,
+                                      hospital: doctorList[index].hospital,
+                                      isFavorite: doctorList[index].isFav,
+                                      refresher: () {
+                                        ListDoctor(widget.fav);
+                                      },
+                                      press: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return IndividualChatScreen(
+                                            id: doctorList[index].id,
+                                            name: doctorList[index].firstname +
+                                                " " +
+                                                doctorList[index].lastname,
+                                            picture: doctorList[index].picture,
+                                          );
+                                        }));
+                                      })),
+                        ))),
+              ])
+            : errorCard(
+                width: width,
+                height: height,
+                page: TransferMoneyScreen(userProfile[0].money));
+      });
     });
+  }
+
+  Future<void> fetchData() async {
+    isLoading = true;
+    await ListDoctor(widget.fav);
+    await fetchUserProfile();
   }
 
   @override
   void initState() {
-    isLoading = true;
-    ListDoctor(widget.fav);
-    // TODO: implement initState
+    fetchData();
     super.initState();
   }
 

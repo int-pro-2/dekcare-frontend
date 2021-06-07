@@ -113,6 +113,15 @@ class AuthenticateProvider with ChangeNotifier {
     }
   }
 
+  Future<void> fetchProfile() async {
+    try {
+      final res = await Dio().get(apiEndpoint + '/auth/profile',
+          options: Options(headers: {"cookie": 'jwt=' + token + ';'}));
+      _user = modifyUserData(res);
+      notifyListeners();
+    } catch (error) {}
+  }
+
   Future<void> logout() async {
     _token = "";
     notifyListeners();
@@ -171,6 +180,17 @@ class AuthenticateProvider with ChangeNotifier {
           data: {"money": money, "email": email},
           options: Options(headers: {"cookie": 'jwt=' + token + ';'}));
       Timer(Duration(milliseconds: 500), () => notifyListeners());
+    } catch (error) {
+      throw HttpException(generalException);
+    }
+  }
+
+  Future<void> subscribe(int money) async {
+    try {
+      await Dio().post(apiEndpoint + '/bank/subscribe',
+          data: {"money": money},
+          options: Options(headers: {"cookie": 'jwt=' + token + ';'}));
+      notifyListeners();
     } catch (error) {
       throw HttpException(generalException);
     }

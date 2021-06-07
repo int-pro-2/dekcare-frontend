@@ -14,6 +14,12 @@ class TransferMoneyScreen extends StatefulWidget {
   _TransferMoneyScreenState createState() => _TransferMoneyScreenState();
 }
 
+class Choice {
+  final String text;
+  final int amount;
+  Choice({required this.text, required this.amount});
+}
+
 class _TransferMoneyScreenState extends State<TransferMoneyScreen> {
   @override
   int amount = 0;
@@ -24,15 +30,18 @@ class _TransferMoneyScreenState extends State<TransferMoneyScreen> {
   var typeCheckError = '';
 
   var bankIDCheckError = '';
+  List<Choice> choices = [
+    Choice(text: 'รายวัน 30 บาท', amount: 30),
+    Choice(text: 'รายเดือน 150 บาท', amount: 150),
+    Choice(text: 'รายปี 500 บาท', amount: 500)
+  ];
 
   void transferMoney() async {
-    print('addmoney' + amountController.text);
     try {
+      print(amount);
       await Provider.of<AuthenticateProvider>(context, listen: false)
-          .transferMoney(
-              int.parse(amountController.text), bankIDController.text);
+          .subscribe(amount);
       Navigator.pop(context);
-
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -63,24 +72,15 @@ class _TransferMoneyScreenState extends State<TransferMoneyScreen> {
           height: height * 0.09,
           color: whitePrimary,
           child: Container(
-            padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+            padding:
+                const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
             child: Button(
               title: 'ยืนยัน',
-              color: (type != '') ? yellowPrimary : greyPrimary,
+              color: (amount != 0) ? yellowPrimary : greyPrimary,
               onPress: () {
-                if (type == '') {
-                  setState(() {
-                    typeCheckError = 'error';
-                  });
-                }
-
-                if (type.contains('30')) {
-                  transferMoney();
-                }
-                if (type.contains('150')) {
-                  transferMoney();
-                }
-                if (type.contains('500')) {
+                if (amount == 0) {
+                  setState(() => typeCheckError = 'error');
+                } else {
                   transferMoney();
                 }
               },
@@ -89,7 +89,7 @@ class _TransferMoneyScreenState extends State<TransferMoneyScreen> {
         ),
         appBar: AppBar(
             leading: IconButton(
-                icon: Icon(Icons.arrow_back),
+                icon: const Icon(Icons.arrow_back),
                 onPressed: () {
                   Navigator.pop(context);
                 }),
@@ -99,7 +99,7 @@ class _TransferMoneyScreenState extends State<TransferMoneyScreen> {
             ),
             centerTitle: true,
             backgroundColor: yellowPrimary,
-            shape: RoundedRectangleBorder(
+            shape: const RoundedRectangleBorder(
                 borderRadius:
                     BorderRadius.vertical(bottom: Radius.circular(30)))),
         body: SingleChildScrollView(
@@ -107,14 +107,14 @@ class _TransferMoneyScreenState extends State<TransferMoneyScreen> {
             child: Container(
               child: Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Row(
                     children: [
                       Container(
                         width: width * 0.3,
-                        child: TextKT(text: 'ยอดเงินคงเหลือ'),
+                        child: const TextKT(text: 'ยอดเงินคงเหลือ'),
                       ),
                       Row(
                         // mainAxisAlignment: MainAxisAlignment.end,
@@ -134,22 +134,14 @@ class _TransferMoneyScreenState extends State<TransferMoneyScreen> {
                     margin: EdgeInsets.all(20),
                     width: width * 0.9,
                     child: DropdownButtonFormField<String>(
-                      items: <String>[
-                        'รายวัน 30 บาท',
-                        'รายเดือน 150 บาท',
-                        'รายปี 500 บาท',
-                      ].map((String value) {
+                      items: choices.map((Choice value) {
                         return new DropdownMenuItem<String>(
-                          value: value,
-                          child: new Text(value),
+                          value: value.amount.toString(),
+                          child: Text(value.text),
                         );
                       }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          type = value.toString();
-                          typeCheckError = value.toString();
-                        });
-                        print(type);
+                      onChanged: (el) {
+                        setState(() => amount = int.parse(el.toString()));
                       },
                       decoration: InputDecoration(
                         enabledBorder: const OutlineInputBorder(

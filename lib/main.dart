@@ -30,12 +30,15 @@ class DekCare extends StatelessWidget {
               prev == null ? [] : prev.userProfile),
         ),
         ChangeNotifierProxyProvider<AuthenticateProvider, ChatProvider>(
-          create: (ctx) => ChatProvider(null, false),
-          update: (ctx, auth, prev) =>
-              ChatProvider(auth.token, auth.user.privilege),
-          // prev == null ? [] : prev.chatPreview,
-          // prev == null ? [] : prev.doctorList
-        ),
+            create: (ctx) => ChatProvider(null, [], false),
+            update: (ctx, auth, prev) => ChatProvider(
+                  auth.token,
+                  prev == null ? [] : prev.doctorList,
+                  auth.user.privilege,
+                )
+            // prev == null ? [] : prev.chatPreview,
+            // prev == null ? [] : prev.doctorList
+            ),
         ChangeNotifierProxyProvider<AuthenticateProvider, PoopProvider>(
           create: (ctx) => PoopProvider(null, [], [], null, []),
           update: (ctx, auth, prev) => PoopProvider(

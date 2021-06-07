@@ -36,7 +36,7 @@ class errorCard extends StatelessWidget {
                     ),
                   ),
                   ElevatedButton(
-                      child: Text("กลับสู่หน้าหลัก",
+                      child: Text("สมัครสมาชิก",
                           style: TextStyle(fontWeight: FontWeight.bold)),
                       style: ButtonStyle(
                         backgroundColor:

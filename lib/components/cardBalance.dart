@@ -167,13 +167,13 @@ class CardMoney extends StatelessWidget {
                             child: CircleAvatar(
                               backgroundColor: yellowPrimary,
                               child: Icon(
-                                Icons.transform,
+                                Icons.subscriptions,
                                 color: whitePrimary,
                               ),
                             ),
                           ),
                           Text(
-                            'โอนเงิน',
+                            'สมัคนสมาชิก',
                             style: TextStyle(
                                 fontSize: 18,
                                 fontFamily: 'supermarket',

@@ -62,7 +62,7 @@ class ChatProvider with ChangeNotifier {
   List<List<ChatContent>> chatContentList = [];
 
   // Constructor
-  ChatProvider(this._token, this._privilegeStatus);
+  ChatProvider(this._token, this.doctorList, this._privilegeStatus);
 
   bool get getPrivilegeStatus {
     return _privilegeStatus;
@@ -95,13 +95,15 @@ class ChatProvider with ChangeNotifier {
         final response = await Dio().get(apiEndpoint + '/chat/fav-doctors',
             options:
                 Options(headers: {"cookie": 'jwt=' + _token.toString() + ';'}));
-        doctorList = modifyDoctorList(response.data, true);
+        doctorList = modifyDoctorList(response.data.toList(), true);
       } else {
         // Get list of all doctors
         final response = await Dio().get(apiEndpoint + '/chat/doctors',
             options:
                 Options(headers: {"cookie": 'jwt=' + _token.toString() + ';'}));
-        doctorList = modifyDoctorList(response.data, isFav);
+        print('from provider length is');
+        print(response.data.toList().length);
+        doctorList = modifyDoctorList(response.data.toList(), isFav);
       }
       notifyListeners();
     } catch (err) {
