@@ -176,6 +176,7 @@ class ChatProvider with ChangeNotifier {
 
   Future<List<List<ChatContent>>> getListOfChatContent(id) async {
     try {
+      print(id);
       final response = await Dio().get(apiEndpoint + '/chat/messages/$id',
           options:
               Options(headers: {"cookie": 'jwt=' + _token.toString() + ';'}));
