@@ -66,8 +66,7 @@ class _TransferMoneyScreenState extends State<TransferMoneyScreen> {
             padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
             child: Button(
               title: 'ยืนยัน',
-              color:
-                  (bankID != '' && amount != 0) ? yellowPrimary : greyPrimary,
+              color: (type != '') ? yellowPrimary : greyPrimary,
               onPress: () {
                 if (type == '') {
                   setState(() {
@@ -75,17 +74,13 @@ class _TransferMoneyScreenState extends State<TransferMoneyScreen> {
                   });
                 }
 
-                if (amount == 0) {
-                  setState(() {
-                    amountCheckError = -1;
-                  });
+                if (type.contains('30')) {
+                  transferMoney();
                 }
-                if (bankID == '') {
-                  setState(() {
-                    bankIDCheckError = 'error';
-                  });
+                if (type.contains('150')) {
+                  transferMoney();
                 }
-                if (amount != 0 && bankID != '') {
+                if (type.contains('500')) {
                   transferMoney();
                 }
               },
@@ -99,7 +94,7 @@ class _TransferMoneyScreenState extends State<TransferMoneyScreen> {
                   Navigator.pop(context);
                 }),
             title: Text(
-              'ถอนเงิน',
+              'สมัครสมาชิกโปรโมชั่น',
               style: TextStyle(fontSize: 23),
             ),
             centerTitle: true,
@@ -136,76 +131,46 @@ class _TransferMoneyScreenState extends State<TransferMoneyScreen> {
                     ],
                   ),
                   Container(
-                    padding: EdgeInsets.all(15),
-                    child: ChatInput(
-                      controller: bankIDController,
-                      isCreate: true,
-                      onchange: (text) {
+                    margin: EdgeInsets.all(20),
+                    width: width * 0.9,
+                    child: DropdownButtonFormField<String>(
+                      items: <String>[
+                        'รายวัน 30 บาท',
+                        'รายเดือน 150 บาท',
+                        'รายปี 500 บาท',
+                      ].map((String value) {
+                        return new DropdownMenuItem<String>(
+                          value: value,
+                          child: new Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
                         setState(() {
-                          bankID = text;
+                          type = value.toString();
+                          typeCheckError = value.toString();
                         });
-                        setState(() {
-                          bankIDCheckError = '';
-                        });
+                        print(type);
                       },
-                      title: 'บัญชีผู้ใช้',
-                      color: whitePrimary,
-                      widthh: width * 0.9,
-                      heightt: height * 0.07,
-                      hasShadow: false,
+                      decoration: InputDecoration(
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: whitePrimary, width: 0.0),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        filled: true,
+                        hintText: 'เลือกโปรโมชั่น',
+                        fillColor: whitePrimary,
+                      ),
                     ),
                   ),
-                  bankIDCheckError == 'error'
+                  typeCheckError == 'error'
                       ? Container(
                           width: width,
                           padding: EdgeInsets.only(top: 20, left: 25),
                           child: Text(
-                            'โปรดระบุบัญชีผู้ใช้',
-                            style: TextStyle(fontSize: 18, color: Colors.red),
-                          ),
-                        )
-                      : Container(),
-                  Container(
-                    padding: EdgeInsets.all(15),
-                    child: ChatInput(
-                      controller: amountController,
-                      isCreate: true,
-                      onchange: (text) {
-                        setState(() {
-                          if (text != '') {
-                            amount = int.parse(text);
-                          } else {
-                            amount = 0;
-                          }
-                        });
-                        setState(() {
-                          amountCheckError = 0;
-                        });
-                        print(amount.toString() + 'amonut');
-                      },
-                      title: 'จำนวนเงิน',
-                      color: whitePrimary,
-                      widthh: width * 0.9,
-                      heightt: height * 0.07,
-                      hasShadow: false,
-                    ),
-                  ),
-                  amountCheckError == -1
-                      ? Container(
-                          width: width,
-                          padding: EdgeInsets.only(top: 20, left: 25),
-                          child: Text(
-                            'โปรดระบุจำนวนเงิน',
-                            style: TextStyle(fontSize: 18, color: Colors.red),
-                          ),
-                        )
-                      : Container(),
-                  amount > int.parse(widget.money)
-                      ? Container(
-                          width: width,
-                          padding: EdgeInsets.only(top: 20, left: 25),
-                          child: Text(
-                            'จำนวนเงินคงเหลือมีไม่เพียงพอ',
+                            'โปรดเลือกโปรโมชั่น',
                             style: TextStyle(fontSize: 18, color: Colors.red),
                           ),
                         )

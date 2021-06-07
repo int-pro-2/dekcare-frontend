@@ -48,7 +48,12 @@ class ChatContent {
 }
 
 class ChatProvider with ChangeNotifier {
+  // Token
   String? _token;
+
+  // Privilege
+  bool _privilegeStatus = false;
+
   // Consult page
   List<DoctorCard> doctorList = [];
 
@@ -57,7 +62,11 @@ class ChatProvider with ChangeNotifier {
   List<List<ChatContent>> chatContentList = [];
 
   // Constructor
-  ChatProvider(this._token);
+  ChatProvider(this._token, this._privilegeStatus);
+
+  bool get getPrivilegeStatus {
+    return _privilegeStatus;
+  }
 
   /*
   *  #############################################
