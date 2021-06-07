@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../config/api.dart';
 
 class DoctorCard {
@@ -176,6 +175,7 @@ class ChatProvider with ChangeNotifier {
 
   Future<List<List<ChatContent>>> getListOfChatContent(id) async {
     try {
+      print(id);
       final response = await Dio().get(apiEndpoint + '/chat/messages/$id',
           options:
               Options(headers: {"cookie": 'jwt=' + _token.toString() + ';'}));
