@@ -25,7 +25,7 @@ class _WithdrawMoneyScreenState extends State<WithdrawMoneyScreen> {
 
   var bankIDCheckError = '';
 
-  void withdrawMoney() async {
+  void addMoney() async {
     print('addmoney' + amountController.text);
     try {
       await Provider.of<AuthenticateProvider>(context, listen: false)
@@ -74,14 +74,7 @@ class _WithdrawMoneyScreenState extends State<WithdrawMoneyScreen> {
                   setState(() {
                     typeCheckError = 'error';
                   });
-                }not complete');
                 }
-              },
-            ),
-          ),
-        ),
-        appBar: AppBar(
-            leading: IconButton(
 
                 if (amount == '') {
                   setState(() {
@@ -97,7 +90,14 @@ class _WithdrawMoneyScreenState extends State<WithdrawMoneyScreen> {
                   addMoney();
                 }
                 if (amount == '' && bankID == '') {
-                  print('topic and body are 
+                  print('topic and body are not complete');
+                }
+              },
+            ),
+          ),
+        ),
+        appBar: AppBar(
+            leading: IconButton(
                 icon: Icon(Icons.arrow_back),
                 onPressed: () {
                   Navigator.pop(context);
