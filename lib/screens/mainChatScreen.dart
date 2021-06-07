@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:dekcare_frontend/Screens/transferMoney.dart';
 import 'package:dekcare_frontend/components/errorCard.dart';
+import 'package:dekcare_frontend/provider/forumProvider.dart';
 import 'package:dekcare_frontend/screens/individualChatScreen.dart';
 import 'package:dekcare_frontend/Screens/transferMoney.dart';
 import 'package:dekcare_frontend/components/chat/chatPreviewCard.dart';
@@ -10,6 +11,7 @@ import 'package:dekcare_frontend/components/constants.dart';
 import 'package:dekcare_frontend/components/topBar.dart';
 import 'package:dekcare_frontend/components/searchBar.dart';
 import 'package:dekcare_frontend/provider/chatProvider.dart';
+import 'package:dekcare_frontend/screens/splashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -54,7 +56,8 @@ class _ChatState extends State<MainChatScreen> {
               ? Container(
                   height: 120,
                   child: Center(
-                    child: CircularProgressIndicator(color: yellowPrimary),
+                    child: CircularProgressIndicator(
+                        backgroundColor: yellowPrimary),
                   ),
                 )
               : ListView.builder(
@@ -103,49 +106,56 @@ class _ChatState extends State<MainChatScreen> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(fontFamily: 'supermarket'),
-        home: Scaffold(
-            appBar: PreferredSize(
-                child: TopBar(
-                  titleText: 'สนทนา',
-                  enableBackButton: false,
-                  contextFromPage: context,
-                ),
-                preferredSize: Size.fromHeight(height * 0.075)),
-            bottomNavigationBar: Nav(currentIndex: 3),
-            backgroundColor: greySecondary,
-            body: SafeArea(
-              child: Center(
-                child: Column(
-                  children: [
-                    // Padding(
-                    //   padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
-                    //   child: Container(
-                    //     width: width * 0.92,
-                    //     child: searchBar(title: 'ค้นหาชื่อหมอ'),
-                    //   ),
-                    // ),
-                    Expanded(
-                      child: RefreshIndicator(
-                        key: refreshKey,
-                        onRefresh: refreshList,
-                        color: yellowPrimary,
-                        child: SingleChildScrollView(
-                          physics: ScrollPhysics(),
-                          child: Column(children: [
-                            privilege
-                                ? renderChatList()
-                                : errorCard(
-                                    width: width,
-                                    height: height,
-                                    page: () => TransferMoneyScreen,
-                                  )
-                          ]),
+        home: Consumer<ForumProvider>(builder: (context, forumProvider, _) {
+          final userProfile = forumProvider.userProfile;
+          if (userProfile.length == 0) {
+            return SplashScreen();
+          }
+          return Scaffold(
+              appBar: PreferredSize(
+                  child: TopBar(
+                    titleText: 'สนทนา',
+                    enableBackButton: false,
+                    contextFromPage: context,
+                  ),
+                  preferredSize: Size.fromHeight(height * 0.075)),
+              bottomNavigationBar: Nav(currentIndex: 3),
+              backgroundColor: greySecondary,
+              body: SafeArea(
+                child: Center(
+                  child: Column(
+                    children: [
+                      // Padding(
+                      //   padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
+                      //   child: Container(
+                      //     width: width * 0.92,
+                      //     child: searchBar(title: 'ค้นหาชื่อหมอ'),
+                      //   ),
+                      // ),
+                      Expanded(
+                        child: RefreshIndicator(
+                          key: refreshKey,
+                          onRefresh: refreshList,
+                          color: yellowPrimary,
+                          child: SingleChildScrollView(
+                            physics: ScrollPhysics(),
+                            child: Column(children: [
+                              privilege
+                                  ? renderChatList()
+                                  : errorCard(
+                                      width: width,
+                                      height: height,
+                                      page: TransferMoneyScreen(
+                                          userProfile[0].money),
+                                    )
+                            ]),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            )));
+              ));
+        }));
   }
 }
