@@ -63,6 +63,7 @@ class _ConsultState extends State<ConsultScreen> {
     return Consumer<AuthenticateProvider>(builder: (context, authen, child) {
       return Consumer<ChatProvider>(builder: (context, value, child) {
         final doctorList = value.doctorList;
+        if (authen.user.isDoctor) return Container();
         return authen.user.privilege
             ? Column(children: [
                 Toggle(
@@ -71,13 +72,6 @@ class _ConsultState extends State<ConsultScreen> {
                   current: widget.fav,
                   onChange: changeFav,
                 ),
-                // Padding(
-                //   padding: const EdgeInsets.only(bottom: 10.0),
-                //   child: Container(
-                //     width: width * 0.92,
-                //     child: searchBar(title: 'ค้นหาชื่อคุณหมอที่นี่'),
-                //   ),
-                // ),
                 Expanded(
                     child: RefreshIndicator(
                         key: refreshKey,

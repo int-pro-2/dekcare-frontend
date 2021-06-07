@@ -3,6 +3,7 @@ import 'package:dekcare_frontend/components/navBar/nav.dart';
 import 'package:dekcare_frontend/components/constants.dart';
 import 'package:dekcare_frontend/components/cardBalance.dart';
 import 'package:dekcare_frontend/components/card.dart';
+import 'package:dekcare_frontend/provider/authenticateProvider.dart';
 import 'package:dekcare_frontend/provider/forumProvider.dart';
 import 'package:dekcare_frontend/screens/addMoney.dart';
 import 'package:dekcare_frontend/screens/poopInfo.dart';
@@ -40,9 +41,10 @@ class _LandingState extends State<LandingScreen> {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Consumer<ForumProvider>(builder: (context, forumProvider, _) {
-        final userProfile = forumProvider.userProfile;
-        if (userProfile.length == 0) {
+      home: Consumer<AuthenticateProvider>(builder: (context, authen, _) {
+        final userProfile = authen.user;
+        print(userProfile.isDoctor);
+        if (userProfile.firstname.length == 0) {
           return SplashScreen();
         }
         return Container(
@@ -116,7 +118,7 @@ class _LandingState extends State<LandingScreen> {
                                               height: 90,
                                               child: CircleAvatar(
                                                 backgroundImage: NetworkImage(
-                                                    userProfile[0].picture),
+                                                    userProfile.picture),
                                               ),
                                             ),
                                           ),
@@ -143,9 +145,9 @@ class _LandingState extends State<LandingScreen> {
                                                     EdgeInsets.only(left: 20),
                                                 width: width * 0.70,
                                                 child: Text(
-                                                  userProfile[0].firstname +
+                                                  userProfile.firstname +
                                                       " " +
-                                                      userProfile[0].lastname,
+                                                      userProfile.lastname,
                                                   style: TextStyle(
                                                       fontFamily: 'supermarket',
                                                       fontSize: 25,
@@ -166,14 +168,13 @@ class _LandingState extends State<LandingScreen> {
                         height: 20,
                       ),
                       CardMoney(
-                        money: userProfile[0].money,
+                        money: userProfile.money.toString(),
                         pressTransfer: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) {
-                                return TransferMoneyScreen(
-                                    userProfile[0].money);
+                                return TransferMoneyScreen(userProfile.money);
                               },
                             ),
                           );
@@ -183,8 +184,7 @@ class _LandingState extends State<LandingScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) {
-                                return WithdrawMoneyScreen(
-                                    userProfile[0].money);
+                                return WithdrawMoneyScreen(userProfile.money);
                               },
                             ),
                           );
@@ -203,56 +203,60 @@ class _LandingState extends State<LandingScreen> {
                       SizedBox(
                         height: 10,
                       ),
-                      Container(
-                          padding: EdgeInsets.all(20),
-                          width: width,
-                          child: Text(
-                            'ดูแลลูกน้อยกันเถอะ',
-                            style: TextStyle(
-                                fontFamily: 'supermarket',
-                                fontSize: 25,
-                                fontWeight: FontWeight.w500),
-                          )),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            child: CardKid(
-                              image: 'doctor1',
-                              press: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return PoopInputScreen();
+                      !userProfile.isDoctor
+                          ? Container(
+                              padding: EdgeInsets.all(20),
+                              width: width,
+                              child: Text(
+                                'ดูแลลูกน้อยกันเถอะ',
+                                style: TextStyle(
+                                    fontFamily: 'supermarket',
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.w500),
+                              ))
+                          : Container(),
+                      !userProfile.isDoctor
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  child: CardKid(
+                                    image: 'doctor1',
+                                    press: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) {
+                                            return PoopInputScreen();
+                                          },
+                                        ),
+                                      );
                                     },
+                                    title: 'สุขภาพอุจจาระของลูก',
+                                    text: 'บันทึกข้อมูล',
                                   ),
-                                );
-                              },
-                              title: 'สุขภาพอุจจาระของลูก',
-                              text: 'บันทึกข้อมูล',
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(left: 20),
-                            child: CardKid(
-                              image: 'Doctor',
-                              press: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return PoopInfo();
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(left: 20),
+                                  child: CardKid(
+                                    image: 'Doctor',
+                                    press: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) {
+                                            return PoopInfo();
+                                          },
+                                        ),
+                                      );
                                     },
+                                    title: 'ข้อมูลสุขภาพอุจจาระ',
+                                    text: 'ดูข้อมูล',
                                   ),
-                                );
-                              },
-                              title: 'ข้อมูลสุขภาพอุจจาระ',
-                              text: 'ดูข้อมูล',
-                            ),
-                          )
-                        ],
-                      )
+                                )
+                              ],
+                            )
+                          : Container()
                     ]),
                   ),
                 )),
