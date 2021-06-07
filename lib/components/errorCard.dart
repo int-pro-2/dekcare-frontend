@@ -29,14 +29,15 @@ class errorCard extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: Text(
-                      "Permission denied due to insufficient privilege. \"Please subscribe to gain access to this function\". ",
+                      "การเข้าถึงถูกปฏิเสธเนื่องจากสิทธิ์ของคุณหมดอายุหรือไม่เพียงพอ ",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontSize: 20, color: yellowPrimary, height: 1.15),
                     ),
                   ),
                   ElevatedButton(
-                      child: Text("Back to home"),
+                      child: Text("กลับสู่หน้าหลัก",
+                          style: TextStyle(fontWeight: FontWeight.bold)),
                       style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.resolveWith<Color>(

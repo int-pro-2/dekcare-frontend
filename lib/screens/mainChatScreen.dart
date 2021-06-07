@@ -44,50 +44,56 @@ class _ChatState extends State<MainChatScreen> {
     }
   }
 
-  Widget renderChatList() {
+  Widget renderChatList(width, height, userProfile) {
     GetPreviewList();
     return Consumer<ChatProvider>(builder: (context, value, child) {
       final chatPreviewList = value.chatPreviewList;
-      return (chatPreviewList.length == 0
-          ? EmptyCard(
-              pevContext: context,
-            )
-          : isLoading
-              ? Container(
-                  height: 120,
-                  child: Center(
-                    child: CircularProgressIndicator(
-                        backgroundColor: yellowPrimary),
-                  ),
+      return (value.getPrivilegeStatus
+          ? chatPreviewList.length == 0
+              ? EmptyCard(
+                  pevContext: context,
                 )
-              : ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: chatPreviewList.length,
-                  itemBuilder: (context, index) => chatPreviewCard(
-                    name: chatPreviewList[index].firstname +
-                        " " +
-                        chatPreviewList[index].lastname,
-                    profile: chatPreviewList[index].picture,
-                    message: chatPreviewList[index].message,
-                    press: () {
-                      print('navigate');
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return IndividualChatScreen(
-                                id: chatPreviewList[index].targetID,
-                                name: chatPreviewList[index].firstname +
-                                    " " +
-                                    chatPreviewList[index].lastname,
-                                picture: chatPreviewList[index].picture);
-                          },
-                        ),
-                      );
-                    },
-                  ),
-                ));
+              : isLoading
+                  ? Container(
+                      height: 120,
+                      child: Center(
+                        child: CircularProgressIndicator(
+                            backgroundColor: yellowPrimary),
+                      ),
+                    )
+                  : ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: chatPreviewList.length,
+                      itemBuilder: (context, index) => chatPreviewCard(
+                        name: chatPreviewList[index].firstname +
+                            " " +
+                            chatPreviewList[index].lastname,
+                        profile: chatPreviewList[index].picture,
+                        message: chatPreviewList[index].message,
+                        press: () {
+                          print('navigate');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return IndividualChatScreen(
+                                    id: chatPreviewList[index].targetID,
+                                    name: chatPreviewList[index].firstname +
+                                        " " +
+                                        chatPreviewList[index].lastname,
+                                    picture: chatPreviewList[index].picture);
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                    )
+          : errorCard(
+              width: width,
+              height: height,
+              page: TransferMoneyScreen(userProfile[0].money),
+            ));
     });
   }
 
@@ -140,14 +146,7 @@ class _ChatState extends State<MainChatScreen> {
                           child: SingleChildScrollView(
                             physics: ScrollPhysics(),
                             child: Column(children: [
-                              privilege
-                                  ? renderChatList()
-                                  : errorCard(
-                                      width: width,
-                                      height: height,
-                                      page: TransferMoneyScreen(
-                                          userProfile[0].money),
-                                    )
+                              renderChatList(width, height, userProfile)
                             ]),
                           ),
                         ),
