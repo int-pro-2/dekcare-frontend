@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:dekcare_frontend/Screens/transferMoney.dart';
 import 'package:dekcare_frontend/components/errorCard.dart';
+import 'package:dekcare_frontend/provider/authenticateProvider.dart';
 import 'package:dekcare_frontend/provider/forumProvider.dart';
 import 'package:dekcare_frontend/screens/individualChatScreen.dart';
 import 'package:dekcare_frontend/Screens/transferMoney.dart';
@@ -9,7 +10,6 @@ import 'package:dekcare_frontend/components/chat/emptyCard.dart';
 import 'package:dekcare_frontend/components/navBar/nav.dart';
 import 'package:dekcare_frontend/components/constants.dart';
 import 'package:dekcare_frontend/components/topBar.dart';
-import 'package:dekcare_frontend/components/searchBar.dart';
 import 'package:dekcare_frontend/provider/chatProvider.dart';
 import 'package:dekcare_frontend/screens/splashScreen.dart';
 import 'package:flutter/material.dart';
@@ -32,77 +32,87 @@ class _ChatState extends State<MainChatScreen> {
     return null;
   }
 
-  void GetPreviewList() async {
+  Future<void> GetPreviewList() async {
     try {
       await Provider.of<ChatProvider>(context, listen: false)
           .getListOfChatPreview();
-      setState(() {
-        isLoading = false;
-      });
     } catch (err) {
       print(err);
     }
   }
 
   Widget renderChatList(width, height, userProfile) {
-    GetPreviewList();
-    return Consumer<ChatProvider>(builder: (context, value, child) {
-      final chatPreviewList = value.chatPreviewList;
-      return (value.getPrivilegeStatus
-          ? chatPreviewList.length == 0
-              ? EmptyCard(
-                  pevContext: context,
-                )
-              : isLoading
-                  ? Container(
-                      height: 120,
-                      child: Center(
-                        child: CircularProgressIndicator(
-                            backgroundColor: yellowPrimary),
-                      ),
-                    )
-                  : ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: chatPreviewList.length,
-                      itemBuilder: (context, index) => chatPreviewCard(
-                        name: chatPreviewList[index].firstname +
-                            " " +
-                            chatPreviewList[index].lastname,
-                        profile: chatPreviewList[index].picture,
-                        message: chatPreviewList[index].message,
-                        press: () {
-                          print('navigate');
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return IndividualChatScreen(
-                                    id: chatPreviewList[index].targetID,
-                                    name: chatPreviewList[index].firstname +
-                                        " " +
-                                        chatPreviewList[index].lastname,
-                                    picture: chatPreviewList[index].picture);
-                              },
-                            ),
-                          );
-                        },
-                      ),
-                    )
-          : errorCard(
-              width: width,
-              height: height,
-              page: TransferMoneyScreen(userProfile[0].money),
-            ));
+    return Consumer<AuthenticateProvider>(builder: (context, authen, child) {
+      return Consumer<ChatProvider>(builder: (context, value, child) {
+        final chatPreviewList = value.chatPreviewList;
+        return (authen.user.privilege
+            ? chatPreviewList.length == 0
+                ? EmptyCard(
+                    pevContext: context,
+                  )
+                : isLoading
+                    ? Container(
+                        height: 120,
+                        child: Center(
+                          child: CircularProgressIndicator(
+                              backgroundColor: yellowPrimary),
+                        ),
+                      )
+                    : ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: chatPreviewList.length,
+                        itemBuilder: (context, index) => chatPreviewCard(
+                          name: chatPreviewList[index].firstname +
+                              " " +
+                              chatPreviewList[index].lastname,
+                          profile: chatPreviewList[index].picture,
+                          message: chatPreviewList[index].message,
+                          press: () {
+                            print('navigate');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return IndividualChatScreen(
+                                      id: chatPreviewList[index].targetID,
+                                      name: chatPreviewList[index].firstname +
+                                          " " +
+                                          chatPreviewList[index].lastname,
+                                      picture: chatPreviewList[index].picture);
+                                },
+                              ),
+                            );
+                          },
+                        ),
+                      )
+            : errorCard(
+                width: width,
+                height: height,
+                page: TransferMoneyScreen(userProfile[0].money),
+              ));
+      });
     });
+  }
+
+  Future<void> fetchUserProfile() async {
+    try {
+      await Provider.of<AuthenticateProvider>(context, listen: false)
+          .fetchProfile();
+    } catch (error) {}
+  }
+
+  Future<void> fetchData() async {
+    setState(() => isLoading = true);
+    await GetPreviewList();
+    await fetchUserProfile();
+    setState(() => isLoading = false);
   }
 
   @override
   void initState() {
-    // TODO: implement initState
+    fetchData();
     super.initState();
-    isLoading = true;
-    GetPreviewList();
   }
 
   @override
@@ -110,9 +120,10 @@ class _ChatState extends State<MainChatScreen> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(fontFamily: 'supermarket'),
-        home: Consumer<ForumProvider>(builder: (context, forumProvider, _) {
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(fontFamily: 'supermarket'),
+      home: Consumer<ForumProvider>(
+        builder: (context, forumProvider, _) {
           final userProfile = forumProvider.userProfile;
           if (userProfile.length == 0) {
             return SplashScreen();
@@ -131,13 +142,6 @@ class _ChatState extends State<MainChatScreen> {
                 child: Center(
                   child: Column(
                     children: [
-                      // Padding(
-                      //   padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
-                      //   child: Container(
-                      //     width: width * 0.92,
-                      //     child: searchBar(title: 'ค้นหาชื่อหมอ'),
-                      //   ),
-                      // ),
                       Expanded(
                         child: RefreshIndicator(
                           key: refreshKey,
@@ -155,6 +159,8 @@ class _ChatState extends State<MainChatScreen> {
                   ),
                 ),
               ));
-        }));
+        },
+      ),
+    );
   }
 }

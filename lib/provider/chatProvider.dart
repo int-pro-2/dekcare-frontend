@@ -62,7 +62,8 @@ class ChatProvider with ChangeNotifier {
   List<List<ChatContent>> chatContentList = [];
 
   // Constructor
-  ChatProvider(this._token, this.doctorList, this._privilegeStatus);
+  ChatProvider(this._token, this.doctorList, this._privilegeStatus,
+      this.chatPreviewList, this.chatContentList);
 
   bool get getPrivilegeStatus {
     return _privilegeStatus;
