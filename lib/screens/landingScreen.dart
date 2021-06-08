@@ -126,8 +126,8 @@ class _LandingState extends State<LandingScreen> {
                                             children: [
                                               Container(
                                                 width: width * 0.7,
-                                                padding:
-                                                    EdgeInsets.only(left: 20),
+                                                padding: const EdgeInsets.only(
+                                                    left: 20),
                                                 // width: width * 0.70,
                                                 child: Text(
                                                   'ยินดีต้อนรับสู่ DekCare',

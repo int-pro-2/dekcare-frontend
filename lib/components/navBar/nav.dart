@@ -84,6 +84,10 @@ class _State extends State<Nav> {
 
     return Consumer<AuthenticateProvider>(builder: (context, authen, child) {
       final userProfile = authen.user;
+      if (userProfile.isDoctor) {
+        pageRoutes.removeAt(1);
+        items.removeAt(1);
+      }
       return Container(
         height: 60,
         child: PageView(controller: _pageController, children: [
@@ -100,11 +104,10 @@ class _State extends State<Nav> {
                     },
                   ),
                 );
+                _currentIndex = index;
+                _pageController.animateToPage(index,
+                    duration: Duration(milliseconds: 300), curve: Curves.ease);
               }
-
-              _currentIndex = index;
-              _pageController.animateToPage(index,
-                  duration: Duration(milliseconds: 300), curve: Curves.ease);
             }),
             items: items,
           ),

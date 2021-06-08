@@ -63,7 +63,6 @@ class _ConsultState extends State<ConsultScreen> {
     return Consumer<AuthenticateProvider>(builder: (context, authen, child) {
       return Consumer<ChatProvider>(builder: (context, value, child) {
         final doctorList = value.doctorList;
-        if (authen.user.isDoctor) return Container();
         return authen.user.privilege
             ? Column(children: [
                 Toggle(

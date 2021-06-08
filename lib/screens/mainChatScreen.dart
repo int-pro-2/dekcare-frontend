@@ -122,45 +122,48 @@ class _ChatState extends State<MainChatScreen> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'supermarket'),
-      home: Consumer<ForumProvider>(
-        builder: (context, forumProvider, _) {
-          final userProfile = forumProvider.userProfile;
-          if (userProfile.length == 0) {
-            return SplashScreen();
-          }
-          return Scaffold(
-              appBar: PreferredSize(
-                  child: TopBar(
-                    titleText: 'สนทนา',
-                    enableBackButton: false,
-                    contextFromPage: context,
-                  ),
-                  preferredSize: Size.fromHeight(height * 0.075)),
-              bottomNavigationBar: Nav(currentIndex: 3),
-              backgroundColor: greySecondary,
-              body: SafeArea(
-                child: Center(
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: RefreshIndicator(
-                          key: refreshKey,
-                          onRefresh: refreshList,
-                          color: yellowPrimary,
-                          child: SingleChildScrollView(
-                            physics: ScrollPhysics(),
-                            child: Column(children: [
-                              renderChatList(width, height, userProfile)
-                            ]),
+      home: Consumer<AuthenticateProvider>(builder: (context, authen, child) {
+        final isDoctor = authen.user.isDoctor;
+        return Consumer<ForumProvider>(
+          builder: (context, forumProvider, _) {
+            final userProfile = forumProvider.userProfile;
+            if (userProfile.length == 0) {
+              return SplashScreen();
+            }
+            return Scaffold(
+                appBar: PreferredSize(
+                    child: TopBar(
+                      titleText: 'สนทนา',
+                      enableBackButton: false,
+                      contextFromPage: context,
+                    ),
+                    preferredSize: Size.fromHeight(height * 0.075)),
+                bottomNavigationBar: Nav(currentIndex: isDoctor ? 2 : 3),
+                backgroundColor: greySecondary,
+                body: SafeArea(
+                  child: Center(
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: RefreshIndicator(
+                            key: refreshKey,
+                            onRefresh: refreshList,
+                            color: yellowPrimary,
+                            child: SingleChildScrollView(
+                              physics: ScrollPhysics(),
+                              child: Column(children: [
+                                renderChatList(width, height, userProfile)
+                              ]),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ));
-        },
-      ),
+                ));
+          },
+        );
+      }),
     );
   }
 }
