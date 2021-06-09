@@ -52,7 +52,7 @@ class _WithdrawMoneyScreenState extends State<WithdrawMoneyScreen> {
     @override
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    print(widget.money);
+    print(widget.money.toString());
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -133,7 +133,8 @@ class _WithdrawMoneyScreenState extends State<WithdrawMoneyScreen> {
                           ),
                           Container(
                             width: width * 0.3,
-                            child: TextKT(text: widget.money + ' baht'),
+                            child:
+                                TextKT(text: widget.money.toString() + ' baht'),
                           )
                         ],
                       ),

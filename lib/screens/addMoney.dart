@@ -45,7 +45,6 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
     } catch (error) {
       print(error);
     }
-    print('done create forumm');
   }
 
   final TextEditingController amountController = TextEditingController();
@@ -54,9 +53,9 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
     @override
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    print(type);
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'supermarket'),
       home: Scaffold(
         backgroundColor: greySecondary,
