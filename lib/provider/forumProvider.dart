@@ -137,7 +137,7 @@ class ForumProvider with ChangeNotifier {
     try {
       // print("tokne in provider" + token);
       final response = await Dio().get(
-          apiEndpoint + '/forum/forums?orderBy=popular',
+          apiEndpoint + '/forum/forums?orderBy=lastest',
           options: Options(headers: {"cookie": 'jwt=' + token + ';'}));
       _forums = modifyResponse(response.data.toList());
       notifyListeners();

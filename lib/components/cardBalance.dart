@@ -112,7 +112,7 @@ class CardMoney extends StatelessWidget {
               ),
             ),
             Text(
-              'สมัคนสมาชิก',
+              'สมัครสมาชิก',
               style: TextStyle(
                   fontSize: 18,
                   fontFamily: 'supermarket',

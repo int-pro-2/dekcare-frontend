@@ -61,7 +61,6 @@ class _TransferMoneyScreenState extends State<TransferMoneyScreen> {
     @override
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    print(widget.money);
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -124,7 +123,8 @@ class _TransferMoneyScreenState extends State<TransferMoneyScreen> {
                           ),
                           Container(
                             width: width * 0.3,
-                            child: TextKT(text: widget.money + ' baht'),
+                            child:
+                                TextKT(text: widget.money.toString() + ' baht'),
                           )
                         ],
                       ),

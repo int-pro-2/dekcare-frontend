@@ -234,6 +234,7 @@ class _ForumState extends State<ForumScreen> {
                                             totalItems: forumList.length,
                                           ),
                                         ),
+                                        SizedBox(height: 30),
                                       ]),
                                     ),
                                   ),
