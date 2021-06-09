@@ -10,6 +10,7 @@ class User {
   String firstname;
   String lastname;
   String picture;
+  String email;
   DateTime birthdate;
   int money;
   bool isDoctor;
@@ -19,6 +20,7 @@ class User {
     required this.firstname,
     required this.lastname,
     required this.picture,
+    required this.email,
     required this.birthdate,
     required this.money,
     required this.isDoctor,
@@ -32,6 +34,7 @@ class AuthenticateProvider with ChangeNotifier {
       firstname: '',
       lastname: '',
       picture: '',
+      email: '',
       birthdate: DateTime.now(),
       money: 0,
       isDoctor: false,
@@ -55,6 +58,7 @@ class AuthenticateProvider with ChangeNotifier {
         firstname: response.data['firstname'],
         lastname: response.data['lastname'],
         picture: response.data['picture'],
+        email: response.data['email'],
         birthdate: DateTime.parse(response.data['birthdate']),
         money: response.data['money'],
         isDoctor: response.data['isDoctor'],

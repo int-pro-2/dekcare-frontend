@@ -142,9 +142,9 @@ class _ConsultState extends State<ConsultScreen> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(fontFamily: 'supermarket'),
-        home: Consumer<ForumProvider>(builder: (context, forumProvider, _) {
-          final userProfile = forumProvider.userProfile;
-          if (userProfile.length == 0) {
+        home: Consumer<AuthenticateProvider>(builder: (context, authen, _) {
+          final userProfile = authen.user;
+          if (userProfile.firstname.length == 0) {
             return SplashScreen();
           }
           return Container(

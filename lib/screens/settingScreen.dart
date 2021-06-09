@@ -36,9 +36,10 @@ class _SettingState extends State<SettingScreen> {
     );
   }
 
-  void fetchUserProfile() async {
+  Future<void> fetchUserProfile() async {
     try {
-      await Provider.of<ForumProvider>(context, listen: false).getUserProfile();
+      await Provider.of<AuthenticateProvider>(context, listen: false)
+          .fetchProfile();
     } catch (error) {}
   }
 
@@ -46,7 +47,7 @@ class _SettingState extends State<SettingScreen> {
     try {
       await Provider.of<AuthenticateProvider>(context, listen: false)
           .updateProfilePicture(updatePictureController.text);
-      fetchUserProfile();
+      await fetchUserProfile();
     } catch (error) {
       print(error);
     }
@@ -74,9 +75,9 @@ class _SettingState extends State<SettingScreen> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'supermarket'),
-      home: Consumer<ForumProvider>(builder: (context1, forumProvider, _) {
-        final userProfile = forumProvider.userProfile;
-        if (userProfile.length == 0) {
+      home: Consumer<AuthenticateProvider>(builder: (context1, authen, _) {
+        final userProfile = authen.user;
+        if (userProfile.firstname.length == 0) {
           return SplashScreen();
         }
         return Scaffold(
@@ -116,8 +117,8 @@ class _SettingState extends State<SettingScreen> {
                                       width: width * 0.2,
                                       height: height * 0.2,
                                       child: CircleAvatar(
-                                        backgroundImage: NetworkImage(
-                                            userProfile[0].picture),
+                                        backgroundImage:
+                                            NetworkImage(userProfile.picture),
                                       ))),
                               Positioned(
                                   top: 80,
@@ -173,13 +174,12 @@ class _SettingState extends State<SettingScreen> {
                       TextKT(text: 'บัญชี'),
                       TextBoxSetting(
                         title: 'บัญชี',
-                        info: userProfile[0].email,
+                        info: userProfile.email,
                       ),
                       TextBoxSetting(
                         title: 'ชื่อ',
-                        info: userProfile[0].firstname +
-                            " " +
-                            userProfile[0].lastname,
+                        info:
+                            userProfile.firstname + " " + userProfile.lastname,
                       ),
                       TextKT(text: 'อื่นๆ'),
                       ButtonSetting(

@@ -116,6 +116,11 @@ class _ChatState extends State<MainChatScreen> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
@@ -124,10 +129,10 @@ class _ChatState extends State<MainChatScreen> {
       theme: ThemeData(fontFamily: 'supermarket'),
       home: Consumer<AuthenticateProvider>(builder: (context, authen, child) {
         final isDoctor = authen.user.isDoctor;
-        return Consumer<ForumProvider>(
-          builder: (context, forumProvider, _) {
-            final userProfile = forumProvider.userProfile;
-            if (userProfile.length == 0) {
+        return Consumer<AuthenticateProvider>(
+          builder: (context, authen, _) {
+            final userProfile = authen.user;
+            if (userProfile.firstname.length == 0) {
               return SplashScreen();
             }
             return Container(

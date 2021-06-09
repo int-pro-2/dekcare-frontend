@@ -22,7 +22,7 @@ class LandingScreen extends StatefulWidget {
 }
 
 class _LandingState extends State<LandingScreen> {
-  void fetchUserProfile() async {
+  Future<void> fetchUserProfile() async {
     try {
       await Provider.of<AuthenticateProvider>(context, listen: false)
           .fetchProfile();
