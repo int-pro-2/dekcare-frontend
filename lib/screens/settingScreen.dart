@@ -26,7 +26,7 @@ class _SettingState extends State<SettingScreen> {
     } catch (error) {
       print(error);
     }
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) {
@@ -52,9 +52,15 @@ class _SettingState extends State<SettingScreen> {
     }
   }
 
+  @override
   void initState() {
     super.initState();
     fetchUserProfile();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   final TextEditingController updatePictureController = TextEditingController();

@@ -1,6 +1,7 @@
 import 'package:dekcare_frontend/components/button.dart';
 import 'package:dekcare_frontend/components/constants.dart';
 import 'package:dekcare_frontend/provider/authenticateProvider.dart';
+import 'package:dekcare_frontend/screens/landingScreen.dart';
 import 'package:dekcare_frontend/screens/registerScreen.dart';
 import 'package:provider/provider.dart';
 
@@ -12,10 +13,18 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginState extends State<LoginScreen> {
-  void login() async {
+  void login(BuildContext context) async {
     try {
       await Provider.of<AuthenticateProvider>(context, listen: false)
           .login(emailController.text, passwordController.text);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return LandingScreen();
+          },
+        ),
+      );
     } catch (error) {
       print(error);
     }
@@ -138,7 +147,7 @@ class _LoginState extends State<LoginScreen> {
                 Button(
                     color: yellowPrimary,
                     onPress: () {
-                      login();
+                      login(context);
                     },
                     title: 'Login'),
                 SizedBox(

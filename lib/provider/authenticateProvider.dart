@@ -68,11 +68,13 @@ class AuthenticateProvider with ChangeNotifier {
           data: {"email": email, "password": password});
       final token = response.data["token"];
       _token = token;
+
       final res = await Dio().get(apiEndpoint + '/auth/profile',
           options: Options(headers: {"cookie": 'jwt=' + _token + ';'}));
 
       _user = modifyUserData(res);
       prefs.setString('userToken', _token);
+      await tryAutoLogin();
       notifyListeners();
     } catch (error) {
       print(error);
@@ -82,7 +84,7 @@ class AuthenticateProvider with ChangeNotifier {
   Future<void> register(String email, String password, String firstname,
       String lastname, String birthdate) async {
     try {
-      final response = await Dio().post(apiEndpoint + '/auth/register', data: {
+      await Dio().post(apiEndpoint + '/auth/register', data: {
         "email": email,
         "password": password,
         "firstname": firstname,

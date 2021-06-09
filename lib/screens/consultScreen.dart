@@ -147,23 +147,28 @@ class _ConsultState extends State<ConsultScreen> {
           if (userProfile.length == 0) {
             return SplashScreen();
           }
-          return Scaffold(
-              appBar: PreferredSize(
-                child: TopBar(
-                  titleText: 'ปรึกษาลูกน้อยกับหมอ',
-                  enableBackButton: false,
-                  contextFromPage: context,
-                ),
-                preferredSize: Size.fromHeight((height * 0.075)),
-              ),
-              bottomNavigationBar: Nav(
-                currentIndex: 1,
-              ),
-              backgroundColor: greySecondary,
-              body: SafeArea(
-                  child: Center(
-                child: renderDoctorList(width, height, userProfile),
-              )));
+          return Container(
+            color: yellowPrimary,
+            child: SafeArea(
+              child: Scaffold(
+                  appBar: PreferredSize(
+                    child: TopBar(
+                      titleText: 'ปรึกษาลูกน้อยกับหมอ',
+                      enableBackButton: false,
+                      contextFromPage: context,
+                    ),
+                    preferredSize: Size.fromHeight((height * 0.075)),
+                  ),
+                  bottomNavigationBar: Nav(
+                    currentIndex: 1,
+                  ),
+                  backgroundColor: greySecondary,
+                  body: SafeArea(
+                      child: Center(
+                    child: renderDoctorList(width, height, userProfile),
+                  ))),
+            ),
+          );
         }));
   }
 }

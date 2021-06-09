@@ -130,37 +130,42 @@ class _ChatState extends State<MainChatScreen> {
             if (userProfile.length == 0) {
               return SplashScreen();
             }
-            return Scaffold(
-                appBar: PreferredSize(
-                    child: TopBar(
-                      titleText: 'สนทนา',
-                      enableBackButton: false,
-                      contextFromPage: context,
-                    ),
-                    preferredSize: Size.fromHeight(height * 0.075)),
-                bottomNavigationBar: Nav(currentIndex: isDoctor ? 2 : 3),
-                backgroundColor: greySecondary,
-                body: SafeArea(
-                  child: Center(
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: RefreshIndicator(
-                            key: refreshKey,
-                            onRefresh: refreshList,
-                            color: yellowPrimary,
-                            child: SingleChildScrollView(
-                              physics: ScrollPhysics(),
-                              child: Column(children: [
-                                renderChatList(width, height, userProfile)
-                              ]),
-                            ),
-                          ),
+            return Container(
+              color: yellowPrimary,
+              child: SafeArea(
+                child: Scaffold(
+                    appBar: PreferredSize(
+                        child: TopBar(
+                          titleText: 'สนทนา',
+                          enableBackButton: false,
+                          contextFromPage: context,
                         ),
-                      ],
-                    ),
-                  ),
-                ));
+                        preferredSize: Size.fromHeight(height * 0.075)),
+                    bottomNavigationBar: Nav(currentIndex: isDoctor ? 2 : 3),
+                    backgroundColor: greySecondary,
+                    body: SafeArea(
+                      child: Center(
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: RefreshIndicator(
+                                key: refreshKey,
+                                onRefresh: refreshList,
+                                color: yellowPrimary,
+                                child: SingleChildScrollView(
+                                  physics: ScrollPhysics(),
+                                  child: Column(children: [
+                                    renderChatList(width, height, userProfile)
+                                  ]),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )),
+              ),
+            );
           },
         );
       }),

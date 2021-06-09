@@ -88,9 +88,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
     @override
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    print(dateTime);
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'supermarket'),
       home: Scaffold(
         backgroundColor: whitePrimary,
@@ -201,7 +201,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     padding: EdgeInsets.only(left: 25, top: 15, bottom: 15),
                     width: width,
                     child: Text(
-                      'บัญชีผู้ใช้',
+                      'ข้อมูลผู้ใช้',
                       style: TextStyle(
                           fontFamily: 'supermarket',
                           fontSize: 17,
@@ -229,7 +229,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       keyboardType: TextInputType.emailAddress,
                       controller: emailController,
                       decoration: InputDecoration(
-                          hintText: 'บัญชีผู้ใช้',
+                          hintText: 'อีเมล',
                           hintStyle: TextStyle(
                               fontFamily: 'supermarket', fontSize: 18),
                           icon: Icon(
@@ -456,7 +456,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     )),
                 Container(
                     width: width * 0.6,
-                    height: height * 0.1,
+                    height: height * 0.2,
                     child: buildDatePicker()),
               ],
             ),
@@ -468,7 +468,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   DateTime dateTime = DateTime.now();
   Widget buildDatePicker() => SizedBox(
-        height: 180,
+        height: 240,
         child: CupertinoDatePicker(
           minimumYear: 1998,
           maximumYear: DateTime.now().year,
