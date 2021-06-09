@@ -419,12 +419,13 @@ class _ForumInsideScreenState extends State<ForumInsideScreen> {
                                       ],
                                     ),
                                     SizedBox(
-                                      height: 20,
+                                      height: 140,
                                     )
                                   ]),
                                 ),
                               ),
-                            )
+                            ),
+                            // SizedBox(height: 100)
                           ],
                         ),
                       ),

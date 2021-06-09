@@ -52,6 +52,8 @@ class _ForumState extends State<ForumScreen> {
   void fetchForums() async {
     try {
       await Provider.of<ForumProvider>(context, listen: false).fetchForums();
+      print('length is');
+      print(Provider.of<ForumProvider>(context, listen: false).forums.length);
     } catch (error) {}
   }
 
@@ -61,14 +63,20 @@ class _ForumState extends State<ForumScreen> {
     super.initState();
     random = Random();
     fetchForums();
-
     refreshList();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   Future<Null> refreshList() async {
     refreshKey.currentState?.show(atTop: false);
     await Future.delayed(Duration(seconds: 1));
-    setState(() {});
+    setState(() {
+      initList = 0;
+    });
     fetchForums();
     return null;
   }
@@ -85,8 +93,14 @@ class _ForumState extends State<ForumScreen> {
         return Consumer<ForumProvider>(builder: (context, forumProvider, _) {
           final isDoctor = authen.user.isDoctor;
           final forumList = forumProvider.forums;
+          print('inside length is');
+          print(forumList.length);
           if (initList == 0 && forumList.length != 0) {
             initList++;
+            print('init is');
+            print(initList);
+            print('body is');
+            print(forumList[0].body);
             for (var i = 0; i < 3; i++) {
               listRender.add(Forums(
                   id: forumList[i].id,
@@ -98,6 +112,11 @@ class _ForumState extends State<ForumScreen> {
                   count: forumList[i].count,
                   picture: forumList[i].picture));
             }
+            print('list render length is');
+            print(listRender.length);
+            try {
+              setState(() {});
+            } catch (error) {}
           }
 
           return Container(
@@ -210,26 +229,31 @@ class _ForumState extends State<ForumScreen> {
                                                 pageRender = page;
                                               });
                                               print(pageRender);
-                                              listRender = [];
-                                              for (var i =
-                                                      ((pageRender - 1) * 3);
-                                                  i < pageRender * 3;
-                                                  i++) {
-                                                if (i < forumList.length) {
-                                                  listRender.add(Forums(
-                                                      id: forumList[i].id,
-                                                      ownerID:
-                                                          forumList[i].ownerID,
-                                                      topic: forumList[i].topic,
-                                                      body: forumList[i].body,
-                                                      date: forumList[i].date,
-                                                      displayname: forumList[i]
-                                                          .displayname,
-                                                      count: forumList[i].count,
-                                                      picture: forumList[i]
-                                                          .picture));
+                                              setState(() {
+                                                listRender = [];
+                                                for (var i =
+                                                        ((pageRender - 1) * 3);
+                                                    i < pageRender * 3;
+                                                    i++) {
+                                                  if (i < forumList.length) {
+                                                    listRender.add(Forums(
+                                                        id: forumList[i].id,
+                                                        ownerID: forumList[i]
+                                                            .ownerID,
+                                                        topic:
+                                                            forumList[i].topic,
+                                                        body: forumList[i].body,
+                                                        date: forumList[i].date,
+                                                        displayname:
+                                                            forumList[i]
+                                                                .displayname,
+                                                        count:
+                                                            forumList[i].count,
+                                                        picture: forumList[i]
+                                                            .picture));
+                                                  }
                                                 }
-                                              }
+                                              });
                                             },
                                             totalItems: forumList.length,
                                           ),
