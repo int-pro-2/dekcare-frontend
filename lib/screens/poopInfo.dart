@@ -45,7 +45,7 @@ class _PoopInfoState extends State<PoopInfo> {
             titleText: 'ข้อมูลสุขภาพอุจจาระของลูก',
             enableBackButton: true,
             contextFromPage: context,
-            press: () => {},
+            press: () {},
           ),
           preferredSize: Size.fromHeight((height * 0.075)),
         ),

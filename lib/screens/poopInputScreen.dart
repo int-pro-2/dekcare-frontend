@@ -140,12 +140,7 @@ class _PoopInputScreenState extends State<PoopInputScreen> {
         ),
         appBar: PreferredSize(
             child: TopBar(
-              press: () {
-                setState(() {
-                  color = '';
-                  type = '';
-                });
-              },
+              press: () {},
               titleText: 'สุขภาพอุจจาระของลูก',
               enableBackButton: true,
               contextFromPage: context,
@@ -301,6 +296,7 @@ class _PoopInputScreenState extends State<PoopInputScreen> {
             titleText: 'สุขภาพอุจจาระของลูก',
             enableBackButton: true,
             contextFromPage: context,
+            press: () {},
           ),
           preferredSize: Size.fromHeight((height * 0.075))),
       body: Consumer<PoopProvider>(
