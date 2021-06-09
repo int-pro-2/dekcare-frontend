@@ -36,11 +36,12 @@ class _TransferMoneyScreenState extends State<TransferMoneyScreen> {
     Choice(text: 'รายปี 500 บาท', amount: 500)
   ];
 
-  void transferMoney() async {
+  Future<void> transferMoney() async {
     try {
       print(amount);
       await Provider.of<AuthenticateProvider>(context, listen: false)
           .subscribe(amount);
+      print('subscribe complete');
       Navigator.pop(context);
       Navigator.pushReplacement(
         context,

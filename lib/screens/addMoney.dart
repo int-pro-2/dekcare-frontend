@@ -1,13 +1,8 @@
 import 'package:dekcare_frontend/components/button.dart';
-import 'package:dekcare_frontend/components/cardForum.dart';
 import 'package:dekcare_frontend/components/chatInput.dart';
 import 'package:dekcare_frontend/components/constants.dart';
-import 'package:dekcare_frontend/components/navBar/nav.dart';
 import 'package:dekcare_frontend/provider/authenticateProvider.dart';
-import 'package:dekcare_frontend/screens/forumScreen.dart';
 import 'package:dekcare_frontend/screens/landingScreen.dart';
-import 'package:dekcare_frontend/screens/loginScreen.dart';
-import 'package:dekcare_frontend/provider/forumProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +23,6 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
   var bankIDCheckError = '';
 
   void addMoney() async {
-    print('addmoney' + amountController.text);
     try {
       await Provider.of<AuthenticateProvider>(context, listen: false)
           .addMoney(int.parse(amountController.text));

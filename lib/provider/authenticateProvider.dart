@@ -170,7 +170,7 @@ class AuthenticateProvider with ChangeNotifier {
       await Dio().post(apiEndpoint + '/bank/withdraw',
           data: {"money": money},
           options: Options(headers: {"cookie": 'jwt=' + token + ';'}));
-      Timer(Duration(milliseconds: 500), () => notifyListeners());
+      notifyListeners();
     } catch (error) {
       throw HttpException(generalException);
     }
@@ -181,7 +181,7 @@ class AuthenticateProvider with ChangeNotifier {
       await Dio().post(apiEndpoint + '/bank/transfer',
           data: {"money": money, "email": email},
           options: Options(headers: {"cookie": 'jwt=' + token + ';'}));
-      Timer(Duration(milliseconds: 500), () => notifyListeners());
+      notifyListeners();
     } catch (error) {
       throw HttpException(generalException);
     }

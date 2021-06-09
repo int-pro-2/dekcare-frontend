@@ -24,13 +24,15 @@ class LandingScreen extends StatefulWidget {
 class _LandingState extends State<LandingScreen> {
   void fetchUserProfile() async {
     try {
-      await Provider.of<ForumProvider>(context, listen: false).getUserProfile();
+      await Provider.of<AuthenticateProvider>(context, listen: false)
+          .fetchProfile();
     } catch (error) {}
   }
 
   @override
   void initState() {
     super.initState();
+
     fetchUserProfile();
   }
 
@@ -43,7 +45,6 @@ class _LandingState extends State<LandingScreen> {
       debugShowCheckedModeBanner: false,
       home: Consumer<AuthenticateProvider>(builder: (context, authen, _) {
         final userProfile = authen.user;
-        print(userProfile.isDoctor);
         if (userProfile.firstname.length == 0) {
           return SplashScreen();
         }

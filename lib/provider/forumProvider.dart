@@ -135,7 +135,6 @@ class ForumProvider with ChangeNotifier {
     String token = prefs.getString('userToken').toString();
     _token = token;
     try {
-      // print("tokne in provider" + token);
       final response = await Dio().get(
           apiEndpoint + '/forum/forums?orderBy=lastest',
           options: Options(headers: {"cookie": 'jwt=' + token + ';'}));
