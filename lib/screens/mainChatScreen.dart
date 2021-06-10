@@ -89,7 +89,7 @@ class _ChatState extends State<MainChatScreen> {
             : errorCard(
                 width: width,
                 height: height,
-                page: TransferMoneyScreen(userProfile[0].money),
+                page: TransferMoneyScreen(authen.user.money),
               ));
       });
     });
